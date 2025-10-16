@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spryte — Archive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: #000;
+      color: #0f0;
+      overflow-x: hidden;
+    }
+    header {
+      position: relative;
+      height: 6rem;
+      /* border-bottom removed per request */
+      overflow: hidden;
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      /* Keep hue animation, remove float so JS can control position */
+      animation: textHue 20s linear infinite;
+      position: absolute;
+      left: 0;
+      top: 0;
+      /* Constrain size to always fit within header */
+      max-height: 80%;
+      max-width: 95%;
+      height: auto;
+      width: auto;
+      object-fit: contain;
+      will-change: transform;
+    }
+    /* Removed floatAround keyframes; movement handled via JS to keep within bounds */
+    .artist-img {
+  width: 100%;
+  max-width: 800px;
+      height: auto;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      margin-right: 0.5rem;
+      flex-shrink: 0;
+      display: block;
+    }
+    @media (max-width: 600px) {
+      .artist-img {
+        width: 90vw;
+        max-width: 100%;
+      }
+    }
+    @keyframes textHue {
+      0%   { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin: 2rem 0 1rem 0;
+      text-align: center;
+      animation: textHue 20s linear infinite;
+    }
+    h2 {
+      animation: textHue 20s linear infinite;
+    }
+  /* Make wiggle lines full-bleed across screen and keep strokes thin */
+  .wiggle-separator svg { display:block; width:100%; height:24px; }
+  .wiggle-separator svg path { vector-effect: non-scaling-stroke; stroke-width: 1px; }
+  .wiggle-separator { width:100vw; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; }
+    @supports (width: 100dvw) {
+      .wiggle-separator { width: 100dvw; margin-left: calc(50% - 50dvw); margin-right: calc(50% - 50dvw); }
+    }
+    @supports (width: 100lvw) {
+      .wiggle-separator { width: 100lvw; margin-left: calc(50% - 50lvw); margin-right: calc(50% - 50lvw); }
+    }
+    @supports (width: 100svw) {
+      .wiggle-separator { width: 100svw; margin-left: calc(50% - 50svw); margin-right: calc(50% - 50svw); }
+    }
+  /* Keep wiggle line strokes thin regardless of viewport scaling */
+  .wiggle-separator svg path { vector-effect: non-scaling-stroke; stroke-width: 1px; }
+    .archive-list {
+  margin: 2rem auto;
+  max-width: 800px;
+  padding: 1rem;
+    }
+    @keyframes fadeColor {
+      0%   { background: rgba(255,0,0,0.2); }
+      50%  { background: rgba(255,0,0,0.3); }
+      100% { background: rgba(255,0,0,0.25); }
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      border-bottom: 2px solid #0f0;
+      padding: 1.5rem;
+      margin: 0;
+    }
+    .archive-text {
+      font-size: 1rem;
+      line-height: 1.5;
+      animation: textHue 20s linear infinite;
+    }
+
+    .artist-title-box {
+      border: 1px solid currentColor;
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      margin-bottom: 0.7rem;
+      display: inline-block;
+      background: rgba(0,255,0,0.03);
+      animation: textHue 20s linear infinite;
+    }
+
+    .streamed-date {
+      display: inline-block;
+      /* border: 1px solid #0f0; */
+      /* border-radius: 4px; */
+      padding: 2px 8px;
+      margin-bottom: 8px;
+      margin-top: 4px;
+      background: none;
+      font-size: 1em;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      border-top: 2px solid #0f0;
+      font-size: 0.8rem;
+      animation: textHue 20s linear infinite;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      .archive-text { font-size: 0.9rem; }
+      .logo {
+        max-width: 90vw;
+        max-height: 60%;
+      }
+    }
+
+    /* Desktop: keep text compact and left-aligned under headings */
+    @media (min-width: 1200px) {
+      .archive-list { max-width: 900px; margin-left: 0; margin-right: 0; }
+      .archive-list .artist-block,
+      .archive-list .archive-text,
+      .archive-list p { max-width: 900px; margin-left: 0; margin-right: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+  <a href="index.html"><img src="images/spryte_logo.png" alt="Spryte Logo" class="logo" /></a>
+  </header>
+  <h1>ARCHIVE</h1>
+  
+  <div class="archive-list">
+  <div class="artist-block" id="nadim-choufi-first">
+    
+    <div class="artist-title-box"><h2 style="margin-bottom:0.5rem; text-transform: lowercase;">nadim choufi: I'm not sure it's the same sun anymore</h2></div>
+    <img src="images/Nadim Choufi2.jpg.webp" alt="Nadim Choufi Still 2" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 29 June 29, 2025, 12-00:00</span><br><br>
+      2022<br><br>
+      Single channel<br>
+      2 minutes 58 seconds<br><br>
+      I could still recognize Beirut, where I live, but nothing was familiar. During that time, I started noticing two suns in the reflection of the city.<br><br>
+      nadim choufi is an artist and editor.
+    </div>
+  </div>
+  <div class="artist-block" id="suzanne-treister">
+    <div class="wiggle-separator" style="margin:3rem 0;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+      <div class="artist-title-box"><h2>Suzanne Treister: THE HOLOGRAPHIC UNIVERSE THEORY OF ART HISTORY (THUTOAH)</h2></div>
+      <img src="images/Suzanne Treister.jpg_1.webp" alt="Suzanne Treister Still" class="artist-img" />
+      <div class="archive-text">
+        <span class="streamed-date">Streamed on 20 April 2025, 12:00 - 00:00</span><br>
+        2018<br>
+        Single-channel video (16:54 mins) with sound (51:16 mins)<br>
+        The Holographic Universe Theory of Art History (THUTOAH), investigates the holographic principle and the theory that our universe could be understood as a vast and complex hologram, and hypothesises that, beyond acknowledged art historical contexts and imperatives, artists may have also been unconsciously attempting to describe the holographic nature of the universe.Projecting over 25,000 chronological images from art history (from cave painting to global contemporary art, including outsider and psychedelic art), THUTOAH echoes conceptually the actions of CERN's particle accelerator, the Large Hadron Collider (LHC), accelerating at 25 images per second in a looped sequence. Alongside this colossal library of images is a soundtrack of interviews with scientists at CERN about the holographic principle and my Holographic Universe Theory of Art History.THUTOAH hypothesises a reality that has perhaps been intuited over the ages, a reality beyond the already documented intentional depictions of spiritual, mystical or transcendent realities or altered states of consciousness; the reality of the holographic nature of the universe.
+        The ideas behind this work manifested in several diagrams in the project, <a href="https://www.suzannetreister.net/HFT_TheGardener/Diagrams/HFT_Diag-HolographicU.html" target="_blank" style="color:#0ff;">HFT The Gardener</a> (2014-15) and watercolours in the project, <a href="https://www.suzannetreister.net/SURVIVOR_F/SF_BlackHoleASI.html" target="_blank" style="color:#0ff;">SURVIVOR (F)</a> (2016-ongoing).<br><br>
+        THUTOAH was developed as part of the Collide International Award, a partnership programme between Arts at CERN and FACT. It was co-produced by ScANNER (Science-Art Network for New Exhibitions and Research), composed of FACT (Foundation for Art and Creative Technology, Liverpool); Arts at CERN, Geneva; CCCB (Centro de Cultural Contemporania de Barcelona); iMAL (interactive Media Art Laboratory, Brussels); and LLU (Le Lieu Unique, Nantes)
+      </div>
+    </div>
+  <div class="artist-block" id="sarah-rara">
+    <div class="wiggle-separator" style="margin:3rem 0;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+      <div class="artist-title-box"><h2>Sarah Rara: UNTITLED (DOOR)</h2></div>
+      <img src="images/Sarah Rara.jpg_1.webp" alt="Sarah Rara Still" class="artist-img" />
+      <div class="archive-text">
+        <span class="streamed-date">Streamed on 16 March 2025, 12:00 - 00:00</span><br>
+        2024<br>
+        59mins 51secs<br>
+        Untitled (Door), emerges from research on philosopher Ludwig Wittgenstein’s architecture, following his exit from philosophy after the publication of Tractatus Logico-Philosophicus. Images of windows, doors, walls, apertures, surfaces, slide in and out of the frame, generating unruly interiors, a symbolic search for an exit, operating within a language of intervals and sequences. An alternative to philosophy: making a house, a window, a door. In Untitled (Door), 2024, a narrow threshold opens on either side, light flows in two directions. Images slide in and out of frame, multiplied prismatically. Door, frame, shutter, iris, frame rate– Optics that speak to a sense of visual thresholds, populated by vibratory gaps. Not an image, a display of the unsteadiness of vision, with an interest in disability, restlessness, and class transformation. A new reading of Tractatus, examining the porousness of language and space, vertigo, falling, transformation, thresholds,and failure through video and text.<br><br>
+        Sarah Rara’s multi-disciplinary practice— including video, sound, performance, and writing— explores the position of witness within fragile systems, and the socio-political and personal dimensions of sensing technologies. Their work in sound and moving image considers gender, queerness, technology, disability, and illness in connection with environmental research. They are a primary organizer of the ongoing project lucky dragons. Their work, solo and in collaboration, has been presented at such institutions as the Whitney Museum of American Art (as part of the 2008 Whitney Biennial), the Hammer Museum, the Centre Georges Pompidou, Walker Art Center in Minneapolis, London’s Institute for Contemporary Art, PS1 in New York, REDCAT and Human Resources in Los Angeles, MOCA Los Angeles, the 54th Venice Biennale, Documenta 14 in Athens, and the Smithsonian’s Hirshhorn Museum and Sculpture Garden, among others. Rara is a 2018 recipient of the LACMA Art + Technology fellowship and current artist-in-residence at Bangkok 1899, Bangkok, Thailand. Rara is Assistant Professor of Moving Image at Williams College.
+      </div>
+    </div>
+  <div class="artist-block" id="miach-malachy">
+    <div class="wiggle-separator" style="margin:3rem 0;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>Miach Malachy: ROTTERS</h2></div>
+    <img src="images/Miach Malachy.jpg.webp" alt="Miach Malachy Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+        <span class="streamed-date">Streamed on 23 February 2025, 12:00 - 00:00</span><br><br>
+        2023<br><br>
+        “SOMETHING IS DIFFERENT TODAY… you are on trial.”<br><br>
+        ‘Rotters holds four sculptures in a looped dialogue. Two interrogators—Sparky the school locker, and Swall the watchtower—push the reticent Rotter the perspex box, for ‘FACTS’. Haunted by the looming presence of So-N-So and the pressure of unstable memories, Rotters’ scene-of-the-crime is a collision between different forms of inquest.’<br><br>
+        This screening is the first showing of the full work outside of its primary installation format in a full video version produced in 2023.<br><br>
+        With <br>Kirsty Clark as So-N-So <br>Samson Dittrich as Sparky <br>MKH as Swall<br>Rotter as Rotter<br><br>
+        Thanks to Jon Roome and Ghislaine Leung.<br><br>
+        Videography by Oliver Bradley-Baker.<br><br>
+        Installation still by David Tolley.<br><br>
+        <b>Content Notification:</b><br>Rotters contains explicit language and references to assault.<br><br>
+        <b>Installation details and description:</b><br>Rotters: Sculptures, sound, script, score, lighting, room, electronics, motors, program.<br><br>
+        Rotters is a situation for four sculptures over 22 minutes, running continuously.<br><br>
+        Rotters’ installation consists of 4 sculptures, synched lighting and speakers. Each sculpture is a character named in the script. Two of the characters Sparky (a steel school locker) and Swall (a watchtower) are interrogating a third, Rotter (a Perspex box) about the whereabouts of So-n-So (a sheet of safety glass). So-n-So is in fact in the room but this is never fully acknowledged by the other characters, though monologues memories in a streaming fashion. Rotter throughout remains mute. The sculptures are ‘animated’ by the structuring conceit of a motorized, synched light, which picks out the speaking or mentioned sculpture and the use of spatialized sound. The lines for each speaking character are voice-acted.<br><br>
+        <b>Previous showing:</b><br>A previous version of this work was shown in 2019 with C4 Random Acts, in a highly abridged adaption.<br><br>
+        Credits for that adaption are as follows:<br>Camera: Oliver Bradley-Baker<br>Voices: Kirsty Clark, Samson Dittrich, MKH, Rotter<br>Producer: Catherine Bray<br>Commissioning Assistant: Jake Cunningham
+      </div>
+  </div>
+  <div class="artist-block" id="joao-maria-gusmao-pedro-paiva">
+    <div class="wiggle-separator" style="margin:3rem 0;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>Joao Maria Gusmao + Pedro Paiva: GLOSSOLALIA</h2></div>
+    <img src="images/Joao Maria Gusmao + Pedro Paiva.jpeg.webp" alt="Joao Maria Gusmao + Pedro Paiva Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 23 February 2025, 12:00 - 00:00</span><br><br>
+      2014<br>
+      <b>Glossolalia (“Good Morning”)</b><br>
+      16mm film, colour, no sound, 7’10’’<br>
+      Produced by Fondazione HangarBicocca, Milan.
+    </div>
+  </div>
+  <div class="artist-block" id="beatrice-vorster-yasmin-vardi">
+    <div class="wiggle-separator" style="margin:3rem 0;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>Beatrice Vorster and Yasmin Vardi: A WOMAN RUNS AWAY FROM SOMETHING</h2></div>
+    <img src="images/Beatrice Vorster and Yasmin Vardi.jpg.webp" alt="Beatrice Vorster and Yasmin Vardi Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 27 October 2024, 12:00 - 00:00</span><br>
+      2024<br>
+      Starring Fergus Robinson, Elli Antoniou and Amelie Mckee<br>
+      Performance by Ammonite<br>
+      21:29<br><br>
+      “A woman runs away from something” takes the skeleton of the home invasion subgenre and reimagines it through techniques of absenting. By removing the narrative and distilling the form to pure format, the film investigates the database mode of horror subgenre by instead highlighting the grammar of cinema. Considering the subgenre as a direct pipeline of social anxiety, our practice is one of distillation: the cross-section of power and desire. It examines the power of suggestion, reaching towards what is hidden through techniques of absenting and remaking. The relationship between sound and image lies at the core of this onscreen/offscreen tension.<br><br>
+      Beatrice Vorster and Yasmin Vardi have worked together since 2020, primarily focusing on moving-image. Their practice centres on decoding cinematic archetypes, particularly of horror cinema, often parodying structural and narrative conventions of specific subgenres in the horror canon. The feminine position is central to their process of encoding and decoding. Throughout their body of work, they examine mechanisms of tension through humour, vulnerability and tropes. They are motivated by understanding cinema as a construction of our realities and identities. 
+      <a href="https://iplungeintothenegativeecstasyofradio.com/beatrice-vorster-yasmin-vardi" target="_blank" style="color:#0ff;">Project page</a>
+      &nbsp;|&nbsp; @yasminvardi &nbsp;|&nbsp; @tape_2046
+    </div>
+  </div>
+  <div class="artist-block" id="mark-leckey">
+    <div class="wiggle-separator" style="margin:3rem 0;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>MARK LECKEY: PROPOSAL FOR A SHOW</h2></div>
+    <img src="images/Mark Leckey.jpg.webp" alt="Mark Leckey Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 18 August 2024, 12:00 - 00:00</span><br>
+      2010<br>
+      Video with sound, 11 mins, 42 secs<br><br>
+      This is a proposal for a curated show with the ******* Gallery. I put it up here as it seemed the easiest way of showing it to a disparate bunch of people. Its in its raw state but It will change as the ideas change.
+    </div>
+  </div>
+  <div class="artist-block" id="lou-lou-sainsbury">
+    <div class="wiggle-separator" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-top:3rem;margin-bottom:3rem;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>LOU LOU SAINSBURY: A FANTASTIC BODY</h2></div>
+    <img src="images/Lou Lou Sainsbury.jpg.webp" alt="Lou Lou Sainsbury Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 29 July 2024, 12:00 - 00:00</span><br><br>
+      2024<br>
+      HD video, colour, sound. 11 mins<br><br>
+      Sunbeam gets surgery and is brought back to life. A doll of Sunbeam, a cute and chaotic personification of the sun invoking the trans Roman Empress Heliogabalus, is split open, remade and implanted with collected ‘resonant’ objects - a rib bone, a lock of hair, teeth, pharmaceutical hormones and a peach pit for a brain. Performed by the artist and filmed in her own bedroom and kitchen, the intimate film explores a domestic imaginary for restitching transfeminine histories, a communion with the dead and the sensual reinvention of a body with no end.<br><br>
+  Commissioned by Ehrlich Steinberg, with generous support from Mondriaan Fund and Amarte Fund. 
+  <a href="https://loulousainsbury.com" target="_blank" style="color:#0ff;">loulousainsbury.com</a> 
+  &nbsp;|&nbsp; <a href="https://instagram.com/loulousainsbury" target="_blank" style="color:#0ff;">@loulousainsbury</a>
+  &nbsp;|&nbsp; <a href="https://instagram.com/ehrlichsteinberg" target="_blank" style="color:#0ff;">@ehrlichsteinberg</a>
+  &nbsp;|&nbsp; <a href="https://instagram.com/mondriaanfonds" target="_blank" style="color:#0ff;">@mondriaanfonds</a>
+  &nbsp;|&nbsp; <a href="https://instagram.com/amartefonds" target="_blank" style="color:#0ff;">@amartefonds</a><br><br>
+      Lou Lou Sainsbury (b. 1994; London) is an artist based in Rotterdam, working across moving image, live-performance, poetry, drawing, sculpture and textiles. A self-described time traveler, Sainsbury’s work seeks to tell stories for more liberated futures, exploring histories of resistance, transformation and entanglement within both human and more-than-human worlds.
+    </div>
+  </div>
+  <div class="artist-block" id="adriana-ramic">
+    <div class="wiggle-separator" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-top:3rem;margin-bottom:3rem;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>ADRIANA RAMIĆ: INDEX OF SCENES</h2></div>
+    <img src="images/Adriana Ramić.jpg.webp" alt="Adriana Ramić Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 9 June 2024, 12:00 - 00:00 (BST)</span><br><br>
+      2022<br>
+      3-channel video projection, panelled drinking glasses, velvet, wool, MDF<br><br>
+      Three videos of chickens engaging in different behaviors comprise the video installation Index of Scenes; they play underneath a window in a theatrical ledge wrapped in varying dark tones of velvet and wool.<br><br>
+      Each video, depicting the wild birds searching, fleeing, and staring, is projected from beneath the ledge onto the back wall, with a paneled drinking glass between projector and screen catching the chicken’s form in a ghostly intermediary apparition — the light turning around and seeing itself, or the uncapturable state between beginning and end in a quantum chicken-egg dilemma.
+    </div>
+  </div>
+  <div class="artist-block" id="dora-budor-noah-barker">
+    <div class="wiggle-separator" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-top:3rem;margin-bottom:3rem;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>NOAH BARKER & DORA BUDOR: ORANGE FILMS I AND II</h2></div>
+    <img src="images/Dora Budor & Noah Barker.jpeg.webp" alt="Dora Budor & Noah Barker Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 19 May 2024, 12:00 - 00:00</span><br><br>
+      <b>Orange Film I</b>, 2023 — HD Video, color, sound / 6’42’’<br>
+      <b>Orange Film II</b>, 2023 — HD Video, color, sound / 4’7’’<br><br>
+      Orange Film I and Orange Film II are two collaborative videos that feature distortion resulting from a camera rig equipped with a glass of orange wine. Filmed in distinct New York sites, nostalgia and disorientation fabricate synthetic portals to a past instrumental to the recent urban development. A recent phenomenon with mythologized premodern origins, orange wine has come to mark a global array of sites for consumption with a homogenous taste literalized as flavor.<br><br>
+      Orange Film I was filmed at two adaptive reuse projects in New York: The High Line and Domino Park. The High Line, a former rail corridor turned elevated park, is renowned as a model for transitioning industrial infrastructure into ‘destination architecture’. Its miles-long expanse has effectively attracted art institutions, tourists, and luxury residential development. Domino Park aspires toward the same effect in its conversion of the former Domino Sugar Refinery, emptying out historical brick building to situate a glass office building inside. Orange Film II abstracts a new private sculpture in the public space, recently revealed under a residence tower at 56 Leonard Street in Tribeca. Under the moniker Jenga Tower, the building is a balancing act in many ways, visually accentuated by the metallic 'bean' sculpture lodged underneath it. The reflections of the cityscape in Anish Kapoor’s 'bean' double the distortion of the curved glass in front of the camera.
+    </div>
+  </div>
+  <div class="artist-block" id="cici-wu">
+    <div class="wiggle-separator" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-top:3rem;margin-bottom:3rem;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>CICI WU: STRONG LONELINESS</h2></div>
+    <img src="images/Cici Wu.jpg.webp" alt="Cici Wu Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 3 March 2024, 12:00 - 00:00</span><br><br>
+      2021<br>
+      8 min 32 sec<br><br>
+      Strong Loneliness is a video that belongs to the project Lantern Strike (Strong Loneliness) which I started in 2021. At the time, I wrote the text below and hope to use this chance to revisit: Lantern Strike as a phrase is inspired by a conversation I had with a friend about nature (non-human) strikes. In the on-going Myanmar protests, protesters imagined and staged Flower Strike, Reborn Strike, Dawn Strike, and Anti-coup Paper Boat Strike. If there is something I want to share in this moment, perhaps it has to be the potential of how language was used in an extremely poetic manner and the imagination came along with those words demonstrated in the movements of Hong Kong, Thailand, and Myanmar from 2019-2021. Lantern Strike also departs from a question: In what form, cinema could be closer to that which is going beyond boundaries of language, border, geography, as a nationless subject. The narrative of this project takes place in quasi-fictional Asia, where paper lanterns once existed as a source of light and ceremonial objects. I plan to study the transcultural and transnational history of these objects, interpreting them as spiritual and technological precursors to the development of early cinema in Asia—a development which is deeply historically entwined with capitalism, colonialism, nationalism and globalization. Defining cinema through its basic abstract unit—light, I search for the transnational origins of early Asian motion pictures. Lantern Strike leads to imaginative past and speculative technologies, which are given by the absent (invisible) historical beginnings of early cinema. The new forms of lanterns in the exhibition were crafted according to various geographical locations and their historicity, including Hong Kong, Sri Lanka, Indonesia, India, Japan, Korea, Vietnam, Thailand, and the Philippines. They functioned as a source of light but also as a kind of encoder of movements (shadows). They are experimental devices that record what may be seen as a suggestion of the bodies via isolating shadows. This video is a compilation of footage collected by my paper-shadow-encoder-lanterns and exists as a mark of my thinking and feeling for that time.
+    </div>
+  </div>
+  <div class="artist-block" id="theo-ellison">
+    <div class="wiggle-separator" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-top:3rem;margin-bottom:3rem;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>THEO ELLISON: STANDARD</h2></div>
+    <img src="images/Theo Ellison.jpg.webp" alt="Theo Ellison Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 4 February 2024, 12:00 - 00:00</span><br><br>
+      2020<br>
+      Single-channel video, Julian Schnabel’s voice<br><br>
+      Standard explores the relationship between absurdity and pathos within the archetype of the macho artist persona. Julian Schnabel’s bravado-laden monologue emanates from a gleaming bird's skull - drawing parallels with the elaborate and visually showy courtship behaviour of birds of paradise.<br><br>
+      <a href="https://instagram.com/theo_ellison" target="_blank" style="color:#0ff;">@theo_ellison</a>
+    </div>
+  </div>
+  <div class="artist-block" id="spryte-presents-infinite-tony">
+    <div class="wiggle-separator" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-top:3rem;margin-bottom:3rem;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>SPRYTE PRESENTS: INFINITE TONY</h2></div>
+    <img src="images/Spryte presents infinite tony.webp" alt="Spryte presents Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 17 December 2023, 12:00 - 21:00 approx.</span><br><br>
+      Infinite Tony is a 12-hour live stream showing the video game Tony Hawk Pro Skater 2, in which Tony Hawk is skating around New York City at night.<br><br>
+      The game is left to run without any player, leaving Tony to move forwards infinitely. This would have created an eternal loop of predetermined routes, if it was not being continuously broken by three roaming taxis which disrupt the repetition.
+    </div>
+  </div>
+  <div class="artist-block" id="morag-keil">
+    <div class="wiggle-separator" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-top:3rem;margin-bottom:3rem;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>MORAG KEIL: ARLY INGVA AXEWELL ANDRA NIKOLAS ELIYA MARGEN & SHOPPING</h2></div>
+    <img src="images/Morag Keill.png.webp" alt="Morag Keil Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 26 November 2023, 12:00 - 00:00</span><br><br>
+      The stream presented two versions of the same film by artist Morag Keil: Marly Ingva Axewell Andra Nikolas Eliya Margen, filmed in Lafayette Galleries, Berlin in 2011 and Shopping, the re-filmed version filmed in a Yorkshire department store in 2018.<br><br>
+      Both films present an IRL computer game devoid of any rules and appearing to have no beginning nor end. The editing is determined by when the participants cross each other's path and the view switches to the camera feed they have intercepted. The sound effects are taken from the video game Halo 2.<br><br>
+      Morag Keil via Project Native Informant
+    </div>
+  </div>
+  <div class="artist-block" id="colectivo-los-ingravidos">
+    <div class="wiggle-separator" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-top:3rem;margin-bottom:3rem;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>COLECTIVO LOS INGRÁVIDOS: TONALLI</h2></div>
+    <img src="images/Colectivo Los Ingrávidos.jpg.webp" alt="Colectivo Los Ingrávidos Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 29 October 2023, 12:00 - 00:00</span><br><br>
+      México | 2021 | 16mm | color | stereo | 16 minutos<br><br>
+      Colectivo Los Ingrávidos (Tehuacán) is a Mexican film collective founded in 2012 to dismantle the commercial and corporate audiovisual grammar and its embedded ideology. The collective is inspired by the historical avant-gardes, and their commitment to using both form and content against alienating realities. Their methods combine digital and analog mediums, interventions on archival materials, mythology, agitprop, social protests, and documentary poetry. Their radical experimentations on documentary and cinematographic devices produce images, both visual and auditory that are political possibilities in their own right.
+    </div>
+  </div>
+  <div class="artist-block" id="lydia-davies">
+    <div class="wiggle-separator" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-top:3rem;margin-bottom:3rem;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>LYDIA DAVIES: NEW SHEETS (AV)</h2></div>
+    <img src="images/Lydia Davies.jpg.webp" alt="Lydia Davies Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 3 September 2023, 12:00 - 00:00</span><br><br>
+      2021<br>
+      Stereo audio with HD video, 10 minutes 40 seconds<br><br>
+      The narrator’s optimistic mood after changing the bedding is trailed by a series of ‘resolute thuds’; setting down a vase, a wheelie bin lid closing, and debris falling from a gaping hole in the ceiling. Their attempt to restore the orderliness of the room is negated as the room and mood deteriorate. Point-of-view is rattled through glimpses and glances, digressions and a heightened self-awareness. Recurring ‘resolute thuds’ suspend any sense of finality and resolution.<br><br>
+      <a href="https://www.lydiadavies.co.uk" target="_blank" style="color:#0ff;">www.lydiadavies.co.uk</a>
+    </div>
+  </div>
+  <div class="artist-block" id="pierre">
+    <div class="wiggle-separator" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-top:3rem;margin-bottom:3rem;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>PIERRE: WHEN I RETURN</h2></div>
+    <img src="images/Pierre.png.webp" alt="Pierre Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 30 July 2023, 12:00 - 00:00</span><br><br>
+      Choreography: Pierre Babbage<br>
+      Music mixed by Harve (Tracks Helen Mirrell, BEBELUNA)<br>
+      Filmed and edited by Rosie Powell<br>
+      Film produced by Raze Collective<br><br>
+      <a href="https://instagram.com/movementbypierre" target="_blank" style="color:#0ff;">@movementbypierre</a>
+      &nbsp;|&nbsp; <a href="https://instagram.com/callmeharve" target="_blank" style="color:#0ff;">@callmeharve</a>
+      &nbsp;|&nbsp; <a href="https://instagram.com/rosiepowellfreelance" target="_blank" style="color:#0ff;">@rosiepowellfreelance</a>
+      &nbsp;|&nbsp; <a href="https://instagram.com/itsbebeluna" target="_blank" style="color:#0ff;">@itsbebeluna</a>
+      &nbsp;|&nbsp; <a href="https://instagram.com/razecollective" target="_blank" style="color:#0ff;">@razecollective</a>
+    </div>
+  </div>
+  
+  <div class="artist-block" id="nadim-choufi-last">
+    <div class="wiggle-separator" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-top:3rem;margin-bottom:3rem;">
+      <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+          <animate attributeName="d" dur="2s" repeatCount="indefinite"
+            values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                    M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+        </path>
+      </svg>
+    </div>
+    <div class="artist-title-box"><h2>NADIM CHOUFI: THE SKY OSCILLATES BETWEEN ETERNITY AND ITS IMMEDIATE CONSEQUENCES</h2></div>
+    <img src="images/Nadim Choufi.png.webp" alt="Nadim Choufi Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on 2 July 2023, 12:00 - 00:00</span><br><br>
+      The Sky Oscillates Between Eternity and Its Immediate Consequences is a work exploring how the future of smart cities relies on the promise of “sustainable” closed systems in the face of health and ecological crises. Two protagonists narrate how the control, isolation, and exploitation of time including environmental life cycles, seasons, and organisms’ lifetimes form the blueprint to achieve such futuristic visions.<br><br>
+      <a href="https://www.nadimchoufi.com" target="_blank" style="color:#0ff;">www.nadimchoufi.com</a>
+    </div>
+  </div>
+  </div>
+  <footer>© 2025 Spryte. All rights reserved.</footer>
+  
+  <script>
+    // Slower, pseudo-random undulation for all wiggle lines
+    (function () {
+      const prefersReducedMotion =
+        window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+      function makeAnimator(path) {
+        // Remove any inline SMIL animations to avoid double-animating
+        path.querySelectorAll('animate').forEach(a => a.remove());
+        const svg = path.ownerSVGElement;
+        const vb = (svg && svg.viewBox && svg.viewBox.baseVal) || { x: 0, y: 0, width: 1920, height: 24 };
+        const width = vb.width || 1920;
+        const height = vb.height || 24;
+        const centerY = height / 2;
+        const segments = 8; // Keep similar segmenting to original path
+        const segW = width / segments;
+        // Randomized per-segment parameters for organic motion
+        const amps = new Array(segments).fill(0).map(() => 4 + Math.random() * 10); // 4–14px
+        const phases = new Array(segments).fill(0).map(() => Math.random() * Math.PI * 2);
+        const speeds = new Array(segments).fill(0).map(() => 0.2 + Math.random() * 0.4); // rad/s, nice and slow
+        // Optionally let amplitude meander over time
+        const ampDrift = new Array(segments).fill(0).map(() => (Math.random() * 0.04) - 0.02);
+        function buildPath(t) {
+          let d = `M0 ${centerY}`;
+          for (let i = 0; i < segments; i++) {
+            // Smoothly vary amplitude within a clamp for organic randomness
+            amps[i] = Math.max(3, Math.min(16, amps[i] + ampDrift[i]));
+            const cx = i * segW + segW / 2;
+            const cy = centerY + Math.sin(phases[i] + speeds[i] * t) * amps[i];
+            const x = (i + 1) * segW;
+            const y = centerY;
+            // Use Q for each segment (explicit control point per segment)
+            d += ` Q ${cx} ${cy}, ${x} ${y}`;
+          }
+          return d;
+        }
+        let last = 0;
+        const minInterval = 80; // ms, throttle updates for performance
+        function tick(ts) {
+          if (!last) last = ts;
+          const dt = ts - last;
+          if (dt >= minInterval) {
+            // t in seconds
+            const t = ts / 1000;
+            path.setAttribute('d', buildPath(t));
+            last = ts;
+          }
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+      window.addEventListener('DOMContentLoaded', () => {
+        // Target every wiggle separator path
+        document.querySelectorAll('.wiggle-separator svg path').forEach((p, i) => {
+          // Small stagger to de-sync start phases visually
+          setTimeout(() => makeAnimator(p), Math.random() * 400 + i * 120);
+        });
+      });
+    })();
+  </script>
+  <script>
+    // Full-bleed alignment for wiggle separators regardless of parent alignment (same as index)
+    (function(){
+      function adjustFullBleed(){
+        const vw = window.innerWidth;
+        document.querySelectorAll('.wiggle-separator').forEach(el => {
+          // Reset only transform before measuring
+          el.style.transform = 'none';
+          const rect = el.getBoundingClientRect();
+          const offset = Math.round(-rect.left);
+          el.style.width = vw + 'px';
+          el.style.maxWidth = 'none';
+          if (offset !== 0) {
+            el.style.transform = `translateX(${offset}px)`;
+          }
+        });
+      }
+      let resizeTimer;
+      window.addEventListener('DOMContentLoaded', adjustFullBleed);
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(adjustFullBleed, 120);
+      });
+    })();
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spryte</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    
+    /* ============================= */
+    /* BODY & HEADER STYLES          */
+    /* ============================= */
+    body {
+      margin: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: #000;
+      color: #0f0;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: relative;
+      height: 6rem;
+      border-bottom: 2px solid #0f0; /* restore straight line */
+      overflow: hidden;
+    }
+
+    /* ============================= */
+    /* LOGO */
+    /* ============================= */
+    .logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      /* Constrain size to always fit within header, like archive */
+      max-height: 80%;
+      max-width: 95%;
+      height: auto;
+      width: auto;
+      object-fit: contain;
+      animation: textHue 20s linear infinite;
+      /* Responsive fallback for small screens */
+    }
+
+    @keyframes floatAround {
+      0%   { top: 10%; left: 10%; }
+      12.5% { top: 5%; left: 40%; }
+      25%  { top: 10%; left: 70%; }
+      37.5% { top: 30%; left: 85%; }
+      50%  { top: 60%; left: 70%; }
+      62.5% { top: 85%; left: 40%; }
+      75%  { top: 60%; left: 10%; }
+      87.5% { top: 30%; left: 0%; }
+      100% { top: 10%; left: 10%; }
+    }
+
+    @keyframes textHue {
+      0%   { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    /* ============================= */
+    /* NEWS BANNER */
+    /* ============================= */
+  /* Keep wiggle line strokes thin regardless of viewport scaling */
+  .wiggle-separator svg path { vector-effect: non-scaling-stroke; stroke-width: 1px; }
+  /* Make wiggle lines full-bleed across screen (viewport negative-margin technique) */
+  .wiggle-separator {
+    width: 100vw;
+    max-width: none;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0;
+    overflow: visible;
+  }
+  /* Use dynamic viewport units where supported (iOS/Android address bar safe) */
+  @supports (width: 100svw) {
+    .wiggle-separator {
+      width: 100svw;
+      margin-left: calc(50% - 50svw);
+      margin-right: calc(50% - 50svw);
+    }
+  }
+  .wiggle-separator svg { display: block; width: 100%; height: 24px; }
+  /* Prefer dynamic viewport units where supported to avoid mobile UI inset issues */
+  @supports (width: 100dvw) {
+    .wiggle-separator { width: 100dvw; margin-left: calc(50% - 50dvw); margin-right: calc(50% - 50dvw); }
+  }
+  @supports (width: 100lvw) {
+    .wiggle-separator { width: 100lvw; margin-left: calc(50% - 50lvw); margin-right: calc(50% - 50lvw); }
+  }
+    .news-banner {
+      background: rgba(0,255,0,0.1);
+      border-bottom: 2px solid #0f0; /* restore straight line */
+      padding: 0.5rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .news-text {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scrollLeft 90s linear infinite, textHue 20s linear infinite;
+    }
+
+    /* Spin just the bullet/star symbols inside the banner */
+    .spin-bullet {
+      display: inline-block;
+      transform-origin: 50% 50%;
+      animation: slowSpin 12s linear infinite;
+    }
+
+    /* Small spinning arrow utility (used in Archive box text) */
+    .spin-arrow {
+      display: inline-block;
+      font-size: 0.9em;
+      line-height: 1;
+      transform-origin: 50% 50%;
+      /* Static arrow (no spin) pointing to top-right */
+      animation: none;
+    }
+
+    @keyframes slowSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes scrollLeft {
+      from { transform: translateX(100%); }
+      to { transform: translateX(-100%); }
+    }
+
+    /* Respect user prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      .news-text {
+        animation: none;
+      }
+      .spin-bullet {
+        animation: none;
+      }
+      .spin-arrow {
+        animation: none;
+      }
+    }
+
+    /* ============================= */
+    /* ABOUT BOX */
+    /* ============================= */
+    /* Base About box (themes will override visuals) */
+    .about-box {
+      position: relative;
+      z-index: 0;
+      margin: 1rem;
+      display: inline-block; /* hugs content */
+      padding: 1rem;
+      border-radius: 0;
+      background: transparent;
+      color: inherit;
+      border: none;
+      box-shadow: none;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 0.9rem; /* slightly smaller */
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    /* Theme: Neon glow card (in keeping with site) */
+    .about-theme-neon {
+      background: rgba(0, 0, 0, 0.65);
+      border: 1px solid #0f0;
+      box-shadow: 0 0 10px rgba(0,255,0,0.35), 0 0 22px rgba(0,255,0,0.18);
+      animation: neonPulse 6s ease-in-out infinite;
+    }
+    @keyframes neonPulse {
+      0%, 100% { box-shadow: 0 0 8px rgba(0,255,0,0.30), 0 0 18px rgba(0,255,0,0.14); }
+      50%      { box-shadow: 0 0 14px rgba(0,255,0,0.45), 0 0 28px rgba(0,255,0,0.22); }
+    }
+
+    /* Theme: Orange sticker card */
+    .about-theme-orange {
+      background: #ff7a00;
+      color: #fff3cf;
+      border: 1px solid #000;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.4);
+    }
+
+    /* Theme: FF-style panel (kept as an option) */
+    .about-theme-ff {
+      background-color: #1b2c7a;
+      background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 2px, rgba(0,0,0,0.06) 2px 4px);
+      color: #eaf2ff;
+      border: 4px solid #0d1b3d;
+      box-shadow: 0 0 0 4px #000, inset 0 0 0 3px #4f6edb;
+      padding: 12px 16px 16px 16px; /* slight theme-specific pad */
+    }
+
+    /* Remove global hue-rotation in About and tighten text rhythm */
+  .about-box p { animation: none; margin: 0; line-height: 1.35; font-family: 'Inter', Arial, sans-serif; font-size: 0.9rem; }
+
+    /* Blinking continue arrow like vintage RPG boxes */
+    .about-box .ff-arrow {
+      position: absolute;
+      right: 8px;
+      bottom: 6px;
+      font-size: 0.9rem;
+      color: inherit;
+      animation: ffBlink 1.6s steps(1, end) infinite;
+    }
+
+    @keyframes ffBlink { 50% { opacity: 0; } }
+
+    .about-box .ff-arrow.hidden { opacity: 0; animation: none; }
+
+    /* (Old fading keyframes removed for stable vintage look) */
+
+    /* Invert-like animation just for About section */
+    @keyframes aboutInvert {
+      0%   { background: #ffffff; color: #000000; }
+      100% { background: #0a0a0a; color: #ffffff; }
+    }
+
+    /* Inside About, use plain colors (no global hue-rotation) */
+    .about-box p { animation: none; }
+
+    /* ============================= */
+    /* LIST STYLES */
+    /* ============================= */
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      /* border-bottom replaced by wiggle separators between items */
+      padding: 1.5rem;
+      margin: 0;
+    }
+
+    h1, h2 {
+      font-size: 1.5rem;
+      margin: 0 0 1rem;
+      display: inline-block;
+      animation: textHue 20s linear infinite;
+      text-transform: uppercase;
+    }
+
+    /* Animate general text like headings */
+    p:not(.no-hue), .listen-links a, footer, .button {
+      animation: textHue 20s linear infinite;
+    }
+
+    /* Match archive's title box style for headings */
+    .artist-title-box {
+      border: 1px solid currentColor;
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      margin-bottom: 0.7rem;
+      display: inline-block;
+      background: rgba(0,255,0,0.03);
+      animation: textHue 20s linear infinite;
+    }
+
+  /* About section links: inherit color, no underline, subtle hover glow */
+  #about a { color: inherit; text-decoration: none; transition: text-shadow 0.6s ease-in-out, filter 0.6s ease-in-out; }
+  #about a:hover { text-decoration: none; text-shadow: 0 0 8px currentColor, 0 0 16px currentColor; filter: brightness(1.15); }
+
+  /* Collapsible section styling */
+  .submissions-summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+  .submissions-summary::-webkit-details-marker { display: none; }
+  .disclosure-icons { position: relative; width: 1.2em; height: 1.2em; display: inline-block; margin-left: 0.75rem; }
+  .disclosure-icons .icon-plus,
+  .disclosure-icons .icon-minus { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; transition: opacity 0.45s ease; }
+  .disclosure-icons .icon-minus { opacity: 0; }
+  details[open] .disclosure-icons .icon-plus { opacity: 0; }
+  details[open] .disclosure-icons .icon-minus { opacity: 1; }
+
+  /* Submissions summary layout */
+  .submissions-summary-left { display: flex; flex-direction: column; }
+  .submissions-teaser { margin-top: 0.25rem; font-size: 0.95rem; }
+
+    /* h2::after underline removed as requested */
+
+    /*
+    @keyframes wiggle {
+      0% { transform: translateY(0px) skewX(0deg); }
+      25% { transform: translateY(2px) skewX(5deg); }
+      50% { transform: translateY(0px) skewX(0deg); }
+      75% { transform: translateY(-2px) skewX(-5deg); }
+      100% { transform: translateY(0px) skewX(0deg); }
+    }
+    */
+
+    .button {
+      margin-left: 1rem;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid currentColor;
+      background: transparent;
+      cursor: pointer;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: inherit;
+    }
+
+    .button:hover {
+      background: rgba(0, 255, 0, 0.1);
+    }
+
+    /* Newsletter status + privacy */
+    .status-msg { min-height: 1.2em; }
+    .status-ok { color: #0f0; }
+    .status-err { color: #ff4d4d; }
+    .privacy-note { font-size: 0.8rem; opacity: 0.85; margin-top: 0.3rem; }
+
+    .archive-text {
+      font-size: 1rem;
+  line-height: 1.2;
+      animation: textHue 20s linear infinite;
+      font-style: italic;
+    }
+
+    .listen-links a {
+      color: #0ff;
+      text-decoration: none;
+      margin: 0 0.3rem;
+    }
+    .listen-links a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      border-top: 2px solid #0f0;
+      font-size: 0.8rem;
+      animation: textHue 20s linear infinite;
+    }
+    /* Floating quick-links widget (bottom-right) */
+    .floating-widget {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      width: 260px;
+      max-width: 85vw;
+      background: #0f0; /* be green */
+      color: #000;
+      border: 2px solid #0f0;
+      border-radius: 10px;
+      box-shadow: 0 0 14px rgba(0,255,0,0.45), 0 0 26px rgba(0,255,0,0.25);
+      z-index: 9999;
+      overflow: hidden;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    .floating-widget .fw-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 10px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .floating-widget .fw-actions { display: flex; gap: 6px; }
+    .floating-widget .fw-btn {
+      background: rgba(0,0,0,0.08);
+      border: 1px solid #000;
+      color: #000;
+      width: 22px; height: 22px;
+      border-radius: 6px;
+      cursor: pointer;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      padding: 0;
+    }
+    .floating-widget .fw-btn:hover { background: rgba(0,0,0,0.16); }
+    .floating-widget .fw-body { padding: 8px 10px 12px; }
+    .floating-widget a {
+      color: #000;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid #000;
+      border-radius: 6px;
+      display: block;
+      padding: 6px 10px;
+      background: rgba(0,0,0,0.06);
+    }
+    .floating-widget a + a { margin-top: 8px; }
+    .floating-widget a:hover { background: rgba(0,0,0,0.14); }
+    .floating-widget.minimized .fw-body { display: none; }
+    /* Reopen button when widget is closed */
+    .floating-reopen {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 9999;
+      background: #0f0;
+      color: #000;
+      border: 2px solid #0f0;
+      border-radius: 9999px;
+      font-weight: 700;
+      padding: 8px 12px;
+      cursor: pointer;
+      box-shadow: 0 0 12px rgba(0,255,0,0.4);
+    }
+    .floating-reopen:hover { filter: brightness(0.96); }
+
+    /* Keep text compact on large screens, left-aligned under headings */
+    @media (min-width: 1200px) {
+      /* Constrain main list item content but keep it left-aligned */
+      ul > li > :not(.wiggle-separator) { max-width: 900px; margin-left: 0; margin-right: 0; }
+      p, .archive-text { max-width: 900px; margin-left: 0; margin-right: 0; }
+    }
+
+    /* ============================= */
+    /* SUPPORT POPUP */
+    /* ============================= */
+    .popup-overlay {
+      position: fixed;
+      top:0;
+      left:0;
+      width:100vw;
+      height:100vh;
+      background: rgba(0,0,0,0.5); /* semi-transparent overlay */
+      z-index: 2000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup {
+      position: relative;
+      background: #000; /* solid box */
+      border: 2px solid #0f0;
+      border-radius: 12px;
+  padding: 2rem;
+      color: #0f0;
+      max-width: 60%;
+      min-width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.4rem; /* compact spacing between elements */
+    }
+
+  /* Tighten vertical rhythm inside popup */
+  .popup h2 { margin: 0; font-size: 2rem; }
+  .popup p { margin: 0; font-size: 0.95rem; }
+
+    .popup .close-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      font-size: 1.2rem;
+      background: transparent;
+      border: none;
+      color: #0f0;
+      cursor: pointer;
+      transition: box-shadow 0.2s, filter 0.2s;
+    }
+
+    .popup .close-btn:hover {
+      text-shadow: 0 0 8px #0f0, 0 0 16px #0f0;
+      animation: spinX 1.5s linear infinite;
+    }
+
+    @keyframes spinX {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .popup .action-btn {
+      margin-top: 0.25rem; /* smaller gap */
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 2px solid #0f0;
+      color: #0f0;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .popup .action-btn:hover { background: rgba(0,255,0,0.1); }
+
+    /* ============================= */
+    /* RESPONSIVE */
+    /* ============================= */
+    @media (max-width: 600px) {
+      h2 { font-size: 1.2rem; }
+      .popup h2 { font-size: 1.3rem; }
+      .archive-text { font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+  
+
+  <!-- ============================= -->
+  <!-- SUPPORT POPUP -->
+  <!-- ============================= -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup">
+    <button class="close-btn" onclick="document.getElementById('popupOverlay').style.display='none'">×</button>
+  <h2>SUPPORT SPRYTE</h2>
+      <p>We are on a funding drive - we're looking for 30 more supporters so we can fully cover the essential costs behind running this project. Support us with £1, £3 or £5 a month!</p>
+      <button class="action-btn" onclick="window.location.href='#support'">CLICK HERE TO SUPPORT</button>
+    </div>
+  </div>
+
+  <!-- Wiggle line between About and Archive -->
+  <div class="wiggle-separator">
+    <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+      <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+        <animate attributeName="d" dur="2s" repeatCount="indefinite"
+          values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                  M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                  M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+      </path>
+    </svg>
+  </div>
+
+  <!-- ============================= -->
+  <!-- HEADER & LOGO -->
+  <!-- ============================= -->
+  <header>
+    <!-- <div class="logo">SPRYTE</div> -->
+    <img src="images/spryte_logo.png" alt="Spryte Logo" class="logo" />
+  </header>
+
+
+  <!-- ============================= -->
+  <!-- NEWS BANNER -->
+  <!-- ============================= -->
+  <div class="news-banner">
+    <div class="news-text"><span class="spin-bullet">✦</span> COMING UP: Spryte Weather Diary: S2 E4 - TUESDAY 28th OCTOBER <span class="spin-bullet">✦</span></div>
+  </div>
+
+
+  <!-- ============================= -->
+  <!-- TWITCH PLAYER -->
+  <!-- ============================= -->
+  <script>
+    // ===========================
+    // Toggle Twitch Player here:
+    // set to true to show, false to hide
+    const showTwitch = true;
+    // Optional: cover the Twitch player with the Spryte banner (when Twitch is shown)
+    const coverTwitchWithBanner = true;
+    // ===========================
+  </script>
+
+  <script>
+    // Email signup to Google Sheets via Google Apps Script
+    // 1) Create a Google Sheet
+    // 2) Tools > Script editor, paste a doPost handler that appends to sheet
+    // 3) Deploy as web app (Anyone with the link), copy the URL below
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby7b-lzzbr1hkw2R5qI6lAfK0qx3qaVxB6T7CvqjQPEVtWr_tPWcuGdSAKO8QCJGDG-Jw/exec';
+
+    window.addEventListener('DOMContentLoaded', function(){
+      console.log('DOM loaded, looking for newsletter form...');
+  const form = document.getElementById('gsheetSignupForm');
+  const statusEl = document.getElementById('gsheetStatus');
+  const emailInput = document.getElementById('gsEmail');
+  const submitBtn = document.getElementById('gsSubmit');
+      
+      console.log('Form elements found:', {
+        form: !!form,
+        statusEl: !!statusEl,
+        emailInput: !!emailInput,
+        submitBtn: !!submitBtn
+      });
+      
+      if (!form || !statusEl) {
+        console.error('Newsletter form or status element not found!');
+        return;
+      }
+
+      console.log('Newsletter form initialized successfully');
+      form.addEventListener('submit', async (e) => {
+        console.log('Form submitted!');
+        e.preventDefault();
+  statusEl.textContent = '';
+  statusEl.classList.remove('status-ok','status-err');
+        const data = new FormData(form);
+        // honeypot check
+        if ((data.get('hp') || '').toString().trim() !== '') {
+          statusEl.textContent = 'Thanks!';
+          form.reset();
+          return;
+        }
+        const email = (data.get('email') || '').toString().trim();
+        if (!email) {
+          statusEl.textContent = 'Please enter an email address.';
+          statusEl.classList.add('status-err');
+          return;
+        }
+        // Simple validation
+        const re = /[^\s@]+@[^\s@]+\.[^\s@]+/;
+        if (!re.test(email)) {
+          statusEl.textContent = 'That doesn\'t look like a valid email.';
+          statusEl.classList.add('status-err');
+          emailInput?.focus();
+          return;
+        }
+        try {
+          console.log('Starting submission process...');
+          statusEl.textContent = 'Submitting…';
+          submitBtn.disabled = true;
+          
+          const payload = { email, ts: new Date().toISOString() };
+          console.log('Payload:', payload);
+          console.log('URL:', APPS_SCRIPT_URL);
+          
+          // Try CORS first, fallback to no-cors if needed
+          let res;
+          try {
+            console.log('Attempting CORS request...');
+            res = await fetch(APPS_SCRIPT_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+            
+            console.log('CORS response status:', res.status);
+            if (res.ok) {
+              const result = await res.text();
+              console.log('CORS Response:', result);
+              statusEl.textContent = 'Thanks! You\'re on the list.';
+              statusEl.classList.add('status-ok');
+              form.reset();
+            } else {
+              throw new Error(`HTTP ${res.status}`);
+            }
+          } catch (corsError) {
+            console.log('CORS failed, trying no-cors mode:', corsError);
+            // Fallback to no-cors mode
+            res = await fetch(APPS_SCRIPT_URL, {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+              body: JSON.stringify(payload)
+            });
+            console.log('No-cors request sent (cannot read response)');
+            // With no-cors we cannot read response; assume success if no error thrown
+            statusEl.textContent = 'Thanks! You\'re on the list.';
+            statusEl.classList.add('status-ok');
+            form.reset();
+          }
+        } catch (err) {
+          console.error('Signup error:', err);
+          statusEl.textContent = 'Sorry, there was a problem. Please try again later.';
+          statusEl.classList.add('status-err');
+        }
+        submitBtn.disabled = false;
+      });
+    });
+  </script>
+
+  <div id="twitchPlayer" style="width:100%; max-width:800px; height:450px; margin:1rem auto; display: none; position: relative;">
+    <!-- Overlay banner to cover Twitch when needed -->
+    <img id="twitchOverlayBanner" src="images/SpryteBanner.png" alt="Spryte Banner"
+      style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center; background:#000; display:none; z-index:2; pointer-events:auto;"/>
+    <iframe
+      src="https://player.twitch.tv/https://www.twitch.tv/spryte_spryte_spryte/"
+      height="100%"
+      width="100%"
+      allowfullscreen
+      frameborder="0">
+    </iframe>
+  </div>
+
+  <!-- Placeholder image shown when Twitch is hidden -->
+  <div id="twitchPlaceholder" style="width:100%; max-width:800px; margin:1rem auto; display: none;">
+    <img src="images/SpryteBanner.png" alt="Spryte Banner" style="width:100%; height:auto; display:block;" loading="lazy" />
+  </div>
+
+  <script>
+    // Apply the toggle
+    (function(){
+      const playerEl = document.getElementById('twitchPlayer');
+      const placeholderEl = document.getElementById('twitchPlaceholder');
+      const overlayEl = document.getElementById('twitchOverlayBanner');
+      if (playerEl) playerEl.style.display = showTwitch ? 'block' : 'none';
+      if (placeholderEl) placeholderEl.style.display = showTwitch ? 'none' : 'block';
+      if (overlayEl) overlayEl.style.display = (showTwitch && coverTwitchWithBanner) ? 'block' : 'none';
+    })();
+  </script>
+
+  
+
+
+  <!-- ============================= -->
+  <!-- ABOUT BOX -->
+  <!-- ============================= -->
+  <div class="about-box about-theme-neon">
+    <p>Spryte is an online artist-led project. We show artists' moving-image works,
+      as well as audio and text. These all take place sporadically online and are free to access.
+      All contributors are paid and funded by our audience. To keep up to date with Spryte's projects, please subscribe to our newsletter below!</p>
+  </div>
+
+  
+
+  <!-- ============================= -->
+  <!-- NEWSLETTER SIGNUP -->
+  <!-- ============================= -->
+  
+
+  <!-- ============================= -->
+  <!-- ARCHIVE + OTHER SECTIONS -->
+  <!-- ============================= -->
+  <ul>
+    <li>
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem;">
+        <div class="artist-title-box" style="margin:0;"><h2 style="margin: 0;"><a href="archive.html" style="color: inherit; text-decoration: none;">Archive</a></h2></div>
+  <a class="button" href="archive.html" aria-label="Go to Archive">FULL ARCHIVE</a>
+      </div>
+      <p class="archive-text">
+        
+        Our archive catalogues all previous Spryte streams of artists' moving-image works
+        Previous streams:
+        <a href="archive.html#nadim-choufi-first" style="color: inherit; text-decoration: underline;">Nadim Choufi</a>,
+        <a href="archive.html#suzanne-treister" style="color: inherit; text-decoration: underline;">Suzanne Treister</a>,
+        <a href="archive.html#sarah-rara" style="color: inherit; text-decoration: underline;">Sarah Rara</a>,
+        <a href="archive.html#miach-malachy" style="color: inherit; text-decoration: underline;">Miach Malachy</a>,
+        <a href="archive.html#joao-maria-gusmao-pedro-paiva" style="color: inherit; text-decoration: underline;">Joao Maria Gusmao + Pedro Paiva</a>,
+        <a href="archive.html#beatrice-vorster-yasmin-vardi" style="color: inherit; text-decoration: underline;">Beatrice Vorster and Yasmin Vardi</a>,
+        <a href="archive.html#mark-leckey" style="color: inherit; text-decoration: underline;">Mark Leckey</a>,
+        <a href="archive.html#lou-lou-sainsbury" style="color: inherit; text-decoration: underline;">Lou Lou Sainsbury</a>,
+        <a href="archive.html#adriana-ramic" style="color: inherit; text-decoration: underline;">Adriana Ramić</a>,
+        <a href="archive.html#dora-budor-noah-barker" style="color: inherit; text-decoration: underline;">Dora Budor &amp; Noah Barker</a>,
+        <a href="archive.html#cici-wu" style="color: inherit; text-decoration: underline;">Cici Wu</a>,
+        <a href="archive.html#theo-ellison" style="color: inherit; text-decoration: underline;">Theo Ellison</a>,
+        <a href="archive.html#spryte-presents-infinite-tony" style="color: inherit; text-decoration: underline;">Spryte Presents</a>,
+        <a href="archive.html#morag-keil" style="color: inherit; text-decoration: underline;">Morag Keil</a>,
+        <a href="archive.html#colectivo-los-ingravidos" style="color: inherit; text-decoration: underline;">Colectivo Los Ingrávidos</a>,
+        <a href="archive.html#lydia-davies" style="color: inherit; text-decoration: underline;">Lydia Davies</a>,
+        <a href="archive.html#pierre" style="color: inherit; text-decoration: underline;">Pierre</a>,
+        <a href="archive.html#nadim-choufi-last" style="color: inherit; text-decoration: underline;">Nadim Choufi</a>.
+  <br><br>For our full archive, click on the "FULL ARCHIVE" button! <span class="spin-arrow">↗</span>
+      </p>
+    <li style="padding:0; margin:0; list-style:none;">
+      <div class="wiggle-separator">
+        <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+            <animate attributeName="d" dur="2s" repeatCount="indefinite"
+              values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                      M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                      M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+          </path>
+        </svg>
+      </div>
+    </li>
+    <!-- Weather Diary Section -->
+    <li>
+      <div class="artist-title-box"><h2 style="margin:0;">Weather Diary</h2></div>
+      <div style="margin: 0.5rem 0;">
+        <iframe width="100%" height="20" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2179382499&color=%23000000&inverse=true&auto_play=false&show_user=true"></iframe>
+        <div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/spryte-607129003" title="Spryte" target="_blank" style="color: #cccccc; text-decoration: none;">Spryte</a> · <a href="https://soundcloud.com/spryte-607129003/tuesday-30th-september" title="TUESDAY 30TH SEPTEMBER" target="_blank" style="color: #cccccc; text-decoration: none;">TUESDAY 30TH SEPTEMBER</a></div>
+      </div>
+      <p>Spryte presents "Spryte Weather Diary", where people in different places 
+        send short voice notes describing how they interacted with the weather that day.</p>
+      <p class="listen-links">
+        Listen to latest episode here: 
+        <a href="#">SoundCloud</a> · 
+        <a href="#">Apple</a> · 
+        <a href="#">Spotify</a>
+      </p>
+    </li>
+    <!-- Wiggle line between Weather Diary and SPRYTEtexts -->
+    <li style="padding:0; margin:0; list-style:none;">
+      <div class="wiggle-separator">
+        <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+            <animate attributeName="d" dur="2s" repeatCount="indefinite"
+              values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                      M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                      M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+          </path>
+        </svg>
+      </div>
+    </li>
+    <!-- SPRYTEtexts Section -->
+    <li>
+      <div class="artist-title-box"><h2 class="mixed-caps" style="margin:0;">SPRYTEtexts</h2></div>
+  <p>✦ <a href="pip-williams.html" style="color:inherit; text-decoration:underline;">Pip Williams</a>: <em>mumurations (after E.C)</em> - 9 February 2025</p>
+    </li>
+    <!-- Wiggle line between SPRYTEtexts and Newsletter -->
+    <li style="padding:0; margin:0; list-style:none;">
+      <div class="wiggle-separator">
+        <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+            <animate attributeName="d" dur="2s" repeatCount="indefinite"
+              values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                      M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                      M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+          </path>
+        </svg>
+      </div>
+    </li>
+    <!-- Newsletter section moved here just below SPRYTEtexts -->
+    <li id="newsletter">
+      <div class="artist-title-box"><h2 style="margin:0;">Newsletter</h2></div>
+      <p>Sign up to our newsletter to stay updated on future streams. We send one announcement e-mail and one reminder e-mail when the stream, text or audio project goes live. As Spryte is sporadic in nature, this means you’ll only receive a few emails each month:</p>
+      <form id="gsheetSignupForm" style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+        <input id="gsEmail" type="email" name="email" required inputmode="email" autocomplete="email"
+          pattern="[^\s@]+@[^\s@]+\.[^\s@]+" title="Please enter a valid email address"
+          placeholder="your@email.com" aria-label="Email"
+          style="flex:1 1 280px;max-width:420px;padding:0.6rem 0.8rem;border:1px solid currentColor;background:transparent;color:inherit;border-radius:4px;"/>
+        <!-- Honeypot field to deter bots -->
+        <input type="text" name="hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-10000px;opacity:0;" aria-hidden="true"/>
+        <button id="gsSubmit" type="submit" class="button" style="padding:0.6rem 0.9rem;">Sign Up</button>
+      </form>
+      <div id="gsheetStatus" class="status-msg" aria-live="polite" style="margin-top:0.6rem;font-size:0.9rem;"></div>
+      <p class="privacy-note">We only use your email to send Spryte updates. Unsubscribe anytime - no spam.</p>
+    </li>
+    <!-- Wiggle line between sections -->
+    <li style="padding:0; margin:0; list-style:none;">
+      <div class="wiggle-separator">
+        <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+            <animate attributeName="d" dur="2s" repeatCount="indefinite"
+              values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                      M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                      M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+          </path>
+        </svg>
+      </div>
+    </li>
+  <li id="support">
+      <div class="artist-title-box"><h2 style="margin:0;">Support</h2></div>
+      <p>Spryte always pays artists and contributors to show their work
+        and also keeps the stream freely available to anyone with access
+        to the internet. <br><br> It is core to Spryte that this is funded by small
+        contributions and donations from multiple people who support the project.
+        It’s an active decision to use this alternative funding model, which
+        diverges from how many other art projects are funded, allowing us to be
+        independent and show work that we believe in, while also ensuring everyone is paid.
+        <br><br>
+        For those who wish to support Spryte, we ask for donations of either
+        £1, £2.50 or £5 a month to go towards directly funding the artist fees
+        and any essential costs to sustaining this stream. With more donations
+        and contributions, we can set up more streams, pay more artists and pay
+        those artists more.
+        </p>
+  <p class="no-hue"><span style="animation: textHue 20s linear infinite;">To support Spryte in this way, please visit our </span>
+  <a href="https://www.patreon.com/SPRYTE" style="color: #0f0; text-decoration: none;" target="_blank" rel="noopener">Patreon</a><span style="animation: textHue 20s linear infinite;">.</span>
+  </p>
+        <p>Thank you!</p>
+    </li>
+    <!-- Wiggle line between Support and Submissions -->
+    <li style="padding:0; margin:0; list-style:none;">
+      <div class="wiggle-separator">
+        <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+            <animate attributeName="d" dur="2s" repeatCount="indefinite"
+              values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                      M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                      M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+          </path>
+        </svg>
+      </div>
+    </li>
+    <!-- About Section (inserted between Support and Submissions) -->
+    <li id="about">
+      <div class="artist-title-box"><h2 style="margin:0;">About/Contact</h2></div>
+  <p>Spryte was created and is managed by artists <a href="https://www.rashirajguru.com" target="_blank" rel="noopener">Rashi Rajguru</a> and <a href="https://cameronscott.info" target="_blank" rel="noopener">Cameron Scott</a>.</p>
+  <p>To contact us, email <a href="mailto:hello@spryte.info">hello@spryte.info</a></p>
+  <p>to keep updated, either sign up to the newsletter above, or use these links: <a href="https://spryte.substack.com" target="_blank" rel="noopener">Substack</a> | <a href="https://www.patreon.com/SPRYTE" target="_blank" rel="noopener">Patreon</a></p>
+    </li>
+    <!-- Wiggle line between About and Submissions -->
+    <li style="padding:0; margin:0; list-style:none;">
+      <div class="wiggle-separator">
+        <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+          <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+            <animate attributeName="d" dur="2s" repeatCount="indefinite"
+              values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                      M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                      M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+          </path>
+        </svg>
+      </div>
+    </li>
+    <!-- Submissions Section -->
+    <li id="submissions">
+      <details>
+        <summary class="submissions-summary">
+          <div class="submissions-summary-left">
+            <span class="artist-title-box"><h2 style="margin:0; display:inline;">Submissions</h2></span>
+            <div class="submissions-teaser">Spryte takes submissions! Click on the + for more information.</div>
+          </div>
+          <span class="disclosure-icons" aria-hidden="true">
+            <span class="icon-plus">+</span>
+            <span class="icon-minus">−</span>
+          </span>
+        </summary>
+        <div style="margin-top:0.75rem;">
+          <p>Spryte is artist-run and financially supported by individuals - parameters that are really important to us. In line with this, we would like to introduce something we really care about: that anywhere which shows work should be open to submissions and proposals, which are also treated exactly the same as the rest of the programme.</p>
+          <p>We are very happy to say that Spryte is open to submissions! We are going to keep the application process as light on your labour as possible. If you would like to submit a work - <strong>video/moving-image or text-based</strong>, please email us at <a href="mailto:hello@spryte.info?subject=Submission%20+%20Your%20Name" style="color: inherit; text-decoration: underline;">hello@spryte.info</a> with the subject as “Submission” + your name. In the email, please include a link to the work you would like us to see and any writing you feel necessary/relevant (there also doesn’t need to be any writing attached at all). To keep things equally light on our side, if we would like to stream the work we will get in touch. </p>
+          <p>Most importantly, we current only show works that have already been made (although we hope to fund/commission works in the distant future).</p>
+          <p>If successful the work will be streamed on Spryte (if moving-image) or posted on the website permanently (if text-based), just like all the other works we’ve shown.</p>
+          <p>Each presented work receives a £100 screening/artist fee (paid for thanks to the support of our patrons via <a href="https://patreon.com/SPRYTE" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline;">Patreon</a>, while we make up the rest). The fee reflects what the project can currently afford, but we hope and plan for this to grow as we increase our supporters!</p>
+          <p>We promote the stream or publication of text a week or two before on our newsletter, and some exhibition news websites.</p>
+          <p>In terms of what we look for, we keep this as open as possible. Our programme is very open in terms of subject and content - some streams are more audio-focused, others are live webcams, documentaries and other types of footage that sit more outside the realm of artist-made moving-image work (as well as some that are very much positioned within that realm, too). One key thread between all streams is a playful approach to narrative - something that we are deeply interested in and an element which spans many fields and mediums.</p>
+          <p>See our <a href="archive.html" style="color: inherit; text-decoration: underline;">Archive</a> page on our website for a look at what we’ve shown before - although, this is also just a slice of the type of work we are interested in showing.</p>
+          <p>We stream moving-image works on loop for 12 hours, on a Sunday (we may also try some 24 hours ones soon) on sporadic Sundays, approximately once a month (again, we’re hoping this grows... more funding = more streams!)</p>
+          <p>We can’t wait to see your work!</p>
+        </div>
+      </details>
+    </li>
+  </ul>
+
+  <!-- Always-on green quick links widget -->
+  <div id="spryteWidget" class="floating-widget" role="region" aria-label="Quick links">
+    <div class="fw-header">
+  <span>Support Us! Sign Up!</span>
+      <div class="fw-actions">
+        <button id="fwMinBtn" class="fw-btn" title="Minimize" aria-label="Minimize">–</button>
+        <button id="fwCloseBtn" class="fw-btn" title="Close" aria-label="Close">×</button>
+      </div>
+    </div>
+    <div class="fw-body">
+      <a href="#support" id="fwToSupport">Support Spryte with £1</a>
+      <a href="#newsletter" id="fwToNewsletter">Newsletter Sign-Up</a>
+    </div>
+  </div>
+  <button id="spryteWidgetReopen" class="floating-reopen" aria-label="Open quick links" style="display:none;">Open Spryte Links</button>
+
+  <!-- ============================= -->
+  <!-- FOOTER -->
+  <!-- ============================= -->
+  <footer>© 2025 Spryte. All rights reserved.</footer>
+
+  <script>
+    // Floating widget behavior (persist minimized/closed state)
+    (function(){
+      const WIDGET_KEY = 'spryteWidgetState';
+      function ready(fn){
+        if (document.readyState !== 'loading') fn();
+        else document.addEventListener('DOMContentLoaded', fn);
+      }
+      ready(() => {
+        const widget = document.getElementById('spryteWidget');
+        if (!widget) return;
+        const minBtn = document.getElementById('fwMinBtn');
+        const closeBtn = document.getElementById('fwCloseBtn');
+        const toSupport = document.getElementById('fwToSupport');
+        const toNewsletter = document.getElementById('fwToNewsletter');
+        const reopenBtn = document.getElementById('spryteWidgetReopen');
+        // Restore state
+        const state = localStorage.getItem(WIDGET_KEY) || 'open';
+        if (state === 'min') widget.classList.add('minimized');
+        if (state === 'closed') {
+          widget.style.display = 'none';
+          if (reopenBtn) reopenBtn.style.display = 'inline-block';
+        }
+
+        function setMinButton(){
+          if (!minBtn) return;
+          const isMin = widget.classList.contains('minimized');
+          minBtn.textContent = isMin ? '+' : '–';
+          minBtn.title = isMin ? 'Expand' : 'Minimize';
+          minBtn.setAttribute('aria-label', isMin ? 'Expand' : 'Minimize');
+        }
+        setMinButton();
+
+        minBtn?.addEventListener('click', () => {
+          widget.classList.toggle('minimized');
+          const s = widget.classList.contains('minimized') ? 'min' : 'open';
+          localStorage.setItem(WIDGET_KEY, s);
+          setMinButton();
+        });
+        closeBtn?.addEventListener('click', () => {
+          widget.style.display = 'none';
+          localStorage.setItem(WIDGET_KEY, 'closed');
+          if (reopenBtn) reopenBtn.style.display = 'inline-block';
+        });
+        reopenBtn?.addEventListener('click', () => {
+          widget.style.display = 'block';
+          widget.classList.remove('minimized');
+          localStorage.setItem(WIDGET_KEY, 'open');
+          reopenBtn.style.display = 'none';
+        });
+
+        function smoothScrollTo(el){
+          if (!el) return;
+          try { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+          catch { el.scrollIntoView(true); }
+        }
+        toSupport?.addEventListener('click', (e) => {
+          const target = document.getElementById('support');
+          if (target) {
+            e.preventDefault();
+            smoothScrollTo(target);
+          }
+        });
+        toNewsletter?.addEventListener('click', (e) => {
+          const target = document.getElementById('newsletter');
+          if (target) {
+            e.preventDefault();
+            // Align the bottom of the newsletter section to the bottom of the viewport
+            const rect = target.getBoundingClientRect();
+            const desiredTop = Math.max(0, window.scrollY + rect.bottom - window.innerHeight);
+            try {
+              window.scrollTo({ top: desiredTop, behavior: 'smooth' });
+            } catch {
+              window.scrollTo(0, desiredTop);
+            }
+          }
+        });
+      });
+    })();
+  </script>
+  <script>
+    // Full-bleed alignment for wiggle separators regardless of parent alignment
+    (function(){
+      function adjustFullBleed(){
+        const vw = window.innerWidth;
+        document.querySelectorAll('.wiggle-separator').forEach(el => {
+          // Reset only transform before measuring
+          el.style.transform = 'none';
+          // Measure left offset relative to viewport and translate to align to 0
+          const rect = el.getBoundingClientRect();
+          const offset = Math.round(-rect.left);
+          // Keep CSS-driven 100vw width; set explicit px as a safety
+          el.style.width = vw + 'px';
+          el.style.maxWidth = 'none';
+          if (offset !== 0) {
+            el.style.transform = `translateX(${offset}px)`;
+          }
+        });
+      }
+      let resizeTimer;
+      window.addEventListener('DOMContentLoaded', adjustFullBleed);
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(adjustFullBleed, 120);
+      });
+    })();
+  </script>
+
+  <script>
+    // Slower, pseudo-random undulation for all wiggle lines (same as archive)
+    (function () {
+      const prefersReducedMotion =
+        window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+      function makeAnimator(path) {
+        // Remove any inline SMIL animations to avoid double-animating
+        path.querySelectorAll('animate').forEach(a => a.remove());
+        const svg = path.ownerSVGElement;
+        const vb = (svg && svg.viewBox && svg.viewBox.baseVal) || { x: 0, y: 0, width: 1920, height: 24 };
+        const width = vb.width || 1920;
+        const height = vb.height || 24;
+        const isVertical = path.getAttribute('data-orientation') === 'vertical';
+        const center = isVertical ? (width / 2) : (height / 2);
+        const segments = 8; // Keep similar segmenting to original path
+        const segLen = (isVertical ? height : width) / segments;
+        // Randomized per-segment parameters for organic motion
+        const amps = new Array(segments).fill(0).map(() => 4 + Math.random() * 10); // 4–14px
+        const phases = new Array(segments).fill(0).map(() => Math.random() * Math.PI * 2);
+        const speeds = new Array(segments).fill(0).map(() => 0.2 + Math.random() * 0.4); // rad/s, nice and slow
+        // Optionally let amplitude meander over time
+        const ampDrift = new Array(segments).fill(0).map(() => (Math.random() * 0.04) - 0.02);
+        function buildPath(t) {
+          if (!isVertical) {
+            const centerY = center;
+            let d = `M0 ${centerY}`;
+            for (let i = 0; i < segments; i++) {
+              amps[i] = Math.max(3, Math.min(16, amps[i] + ampDrift[i]));
+              const cx = i * segLen + segLen / 2;
+              const cy = centerY + Math.sin(phases[i] + speeds[i] * t) * amps[i];
+              const x = (i + 1) * segLen;
+              const y = centerY;
+              d += ` Q ${cx} ${cy}, ${x} ${y}`;
+            }
+            return d;
+          } else {
+            const centerX = center;
+            let d = `M${centerX} 0`;
+            for (let i = 0; i < segments; i++) {
+              amps[i] = Math.max(3, Math.min(16, amps[i] + ampDrift[i]));
+              const cy = i * segLen + segLen / 2;
+              const cx = centerX + Math.sin(phases[i] + speeds[i] * t) * amps[i];
+              const y = (i + 1) * segLen;
+              const x = centerX;
+              d += ` Q ${cx} ${cy}, ${x} ${y}`;
+            }
+            return d;
+          }
+        }
+        let last = 0;
+        const minInterval = 80; // ms, throttle updates for performance
+        function tick(ts) {
+          if (!last) last = ts;
+          const dt = ts - last;
+          if (dt >= minInterval) {
+            // t in seconds
+            const t = ts / 1000;
+            path.setAttribute('d', buildPath(t));
+            last = ts;
+          }
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+      window.addEventListener('DOMContentLoaded', () => {
+        // Target every wiggle separator path
+        document.querySelectorAll('.wiggle-separator svg path').forEach((p, i) => {
+          // Small stagger to de-sync start phases visually
+          setTimeout(() => makeAnimator(p), Math.random() * 400 + i * 120);
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
