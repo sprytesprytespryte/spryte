@@ -444,8 +444,9 @@
       border-radius: 12px;
   padding: 2rem;
       color: #0f0;
-      max-width: 60%;
-      min-width: 300px;
+      max-width: 30%;
+      /* allow a sensible minimum so the popup doesn't become unusably small */
+      min-width: 240px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -493,10 +494,63 @@
     /* ============================= */
     /* RESPONSIVE */
     /* ============================= */
-    @media (max-width: 600px) {
+   /* Broadened breakpoint to cover more mobile/tablet devices where
+     gaps were reported. These rules force-override inline styles so
+     the banner will fill its container. */
+   @media (max-width: 900px) {
       h2 { font-size: 1.2rem; }
       .popup h2 { font-size: 1.3rem; }
       .archive-text { font-size: 0.9rem; }
+      /* Make popup usable on small screens by allowing near-full width */
+      .popup {
+        max-width: 95%;
+        min-width: 0;
+        margin: 0 0.5rem;
+        padding: 1rem;
+      }
+
+    /* Remove extra vertical spacing around the Spryte banner on mobile.
+      To preserve the entire image (no cropping) we will size the
+      container to match the image aspect ratio via JS and use
+      object-fit: contain so the full image is visible without blank
+      bands. */
+    #twitchPlayer, #twitchPlaceholder {
+      margin: 0 !important; /* remove the 1rem gap around the player/placeholder */
+      max-width: 100% !important;
+      width: 100% !important;
+      /* don't force an aspect here; JS will compute and set it based on
+        the actual image dimensions so the image is shown fully */
+      overflow: hidden !important;
+    }
+
+    /* Show the full image inside the container (no cropping). Because
+      the container will be resized to match the image aspect ratio,
+      object-fit: contain will render without top/bottom bands. */
+    #twitchPlayer #twitchOverlayBanner,
+    #twitchPlaceholder img,
+    #twitchPlayer img {
+      display: block !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain !important;
+      object-position: center center !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+      /* Ensure the embedded iframe also fills the container so there
+         aren't gaps when overlaying the banner or when showing the player. */
+      #twitchPlayer iframe {
+        width: 100% !important;
+        height: 100% !important;
+        display: block !important;
+        border: 0 !important;
+      }
+
+      /* Ensure the Twitch player itself scales down (was fixed 450px). */
+      #twitchPlayer {
+        height: auto;
+      }
     }
   </style>
 </head>
@@ -511,7 +565,7 @@
     <button class="close-btn" onclick="document.getElementById('popupOverlay').style.display='none'">×</button>
   <h2>SUPPORT SPRYTE</h2>
       <p>We are on a funding drive - we're looking for 30 more supporters so we can fully cover the essential costs behind running this project. Support us with £1, £3 or £5 a month!</p>
-      <button class="action-btn" onclick="window.location.href='#support'">CLICK HERE TO SUPPORT</button>
+  <a class="action-btn" href="https://patreon.com/SPRYTE" target="_blank" rel="noopener noreferrer">CLICK HERE TO SUPPORT</a>
     </div>
   </div>
 
@@ -664,7 +718,7 @@
     });
   </script>
 
-  <div id="twitchPlayer" style="width:100%; max-width:800px; height:450px; margin:1rem auto; display: none; position: relative;">
+  <div id="twitchPlayer" style="width:100%; max-width:800px; display: none; position: relative;">
     <!-- Overlay banner to cover Twitch when needed -->
     <img id="twitchOverlayBanner" src="images/SpryteBanner.png" alt="Spryte Banner"
       style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center; background:#000; display:none; z-index:2; pointer-events:auto;"/>
@@ -678,7 +732,7 @@
   </div>
 
   <!-- Placeholder image shown when Twitch is hidden -->
-  <div id="twitchPlaceholder" style="width:100%; max-width:800px; margin:1rem auto; display: none;">
+  <div id="twitchPlaceholder" style="width:100%; max-width:800px; display: none;">
     <img src="images/SpryteBanner.png" alt="Spryte Banner" style="width:100%; height:auto; display:block;" loading="lazy" />
   </div>
 
@@ -691,6 +745,42 @@
       if (playerEl) playerEl.style.display = showTwitch ? 'block' : 'none';
       if (placeholderEl) placeholderEl.style.display = showTwitch ? 'none' : 'block';
       if (overlayEl) overlayEl.style.display = (showTwitch && coverTwitchWithBanner) ? 'block' : 'none';
+    })();
+    
+    // Compute and set an exact container height from the banner image using
+    // a standalone Image() so we always get the natural dimensions even if
+    // the DOM <img> is lazy-loaded or not yet in the document.
+    (function(){
+      const src = document.querySelector('#twitchPlaceholder img')?.getAttribute('src') || document.getElementById('twitchOverlayBanner')?.getAttribute('src');
+      const containers = [document.getElementById('twitchPlayer'), document.getElementById('twitchPlaceholder')];
+      if (!src) return;
+
+      function applyFromNatural(w, h) {
+        if (!w || !h) return;
+        const ratio = h / w;
+        containers.forEach(c => {
+          if (!c) return;
+          const cw = c.clientWidth || c.offsetWidth || window.innerWidth;
+          if (!cw) return;
+          const desiredH = Math.round(cw * ratio);
+          c.style.height = desiredH + 'px';
+          c.style.maxHeight = '80vh';
+          c.style.aspectRatio = `${w} / ${h}`;
+        });
+      }
+
+      function loadAndApply() {
+        const img = new Image();
+        img.src = src;
+        if (img.complete && img.naturalWidth) {
+          applyFromNatural(img.naturalWidth, img.naturalHeight);
+        } else {
+          img.addEventListener('load', () => applyFromNatural(img.naturalWidth, img.naturalHeight), { once: true });
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', loadAndApply);
+      let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(loadAndApply, 120); });
     })();
   </script>
 
@@ -762,16 +852,16 @@
     <li>
       <div class="artist-title-box"><h2 style="margin:0;">Weather Diary</h2></div>
       <div style="margin: 0.5rem 0;">
-        <iframe width="100%" height="20" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2179382499&color=%23000000&inverse=true&auto_play=false&show_user=true"></iframe>
-        <div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/spryte-607129003" title="Spryte" target="_blank" style="color: #cccccc; text-decoration: none;">Spryte</a> · <a href="https://soundcloud.com/spryte-607129003/tuesday-30th-september" title="TUESDAY 30TH SEPTEMBER" target="_blank" style="color: #cccccc; text-decoration: none;">TUESDAY 30TH SEPTEMBER</a></div>
+  <iframe width="100%" height="20" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2190123551&color=%23000000&inverse=true&auto_play=false&show_user=true"></iframe>
+  <div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/spryte-607129003" title="Spryte" target="_blank" style="color: #cccccc; text-decoration: none;">Spryte</a> · <a href="https://soundcloud.com/spryte-607129003/tuesday-14th-october" title="TUESDAY 14TH OCTOBER" target="_blank" style="color: #cccccc; text-decoration: none;">TUESDAY 14TH OCTOBER</a></div>
       </div>
       <p>Spryte presents "Spryte Weather Diary", where people in different places 
         send short voice notes describing how they interacted with the weather that day.</p>
       <p class="listen-links">
-        Listen to latest episode here: 
-        <a href="#">SoundCloud</a> · 
-        <a href="#">Apple</a> · 
-        <a href="#">Spotify</a>
+  Listen to latest episode here: 
+  <a href="https://soundcloud.com/spryte-607129003" target="_blank" rel="noopener">SoundCloud</a> · 
+  <a href="https://podcasts.apple.com/gb/podcast/spryte-weather-diary/id1816574806" target="_blank" rel="noopener">Apple</a> · 
+  <a href="https://open.spotify.com/show/5Z7mXu7EOhDKrPpEGIGski?si=efef8b77f94c427e" target="_blank" rel="noopener">Spotify</a>
       </p>
     </li>
     <!-- Wiggle line between Weather Diary and SPRYTEtexts -->
@@ -873,7 +963,7 @@
       <div class="artist-title-box"><h2 style="margin:0;">About/Contact</h2></div>
   <p>Spryte was created and is managed by artists <a href="https://www.rashirajguru.com" target="_blank" rel="noopener">Rashi Rajguru</a> and <a href="https://cameronscott.info" target="_blank" rel="noopener">Cameron Scott</a>.</p>
   <p>To contact us, email <a href="mailto:hello@spryte.info">hello@spryte.info</a></p>
-  <p>to keep updated, either sign up to the newsletter above, or use these links: <a href="https://spryte.substack.com" target="_blank" rel="noopener">Substack</a> | <a href="https://www.patreon.com/SPRYTE" target="_blank" rel="noopener">Patreon</a></p>
+  <p>To keep updated, either sign up to the newsletter above, or use these links: <a href="https://spryte.substack.com" target="_blank" rel="noopener">Substack</a> | <a href="https://www.patreon.com/SPRYTE" target="_blank" rel="noopener">Patreon</a></p>
     </li>
     <!-- Wiggle line between About and Submissions -->
     <li style="padding:0; margin:0; list-style:none;">
