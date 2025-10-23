@@ -92,8 +92,8 @@
     overflow: visible;
   }
   .wiggle-separator svg { display:block; width:100%; height:24px; }
-  /* Keep strokes thin even as viewport scales */
-  .wiggle-separator svg path { vector-effect: non-scaling-stroke; stroke-width: 1px; }
+  /* Keep strokes visible and non-scaling */
+  .wiggle-separator svg path { vector-effect: non-scaling-stroke; stroke-width: 2px; }
     @supports (width: 100svw) { 
       .wiggle-separator { width: 100svw; margin-left: -50svw; margin-right: -50svw; }
     }
