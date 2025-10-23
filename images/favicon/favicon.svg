@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" version="1.1" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+   <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+   <stop offset="50%" style="stop-color:#81D4FA;stop-opacity:1" />
+   <stop offset="100%" style="stop-color:#B3E5FC;stop-opacity:1" />
+  </linearGradient>
+ </defs>
+ <path fill="url(#grad)" d="M256 64c-106 0-192 86-192 192s86 192 192 192 192-86 192-192S362 64 256 64zm0 336c-79.5 0-144-64.5-144-144s64.5-144 144-144 144 64.5 144 144-64.5 144-144 144z">
+  <animate attributeName="d" dur="3s" repeatCount="indefinite" values="
+   M256 64c-106 0-192 86-192 192s86 192 192 192 192-86 192-192S362 64 256 64zm0 336c-79.5 0-144-64.5-144-144s64.5-144 144-144 144 64.5 144 144-64.5 144-144 144z;
+   M256 64c-106 0-192 106-192 192s106 192 192 192 192-86 192-192S362 64 256 64zm0 336c-79.5 0-144-84.5-144-144s84.5-144 144-144 144 64.5 144 144-64.5 144-144 144z;
+   M256 64c-106 0-192 86-192 192s86 192 192 192 192-86 192-192S362 64 256 64zm0 336c-79.5 0-144-64.5-144-144s64.5-144 144-144 144 64.5 144 144-64.5 144-144 144z"
+  />
+ </path>
+</svg>
