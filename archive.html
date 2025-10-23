@@ -93,12 +93,14 @@
     margin-bottom: 0.5rem;
     padding: 0;
     overflow: visible;
+    box-sizing: border-box;
   }
   .wiggle-separator svg { 
     display: block;
     width: 100%;
     height: 24px;
     overflow: visible;
+    position: relative;
   }
   /* Keep strokes visible and non-scaling */
   .wiggle-separator svg path { 
@@ -117,9 +119,12 @@
   }
   /* (path non-scaling-stroke already set above) */
     .archive-list {
-  margin: 2rem auto;
-  max-width: 800px;
-  padding: 1rem;
+      margin: 2rem auto;
+      max-width: 800px;
+      padding: 0;
+    }
+    .archive-list > *:not(.wiggle-separator) {
+      padding: 0 1rem;
     }
     @keyframes fadeColor {
       0%   { background: rgba(255,0,0,0.2); }
