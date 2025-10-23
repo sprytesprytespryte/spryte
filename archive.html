@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Spryte — Archive</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="images/spryte%20flower%20v2.png" sizes="any" type="image/png">
-  <link rel="shortcut icon" href="images/spryte%20flower%20v2.png" type="image/png">
-  <link rel="apple-touch-icon" href="images/spryte%20flower%20v2.png">
+  <link rel="icon" href="images/spryte flower favicon.png" sizes="any" type="image/png">
+  <link rel="shortcut icon" href="images/spryte flower favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="images/spryte flower favicon.png">
   <style>
     body {
       margin: 0;
@@ -68,15 +68,17 @@
     h2 {
       animation: textHue 20s linear infinite;
     }
-  /* Make wiggle lines full-bleed across screen (match index, transform-based) */
+  /* Make wiggle lines full-bleed across screen (viewport negative-margin technique) */
   .wiggle-separator {
     display: block;
     width: 100vw;
     max-width: none;
     position: relative;
     left: 50%;
-    transform: translateX(-50%);
-    margin: 0.5rem 0;
+    right: 50%;
+    margin: 0.5rem 0; /* vertical spacing */
+    margin-left: -50vw; /* extend to left edge of viewport */
+    margin-right: -50vw; /* extend to right edge of viewport */
     padding: 0;
     overflow: visible;
   }
