@@ -14,9 +14,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Spryte — Archive</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="images/spryte%20flower%20favicon.png?v=2" sizes="any" type="image/png">
-  <link rel="shortcut icon" href="images/spryte%20flower%20favicon.png?v=2" type="image/png">
-  <link rel="apple-touch-icon" href="images/spryte%20flower%20favicon.png?v=2">
+  <link rel="icon" href="images/spryte%20flower%20favicon.png?v=3" sizes="any" type="image/png">
+  <link rel="shortcut icon" href="images/spryte%20flower%20favicon.png?v=3" type="image/png">
+  <link rel="apple-touch-icon" href="images/spryte%20flower%20favicon.png?v=3">
   <style>
     body {
       margin: 0;
@@ -77,24 +77,32 @@
     h2 {
       animation: textHue 20s linear infinite;
     }
-  /* Make wiggle lines full-bleed across screen (match homepage transform-centered) */
+  /* Make wiggle lines full-bleed across screen (robust negative-margin technique) */
   .wiggle-separator {
     display: block;
     width: 100vw;
     max-width: none;
     position: relative;
     left: 50%;
-    transform: translateX(-50%);
+    right: 50%;
     margin: 0.5rem 0; /* vertical spacing */
+    margin-left: -50vw; /* extend to left edge of viewport */
+    margin-right: -50vw; /* extend to right edge of viewport */
     padding: 0;
     overflow: visible;
   }
   .wiggle-separator svg { display:block; width:100%; height:24px; }
   /* Keep strokes thin even as viewport scales */
   .wiggle-separator svg path { vector-effect: non-scaling-stroke; stroke-width: 1px; }
-  @supports (width: 100svw) { .wiggle-separator { width: 100svw; } }
-  @supports (width: 100dvw) { .wiggle-separator { width: 100dvw; } }
-  @supports (width: 100lvw) { .wiggle-separator { width: 100lvw; } }
+    @supports (width: 100svw) { 
+      .wiggle-separator { width: 100svw; margin-left: -50svw; margin-right: -50svw; }
+    }
+    @supports (width: 100dvw) { 
+      .wiggle-separator { width: 100dvw; margin-left: -50dvw; margin-right: -50dvw; }
+    }
+    @supports (width: 100lvw) { 
+      .wiggle-separator { width: 100lvw; margin-left: -50lvw; margin-right: -50lvw; }
+    }
   /* (path non-scaling-stroke already set above) */
     .archive-list {
   margin: 2rem auto;
