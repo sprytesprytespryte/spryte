@@ -60,6 +60,8 @@
       /* Align left, but within the same content width as the archive list */
       max-width: 800px;
       margin: 2rem auto 1rem auto;
+      /* Add horizontal padding to line up with the padded content inside .archive-list */
+      padding: 0 1rem;
       text-align: left;
       animation: textHue 20s linear infinite;
     }
@@ -68,6 +70,7 @@
     }
   /* Make wiggle lines full-bleed across screen (match index) */
   .wiggle-separator {
+    display: block;
     width: 100vw;
     max-width: none;
     position: relative;
