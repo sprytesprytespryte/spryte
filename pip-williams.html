@@ -30,16 +30,18 @@
       max-width:none;
       position:relative;
       left:50%;
-      transform: translateX(-50%);
+      right:50%;
+      margin-left:-50vw;
+      margin-right:-50vw;
       margin:1.5rem 0;
       padding:0;
       overflow:visible;
     }
     .wiggle-separator svg { width:100%; height:24px; display:block; }
     .wiggle-separator svg path { vector-effect:non-scaling-stroke; stroke-width:1px; }
-    @supports (width: 100svw) { .wiggle-separator { width: 100svw; } }
-    @supports (width: 100dvw) { .wiggle-separator { width: 100dvw; } }
-    @supports (width: 100lvw) { .wiggle-separator { width: 100lvw; } }
+  @supports (width: 100svw) { .wiggle-separator { width: 100svw; margin-left: calc(50% - 50svw); margin-right: calc(50% - 50svw); } }
+  @supports (width: 100dvw) { .wiggle-separator { width: 100dvw; margin-left: calc(50% - 50dvw); margin-right: calc(50% - 50dvw); } }
+  @supports (width: 100lvw) { .wiggle-separator { width: 100lvw; margin-left: calc(50% - 50lvw); margin-right: calc(50% - 50lvw); } }
     @media (prefers-reduced-motion: reduce) { h1, p { animation:none; } }
     /* Match homepage logo sizing/position */
     .logo {

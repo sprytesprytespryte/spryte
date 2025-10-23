@@ -75,19 +75,30 @@
     max-width: none;
     position: relative;
     left: 50%;
-    transform: translateX(-50%);
-    margin: 0.5rem 0;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
     padding: 0;
     overflow: visible;
   }
   /* Use dynamic viewport units where supported (iOS/Android address bar safe) */
   @supports (width: 100svw) {
-    .wiggle-separator { width: 100svw; }
+    .wiggle-separator {
+      width: 100svw;
+      margin-left: calc(50% - 50svw);
+      margin-right: calc(50% - 50svw);
+    }
   }
   .wiggle-separator svg { display: block; width: 100%; height: 24px; }
   /* Prefer dynamic viewport units where supported to avoid mobile UI inset issues */
-  @supports (width: 100dvw) { .wiggle-separator { width: 100dvw; } }
-  @supports (width: 100lvw) { .wiggle-separator { width: 100lvw; } }
+  @supports (width: 100dvw) {
+    .wiggle-separator { width: 100dvw; margin-left: calc(50% - 50dvw); margin-right: calc(50% - 50dvw); }
+  }
+  @supports (width: 100lvw) {
+    .wiggle-separator { width: 100lvw; margin-left: calc(50% - 50lvw); margin-right: calc(50% - 50lvw); }
+  }
     .news-banner {
       background: rgba(0,255,0,0.1);
       border-bottom: 2px solid #0f0; /* restore straight line */
