@@ -21,9 +21,31 @@
     .back { display:inline-block; margin-top:2rem; font-size:0.85rem; text-decoration:none; border:1px solid currentColor; padding:0.4rem 0.7rem; }
     .back:hover { background:rgba(0,255,0,0.1); }
     @keyframes hue { 0% { filter:hue-rotate(0deg);} 100% { filter:hue-rotate(360deg);} }
-    .wiggle-separator { width:100vw; position:relative; left:50%; margin-left:-50vw; margin:1.5rem 0; }
+    /* Full-bleed wiggle line, matching homepage technique */
+    .wiggle-separator {
+      display:block;
+      width:100vw;
+      max-width:none;
+      position:relative;
+      left:50%;
+      right:50%;
+      margin-left:-50vw;
+      margin-right:-50vw;
+      margin:1.5rem 0;
+      padding:0;
+      overflow:visible;
+    }
     .wiggle-separator svg { width:100%; height:24px; display:block; }
     .wiggle-separator svg path { vector-effect:non-scaling-stroke; stroke-width:1px; }
+    @supports (width: 100svw) {
+      .wiggle-separator { width: 100svw; margin-left: calc(50% - 50svw); margin-right: calc(50% - 50svw); }
+    }
+    @supports (width: 100dvw) {
+      .wiggle-separator { width: 100dvw; margin-left: calc(50% - 50dvw); margin-right: calc(50% - 50dvw); }
+    }
+    @supports (width: 100lvw) {
+      .wiggle-separator { width: 100lvw; margin-left: calc(50% - 50lvw); margin-right: calc(50% - 50lvw); }
+    }
     @media (prefers-reduced-motion: reduce) { h1, p { animation:none; } }
     /* Match homepage logo sizing/position */
     .logo {
