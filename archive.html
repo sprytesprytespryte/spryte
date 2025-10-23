@@ -77,26 +77,24 @@
     h2 {
       animation: textHue 20s linear infinite;
     }
-  /* Make wiggle lines full-bleed across screen (viewport negative-margin technique) */
+  /* Make wiggle lines full-bleed across screen (match homepage transform-centered) */
   .wiggle-separator {
     display: block;
     width: 100vw;
     max-width: none;
     position: relative;
     left: 50%;
-    right: 50%;
+    transform: translateX(-50%);
     margin: 0.5rem 0; /* vertical spacing */
-    margin-left: -50vw; /* extend to left edge of viewport */
-    margin-right: -50vw; /* extend to right edge of viewport */
     padding: 0;
     overflow: visible;
   }
   .wiggle-separator svg { display:block; width:100%; height:24px; }
   /* Keep strokes thin even as viewport scales */
   .wiggle-separator svg path { vector-effect: non-scaling-stroke; stroke-width: 1px; }
-    @supports (width: 100dvw) { .wiggle-separator { width: 100dvw; } }
-    @supports (width: 100lvw) { .wiggle-separator { width: 100lvw; } }
-    @supports (width: 100svw) { .wiggle-separator { width: 100svw; } }
+  @supports (width: 100svw) { .wiggle-separator { width: 100svw; } }
+  @supports (width: 100dvw) { .wiggle-separator { width: 100dvw; } }
+  @supports (width: 100lvw) { .wiggle-separator { width: 100lvw; } }
   /* (path non-scaling-stroke already set above) */
     .archive-list {
   margin: 2rem auto;
@@ -558,7 +556,7 @@
   </div>
   
   <div class="artist-block" id="nadim-choufi-last">
-    <div class="wiggle-separator" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-top:3rem;margin-bottom:3rem;">
+    <div class="wiggle-separator" style="margin:3rem 0;">
       <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
         <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
           <animate attributeName="d" dur="2s" repeatCount="indefinite"
