@@ -20,20 +20,17 @@
       overflow: hidden;
     }
     .logo {
-      font-size: 2rem;
-      font-weight: bold;
-      /* Keep hue animation, remove float so JS can control position */
-      animation: textHue 20s linear infinite;
+      /* Center the logo like on the home page */
       position: absolute;
-      left: 0;
-      top: 0;
-      /* Constrain size to always fit within header */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       max-height: 80%;
       max-width: 95%;
       height: auto;
       width: auto;
       object-fit: contain;
-      will-change: transform;
+      animation: textHue 20s linear infinite;
     }
     /* Removed floatAround keyframes; movement handled via JS to keep within bounds */
     .artist-img {
@@ -60,17 +57,32 @@
     }
     h1 {
       font-size: 2.5rem;
-      margin: 2rem 0 1rem 0;
-      text-align: center;
+      /* Align left, but within the same content width as the archive list */
+      max-width: 800px;
+      margin: 2rem auto 1rem auto;
+      text-align: left;
       animation: textHue 20s linear infinite;
     }
     h2 {
       animation: textHue 20s linear infinite;
     }
-  /* Make wiggle lines full-bleed across screen and keep strokes thin */
+  /* Make wiggle lines full-bleed across screen (match index) */
+  .wiggle-separator {
+    width: 100vw;
+    max-width: none;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0;
+    overflow: visible;
+  }
   .wiggle-separator svg { display:block; width:100%; height:24px; }
+  /* Keep strokes thin even as viewport scales */
   .wiggle-separator svg path { vector-effect: non-scaling-stroke; stroke-width: 1px; }
-  .wiggle-separator { width:100vw; position:relative; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; }
     @supports (width: 100dvw) {
       .wiggle-separator { width: 100dvw; margin-left: calc(50% - 50dvw); margin-right: calc(50% - 50dvw); }
     }
@@ -80,8 +92,7 @@
     @supports (width: 100svw) {
       .wiggle-separator { width: 100svw; margin-left: calc(50% - 50svw); margin-right: calc(50% - 50svw); }
     }
-  /* Keep wiggle line strokes thin regardless of viewport scaling */
-  .wiggle-separator svg path { vector-effect: non-scaling-stroke; stroke-width: 1px; }
+  /* (path non-scaling-stroke already set above) */
     .archive-list {
   margin: 2rem auto;
   max-width: 800px;
@@ -154,6 +165,18 @@
   </style>
 </head>
 <body>
+  <!-- Wiggle line above header (like home page) -->
+  <div class="wiggle-separator">
+    <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+      <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+        <animate attributeName="d" dur="2s" repeatCount="indefinite"
+          values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                  M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                  M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+      </path>
+    </svg>
+  </div>
+
   <header>
   <a href="index.html"><img src="images/spryte_logo.png" alt="Spryte Logo" class="logo" /></a>
   </header>
@@ -612,20 +635,13 @@
     })();
   </script>
   <script>
-    // Full-bleed alignment for wiggle separators regardless of parent alignment (same as index)
+    // Full-bleed alignment for wiggle separators (CSS-only, match index)
     (function(){
       function adjustFullBleed(){
-        const vw = window.innerWidth;
         document.querySelectorAll('.wiggle-separator').forEach(el => {
-          // Reset only transform before measuring
           el.style.transform = 'none';
-          const rect = el.getBoundingClientRect();
-          const offset = Math.round(-rect.left);
-          el.style.width = vw + 'px';
+          el.style.width = '';
           el.style.maxWidth = 'none';
-          if (offset !== 0) {
-            el.style.transform = `translateX(${offset}px)`;
-          }
         });
       }
       let resizeTimer;
