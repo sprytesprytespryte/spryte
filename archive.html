@@ -13,6 +13,32 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Spryte — Archive</title>
+  <!-- Override styles for wiggle lines -->
+  <style>
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+      position: relative;
+    }
+    .wiggle-separator {
+      position: relative;
+      width: calc(100vw + 100px);
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0.5rem -50px;
+      overflow: visible;
+    }
+    .wiggle-separator svg {
+      width: 100%;
+      height: 24px;
+      display: block;
+      overflow: visible;
+    }
+    .archive-list {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <!-- Large screen fixes -->
   <style>
