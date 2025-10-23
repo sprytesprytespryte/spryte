@@ -13,30 +13,69 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Spryte — Archive</title>
-  <!-- Override styles for wiggle lines -->
+  <!-- Full width container reset -->
   <style>
     html, body {
+      margin: 0;
+      padding: 0;
       width: 100%;
+      min-width: 100%;
       overflow-x: hidden;
-      position: relative;
     }
+    
+    /* Container reset for consistent full-width behavior */
     .wiggle-separator {
+      box-sizing: border-box;
       position: relative;
-      width: calc(100vw + 100px);
+      display: block;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
       left: 50%;
-      transform: translateX(-50%);
-      margin: 0.5rem -50px;
-      overflow: visible;
+      right: 50%;
+      padding: 0;
     }
+
+    /* Ensure SVG fills container */
     .wiggle-separator svg {
+      display: block;
       width: 100%;
       height: 24px;
-      display: block;
-      overflow: visible;
     }
+
+    /* Force non-scaling stroke */
+    .wiggle-separator svg path {
+      vector-effect: non-scaling-stroke;
+      stroke-width: 1px;
+    }
+
+    /* Content z-index fix */
     .archive-list {
       position: relative;
       z-index: 1;
+    }
+
+    /* Viewport width fallbacks */
+    @supports (width: 100svw) {
+      .wiggle-separator {
+        width: 100svw;
+        margin-left: calc(-50svw + 50%);
+        margin-right: calc(-50svw + 50%);
+      }
+    }
+    @supports (width: 100dvw) {
+      .wiggle-separator {
+        width: 100dvw;
+        margin-left: calc(-50dvw + 50%);
+        margin-right: calc(-50dvw + 50%);
+      }
+    }
+    @supports (width: 100lvw) {
+      .wiggle-separator {
+        width: 100lvw;
+        margin-left: calc(-50lvw + 50%);
+        margin-right: calc(-50lvw + 50%);
+      }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
