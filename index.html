@@ -68,13 +68,13 @@
   .wiggle-separator svg path { vector-effect: non-scaling-stroke; stroke-width: 1px; }
   /* Make wiggle lines full-bleed across screen (viewport negative-margin technique) */
   .wiggle-separator {
+    display: block;
     width: 100vw;
     max-width: none;
     position: relative;
     left: 50%;
-    right: 50%;
     margin-left: -50vw;
-    margin-right: -50vw;
+    margin-right: 0;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     padding: 0;
