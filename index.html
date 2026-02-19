@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://spryte.info https://*.app.github.dev https://*.github.dev;">
+  <title>Spryte</title>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-V9PDKRC06R"></script>
   <script>
@@ -10,9 +14,6 @@
 
     gtag('config', 'G-V9PDKRC06R');
   </script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Spryte</title>
   <!-- Full width container reset -->
   <style>
     html, body {
@@ -606,10 +607,13 @@
       overflow: hidden !important;
     }
 
+    #twitchPlaceholder {
+      display: none !important;
+    }
+
     /* Show the full image inside the container (no cropping). Because
       the container will be resized to match the image aspect ratio,
       object-fit: contain will render without top/bottom bands. */
-    #twitchPlayer #twitchOverlayBanner,
     #twitchPlaceholder img,
     #twitchPlayer img {
       display: block !important;
@@ -619,6 +623,10 @@
       object-position: center center !important;
       margin: 0 !important;
       padding: 0 !important;
+    }
+
+    #twitchPlayer #twitchOverlayBanner {
+      display: none !important;
     }
 
       /* Ensure the embedded iframe also fills the container so there
@@ -633,6 +641,16 @@
       /* Ensure the Twitch player itself scales down (was fixed 450px). */
       #twitchPlayer {
         height: auto;
+        aspect-ratio: 16 / 9;
+        position: relative;
+      }
+
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        #twitchPlayer {
+          margin: 1rem auto !important;
+          min-height: 280px;
+        }
       }
     }
   </style>
@@ -801,15 +819,16 @@
     });
   </script>
 
-  <div id="twitchPlayer" style="width:100%; max-width:800px; display: none; position: relative; margin: 2rem auto;">
+  <div id="twitchPlayer" style="width:100%; max-width:800px; margin: 2rem auto;">
     <!-- Overlay banner to cover Twitch when needed -->
     <img id="twitchOverlayBanner" src="images/SpryteBanner.png" alt="Spryte Banner"
       style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center; background:#000; display:none; z-index:2; pointer-events:auto;"/>
     <iframe
       src="https://player.twitch.tv/?channel=spryte_spryte_spryte&parent=spryte.info"
-      height="100%"
+      height="480"
       width="100%"
-      allowfullscreen
+      allowfullscreen="true"
+      scrolling="no"
       frameborder="0">
     </iframe>
   </div>
