@@ -192,6 +192,12 @@
       display: inline-block;
       white-space: nowrap;
       animation: scrollLeft 90s linear infinite, textHue 20s linear infinite;
+      will-change: transform;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      animation-delay: 0s;
     }
 
     /* Spin just the bullet/star symbols inside the banner */
