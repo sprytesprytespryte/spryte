@@ -191,13 +191,18 @@
     .news-text {
       display: inline-block;
       white-space: nowrap;
-      animation: scrollLeft 90s linear infinite, textHue 20s linear infinite;
       will-change: transform;
       -webkit-transform: translateZ(0);
       transform: translateZ(0);
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
       animation-delay: 0s;
+    }
+
+    /* Apply animations when JS enables the class to ensure mobile paints immediately */
+    .news-text.active {
+      animation: scrollLeft 90s linear infinite, textHue 20s linear infinite;
+      animation-fill-mode: both;
     }
 
     /* Spin just the bullet/star symbols inside the banner */
@@ -716,6 +721,22 @@
     // Optional: cover the Twitch player with the Spryte banner (when Twitch is shown)
     const coverTwitchWithBanner = false;
     // ===========================
+  </script>
+
+  <script>
+    // Ensure the news banner animation is enabled as soon as the DOM is ready.
+    // Some mobile browsers delay CSS animations until paint; adding the
+    // `active` class on DOMContentLoaded forces the animation to start.
+    window.addEventListener('DOMContentLoaded', function () {
+      const el = document.querySelector('.news-text');
+      if (!el) return;
+      // Add class on next animation frame to ensure element is painted.
+      requestAnimationFrame(function () {
+        el.classList.add('active');
+        // Force a reflow to make sure the animation runs immediately.
+        void el.offsetWidth;
+      });
+    });
   </script>
 
   <script>
