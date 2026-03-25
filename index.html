@@ -849,8 +849,8 @@
   <div id="twitchPlayer" style="width:100%; max-width:800px; margin: 2rem auto; position: relative;">
 
     <!-- Overlay image always visible above Twitch player -->
-    <img id="twitchOverlayBanner" src="images/PamViradaOverlay.jpg" alt="Pam Virada Overlay"
-      style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; background:#000; display:block; z-index:2; pointer-events:auto;" src="images/PamVirada.jpg" alt="Pam Virada Overlay"/>
+    <img id="twitchOverlayBanner" src="images/PamVirada.jpg" alt="Pam Virada Overlay"
+      style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; background:#000; display:block; z-index:2; pointer-events:auto;"/>
     <iframe
       src="https://player.twitch.tv/?channel=spryte_spryte_spryte&parent=spryte.info&parent=www.spryte.info&parent=localhost&parent=127.0.0.1"
       height="480"
@@ -889,15 +889,7 @@
   </div>
 
   <script>
-    // Apply the toggle
-    (function(){
-      const playerEl = document.getElementById('twitchPlayer');
-      const placeholderEl = document.getElementById('twitchPlaceholder');
-      const overlayEl = document.getElementById('twitchOverlayBanner');
-      if (playerEl) playerEl.style.display = showTwitch ? 'block' : 'none';
-      if (placeholderEl) placeholderEl.style.display = showTwitch ? 'none' : 'block';
-      if (overlayEl) overlayEl.style.display = (showTwitch && coverTwitchWithBanner) ? 'block' : 'none';
-    })();
+    // Overlay is always visible, so no toggle needed
     
     // Compute and set an exact container height from the banner image using
     // a standalone Image() so we always get the natural dimensions even if
