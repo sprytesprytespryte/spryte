@@ -847,20 +847,32 @@
   </script>
 
   <div id="twitchPlayer" style="width:100%; max-width:800px; margin: 2rem auto; position: relative;">
-    <!-- Overlay banner to cover Twitch when needed -->
-    <img id="twitchOverlayBanner" src="images/SpryteBanner.png" alt="Spryte Banner"
-      style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center; background:#000; display:none; z-index:2; pointer-events:auto;"/>
+
+    <!-- Overlay image always visible above Twitch player -->
+    <img id="twitchOverlayBanner" src="images/PamViradaOverlay.jpg" alt="Pam Virada Overlay"
+      style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; background:#000; display:block; z-index:2; pointer-events:auto;"/>
     <iframe
       src="https://player.twitch.tv/?channel=spryte_spryte_spryte&parent=spryte.info&parent=www.spryte.info&parent=localhost&parent=127.0.0.1"
       height="480"
       width="100%"
       allowfullscreen="true"
       scrolling="no"
-      frameborder="0">
+      frameborder="0"
+      style="position:relative; z-index:1;">
     </iframe>
   </div>
-  
-  <!-- Description box removed -->
+
+  <!-- Event info box below Twitch player -->
+  <div class="event-info-box" style="max-width:800px; margin: 1.5rem auto 2.5rem auto; background:rgba(0,0,0,0.85); border:1.5px solid #0f0; border-radius:8px; padding:1.5rem 1.2rem; color:#0f0; font-family:'Inter', Arial, sans-serif;">
+    <div style="font-size:1.15rem; font-weight:700; margin-bottom:0.7rem;">Streaming on Sunday 29th March 2026<br>12:00 - 00:00 (BST/UTC+1)<br>spryte.info</div>
+    <div style="font-size:1.1rem; font-weight:700; margin:1.2rem 0 0.5rem 0; letter-spacing:0.5px;">PAM VIRADA</div>
+    <div style="font-size:1.05rem; font-style:italic; margin-bottom:0.2rem;">Sonnet for Si Chang (2022)</div>
+    <div style="font-size:1.05rem; margin-bottom:0.2rem;">digitized Super8</div>
+    <div style="font-size:1.05rem; margin-bottom:1.1rem;">2mins 15secs</div>
+    <div style="font-size:1rem; font-weight:400; line-height:1.5; margin-top:0.7rem;">
+      Composed by a distant king for his beloved, parts of the sonnet overlaps the landscapes of Si Chang island, where his seaside palace once stood.
+    </div>
+  </div>
 
   <!-- Placeholder image shown when Twitch is hidden -->
   <div id="twitchPlaceholder" style="width:100%; max-width:800px; display: none; margin: 2rem auto;">
