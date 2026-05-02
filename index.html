@@ -511,6 +511,67 @@
     }
     .floating-reopen:hover { filter: brightness(0.96); }
 
+    /* ============================= */
+    /* ARCHIVE CAROUSEL              */
+    /* ============================= */
+    .archive-carousel {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 1.5rem 0;
+      max-width: 900px;
+    }
+    .carousel-wrap {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+    .carousel-slide {
+      display: none;
+    }
+    .carousel-slide.active {
+      display: block;
+    }
+    .carousel-slide a {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+    .carousel-slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+    .carousel-slide-title {
+      text-align: center;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-top: 0.45rem;
+      line-height: 1.4;
+      animation: textHue 20s linear infinite;
+    }
+    .carousel-arrow {
+      background: none;
+      border: none;
+      color: inherit;
+      font-size: 2.6rem;
+      cursor: pointer;
+      padding: 0.2rem 0.1rem;
+      line-height: 1;
+      opacity: 0.45;
+      flex-shrink: 0;
+      transition: opacity 0.2s;
+      animation: textHue 20s linear infinite;
+    }
+    .carousel-arrow:hover,
+    .carousel-arrow:focus {
+      opacity: 1;
+      outline: none;
+    }
+
     /* Keep text compact on large screens, left-aligned under headings */
     @media (min-width: 1200px) {
       /* Constrain main list item content but keep it left-aligned */
@@ -961,6 +1022,133 @@
         <a href="archive.html#nadim-choufi-last" style="color: inherit; text-decoration: underline;">Nadim Choufi</a>.
   <br><br>For our full archive, click on the "FULL ARCHIVE" button.
       </p>
+      <!-- Archive Image Carousel -->
+      <div class="archive-carousel" id="archiveCarousel" role="region" aria-label="Archive image carousel">
+        <button class="carousel-arrow" id="carouselPrev" aria-label="Previous">&#8249;</button>
+        <div class="carousel-wrap" id="carouselWrap">
+          <div class="carousel-slide active">
+            <a href="archive.html#pam-virada">
+              <img src="images/PamVirada2.jpg" alt="Pam Virada Still" loading="lazy" />
+              <p class="carousel-slide-title">Pam Virada: Sonnet for Si Chang</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#morag-keil-reality-bites">
+              <img src="images/MoragKeilReality.png" alt="Morag Keil Still" loading="lazy" />
+              <p class="carousel-slide-title">Morag Keil: Reality Bites</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#nadim-choufi-first">
+              <img src="images/Nadim Choufi2.jpg.webp" alt="Nadim Choufi Still" loading="lazy" />
+              <p class="carousel-slide-title">Nadim Choufi: I&#8217;m not sure it&#8217;s the same sun anymore</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#suzanne-treister">
+              <img src="images/Suzanne Treister.jpg_1.webp" alt="Suzanne Treister Still" loading="lazy" />
+              <p class="carousel-slide-title">Suzanne Treister: The Holographic Universe Theory of Art History</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#sarah-rara">
+              <img src="images/Sarah Rara.jpg_1.webp" alt="Sarah Rara Still" loading="lazy" />
+              <p class="carousel-slide-title">Sarah Rara: Untitled (Door)</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#miach-malachy">
+              <img src="images/Miach Malachy.jpg.webp" alt="Miach Malachy Still" loading="lazy" />
+              <p class="carousel-slide-title">Miach Malachy: Rotters</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#joao-maria-gusmao-pedro-paiva">
+              <img src="images/Joao Maria Gusmao + Pedro Paiva.jpeg.webp" alt="Joao Maria Gusmao + Pedro Paiva Still" loading="lazy" />
+              <p class="carousel-slide-title">Joao Maria Gusmao + Pedro Paiva: Glossolalia</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#beatrice-vorster-yasmin-vardi">
+              <img src="images/Beatrice Vorster and Yasmin Vardi.jpg.webp" alt="Beatrice Vorster and Yasmin Vardi Still" loading="lazy" />
+              <p class="carousel-slide-title">Beatrice Vorster and Yasmin Vardi: A Woman Runs Away from Something</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#mark-leckey">
+              <img src="images/Mark Leckey.jpg.webp" alt="Mark Leckey Still" loading="lazy" />
+              <p class="carousel-slide-title">Mark Leckey: Proposal for a Show</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#lou-lou-sainsbury">
+              <img src="images/Lou Lou Sainsbury.jpg.webp" alt="Lou Lou Sainsbury Still" loading="lazy" />
+              <p class="carousel-slide-title">Lou Lou Sainsbury: A Fantastic Body</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#adriana-ramic">
+              <img src="images/Adriana Ram&#237;c.jpg.webp" alt="Adriana Rami&#263; Still" loading="lazy" />
+              <p class="carousel-slide-title">Adriana Rami&#263;: Index of Scenes</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#dora-budor-noah-barker">
+              <img src="images/Dora Budor &amp; Noah Barker.jpeg.webp" alt="Dora Budor &amp; Noah Barker Still" loading="lazy" />
+              <p class="carousel-slide-title">Noah Barker &amp; Dora Budor: Orange Films I and II</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#cici-wu">
+              <img src="images/Cici Wu.jpg.webp" alt="Cici Wu Still" loading="lazy" />
+              <p class="carousel-slide-title">Cici Wu: Strong Loneliness</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#theo-ellison">
+              <img src="images/Theo Ellison.jpg.webp" alt="Theo Ellison Still" loading="lazy" />
+              <p class="carousel-slide-title">Theo Ellison: Standard</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#spryte-presents-infinite-tony">
+              <img src="images/Spryte presents infinite tony.webp" alt="Spryte Presents Still" loading="lazy" />
+              <p class="carousel-slide-title">Spryte Presents: Infinite Tony</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#morag-keil">
+              <img src="images/Morag Keill.png.webp" alt="Morag Keil Still" loading="lazy" />
+              <p class="carousel-slide-title">Morag Keil: Arly Ingva Axewell Andra Nikolas Eliya Margen &amp; Shopping</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#colectivo-los-ingravidos">
+              <img src="images/Colectivo Los Ingr&#225;vidos.jpg.webp" alt="Colectivo Los Ingrávidos Still" loading="lazy" />
+              <p class="carousel-slide-title">Colectivo Los Ingr&#225;vidos: Tonalli</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#lydia-davies">
+              <img src="images/Lydia Davies.jpg.webp" alt="Lydia Davies Still" loading="lazy" />
+              <p class="carousel-slide-title">Lydia Davies: New Sheets (AV)</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#pierre">
+              <img src="images/Pierre.png.webp" alt="Pierre Still" loading="lazy" />
+              <p class="carousel-slide-title">Pierre: When I Return</p>
+            </a>
+          </div>
+          <div class="carousel-slide">
+            <a href="archive.html#nadim-choufi-last">
+              <img src="images/Nadim Choufi.png.webp" alt="Nadim Choufi Still" loading="lazy" />
+              <p class="carousel-slide-title">Nadim Choufi: The Sky Oscillates Between Eternity and Its Immediate Consequences</p>
+            </a>
+          </div>
+        </div>
+        <button class="carousel-arrow" id="carouselNext" aria-label="Next">&#8250;</button>
+      </div>
     <li style="padding:0; margin:0; list-style:none;">
       <div class="wiggle-separator">
         <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
@@ -1231,6 +1419,30 @@
       });
     })();
   </script>
+  <!-- Archive Carousel JS -->
+  <script>
+    (function () {
+      var slides = document.querySelectorAll('#archiveCarousel .carousel-slide');
+      if (!slides.length) return;
+      var idx = 0;
+      function show(n) {
+        slides[idx].classList.remove('active');
+        idx = ((n % slides.length) + slides.length) % slides.length;
+        slides[idx].classList.add('active');
+      }
+      document.getElementById('carouselPrev').addEventListener('click', function () { show(idx - 1); });
+      document.getElementById('carouselNext').addEventListener('click', function () { show(idx + 1); });
+      // Touch swipe
+      var wrap = document.getElementById('carouselWrap');
+      var startX = 0;
+      wrap.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+      wrap.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) show(dx < 0 ? idx + 1 : idx - 1);
+      }, { passive: true });
+    })();
+  </script>
+
   <!-- JS full-bleed alignment not needed; CSS handles centering via translateX -->
 
   <script>
