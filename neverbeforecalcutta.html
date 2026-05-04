@@ -12,16 +12,10 @@
     body { margin:0; background:#000; color:#fff; font-family:'Inter', Arial, sans-serif; line-height:1.45; }
     header { padding:0; text-align:center; }
     h1 { margin:0 0 1rem; font-size:2rem; letter-spacing:0.5px; color:#fff; }
-    h2 { margin:1.8rem 0 0.6rem; font-size:0.95rem; letter-spacing:1px; text-transform:uppercase; color:#fff; }
-    main { width:70vw; margin:0 0 4rem 0; padding:0 1.25rem; }
-    @media (max-width: 900px){ main { width:100%; } }
-    p { margin:0 0 1.1rem; }
     a { color:#fff; }
     a:hover { text-decoration:underline; }
-    .back { display:inline-block; margin-top:2rem; font-size:0.85rem; text-decoration:none; border:1px solid currentColor; padding:0.4rem 0.7rem; }
-    .back:hover { background:rgba(255,255,255,0.1); }
     @keyframes hue { 0% { filter:hue-rotate(0deg);} 100% { filter:hue-rotate(360deg);} }
-    @media (prefers-reduced-motion: reduce) { h1, h2 { animation:none; } }
+    @media (prefers-reduced-motion: reduce) { h1 { animation:none; } }
     .logo {
       position:absolute;
       top:50%;
@@ -32,6 +26,39 @@
       height:auto;
       width:auto;
       object-fit:contain;
+    }
+    /* Timeline layout */
+    main {
+      width: 70vw;
+      margin: 0 0 4rem;
+      padding: 0 1.25rem;
+    }
+    @media (max-width: 900px) { main { width: 100%; } }
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 0 1rem;
+      margin-bottom: 1.5rem;
+      align-items: start;
+    }
+    .timeline-year {
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      color: #fff;
+      padding-top: 0.15rem;
+      position: sticky;
+      top: 1rem;
+      text-align: right;
+    }
+    .timeline-text p {
+      margin: 0 0 1.1rem;
+    }
+    .timeline-text p:last-child {
+      margin-bottom: 0;
+    }
+    @media (max-width: 600px) {
+      .timeline-row { grid-template-columns: 50px 1fr; gap: 0 0.75rem; }
+      .timeline-year { font-size: 0.85rem; }
     }
   </style>
 </head>
@@ -49,6 +76,36 @@
   </section>
 
   <main style="width:70vw; margin:0 0 4rem; padding:0 1.25rem;">
+
+    <div class="timeline-row">
+      <span class="timeline-year">1756</span>
+      <div class="timeline-text">
+        <p>Placeholder text for this entry. The year sits to the left as a fixed point while the prose extends into the right column, allowing the reader to orient themselves in time as they move through the essay.</p>
+      </div>
+    </div>
+
+    <div class="timeline-row">
+      <span class="timeline-year">1857</span>
+      <div class="timeline-text">
+        <p>A second placeholder passage for a later date. Multiple paragraphs can sit under the same year, with the label remaining pinned while the text scrolls.</p>
+        <p>Further detail can be added here — a continuation of the same moment, or a digression that returns to it. The year holds everything together.</p>
+      </div>
+    </div>
+
+    <div class="timeline-row">
+      <span class="timeline-year">1943</span>
+      <div class="timeline-text">
+        <p>Third placeholder entry. This structure allows the essay to move between close historical analysis and wider narrative without losing the reader's sense of when they are.</p>
+      </div>
+    </div>
+
+    <div class="timeline-row">
+      <span class="timeline-year">2026</span>
+      <div class="timeline-text">
+        <p>Final placeholder. The timeline can be as sparse or as dense as the material demands — a single sentence under one year, several paragraphs under another.</p>
+      </div>
+    </div>
+
   </main>
 </body>
 </html>
