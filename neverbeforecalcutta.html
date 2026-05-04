@@ -76,7 +76,6 @@
         margin: 0 !important;
       }
       .page-title {
-        font-size: 19vw;
         line-height: 1;
         text-transform: uppercase;
         margin: 0;
@@ -86,7 +85,7 @@
         flex: 1;
         padding: 1.5rem 0 0.5rem;
       }
-      .page-title span { display: block; }
+      .page-title span { display: block; white-space: nowrap; }
       .title-meta { padding-bottom: 1.5rem; }
     }
   </style>
@@ -139,4 +138,20 @@
 
   </main>
 </body>
+<script>
+  function fitTitleWords() {
+    if (window.innerWidth > 768) return;
+    const spans = document.querySelectorAll('.page-title span');
+    const container = document.querySelector('.title-section');
+    if (!container) return;
+    const available = container.clientWidth - parseFloat(getComputedStyle(container).paddingLeft) * 2;
+    spans.forEach(function(span) {
+      span.style.fontSize = '10px';
+      const ratio = available / span.scrollWidth;
+      span.style.fontSize = Math.floor(10 * ratio) + 'px';
+    });
+  }
+  document.fonts.ready.then(fitTitleWords);
+  window.addEventListener('resize', fitTitleWords);
+</script>
 </html>
