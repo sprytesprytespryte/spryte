@@ -145,11 +145,16 @@
     const container = document.querySelector('.title-section');
     if (!container) return;
     const available = container.clientWidth - parseFloat(getComputedStyle(container).paddingLeft) * 2;
+    // Find the longest word and calculate the font size that makes it fill the width
+    let maxRatio = 0;
     spans.forEach(function(span) {
       span.style.fontSize = '10px';
       const ratio = available / span.scrollWidth;
-      span.style.fontSize = Math.floor(10 * ratio) + 'px';
+      if (ratio < maxRatio || maxRatio === 0) maxRatio = ratio;
     });
+    // Apply the same font size to all words
+    const size = Math.floor(10 * maxRatio) + 'px';
+    spans.forEach(function(span) { span.style.fontSize = size; });
   }
   document.fonts.ready.then(fitTitleWords);
   window.addEventListener('resize', fitTitleWords);
