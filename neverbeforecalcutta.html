@@ -10,109 +10,233 @@
   <link rel="shortcut icon" href="images/spryte%20flower%20favicon.png?v=3" type="image/png">
   <link rel="apple-touch-icon" href="images/spryte%20flower%20favicon.png?v=3">
   <style>
-    body { margin:0; background:#000; color:#fff; font-family:'capitolium2', 'Inter', Arial, sans-serif; line-height:1.45; }
-    header { padding:0; text-align:center; }
-    h1 { margin:0 0 1rem; font-size:2rem; letter-spacing:0.5px; color:#fff; }
-    a { color:#fff; }
-    a:hover { text-decoration:underline; }
-    @keyframes hue { 0% { filter:hue-rotate(0deg);} 100% { filter:hue-rotate(360deg);} }
-    @media (prefers-reduced-motion: reduce) { h1 { animation:none; } }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'capitolium2', 'Inter', serif;
+      line-height: 1.5;
+    }
+    a { color: inherit; }
+    a:hover { text-decoration: underline; }
+    @keyframes hue { 0%{filter:hue-rotate(0deg)} 100%{filter:hue-rotate(360deg)} }
+
+    /* ── HEADER ─────────────────────────────── */
     .logo {
-      position:absolute;
-      top:50%;
-      left:50%;
-      transform: translate(-50%, -50%);
-      max-height:80%;
-      max-width:95%;
-      height:auto;
-      width:auto;
-      object-fit:contain;
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      max-height: 80%; max-width: 95%;
+      height: auto; width: auto; object-fit: contain;
     }
-    /* Timeline layout */
-    main {
-      width: 70vw;
-      margin: 0 0 4rem;
-      padding: 0 1.25rem;
+
+    /* ── TITLE PAGE ─────────────────────────── */
+    .title-page {
+      min-height: calc(100vh - 6rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3rem 2rem 2.5rem;
     }
-    @media (max-width: 900px) { main { width: 100%; } }
-    .timeline-row {
+    .title-grid {
       display: grid;
-      grid-template-columns: 70px 1fr;
-      gap: 0 1rem;
-      margin-bottom: 1.5rem;
+      grid-template-columns: 1fr 1fr;
+      row-gap: clamp(2rem, 14vh, 10rem);
+      flex: 1;
+      align-content: center;
+    }
+    .title-word {
+      font-family: 'capitolium2', 'Inter', serif;
+      font-weight: 700;
+      font-size: clamp(3.5rem, 10vw, 9rem);
+      color: #ff0000;
+      text-transform: uppercase;
+      margin: 0;
+      line-height: 0.95;
+    }
+    .title-word.right { text-align: right; }
+    .title-meta p { margin: 0 0 0.2rem; font-size: 0.9rem; }
+
+    /* ── INTRO + CONE ───────────────────────── */
+    .intro-section {
+      padding: 3rem 2rem 3rem;
+    }
+    .intro-columns {
+      display: grid;
+      grid-template-columns: 1fr 180px 1fr;
+      gap: 0 3rem;
       align-items: start;
     }
-    .timeline-year {
+    .intro-col p {
+      margin: 0 0 1rem;
+      font-size: 0.78rem;
+      color: #ff0000;
+      text-align: justify;
+      hyphens: auto;
+      line-height: 1.55;
+    }
+    .cone-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 0.25rem;
+    }
+    .cone-col svg { width: 100%; height: auto; }
+
+    @media (max-width: 780px) {
+      .intro-columns { grid-template-columns: 1fr; }
+      .cone-col { margin: 2rem auto; width: 140px; }
+    }
+
+    /* ── KALI IMAGE ─────────────────────────── */
+    .kali-wrap { padding: 0 2rem 3.5rem; }
+    .kali-wrap img { display: block; width: 70vw; height: auto; }
+
+    /* ── TIMELINE ───────────────────────────── */
+    .timeline {
+      padding: 0 2rem 8rem;
+    }
+    .tl-row {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 0 3rem;
+      margin-bottom: 3.5rem;
+      align-items: start;
+    }
+    .tl-year {
+      font-family: 'capitolium2', 'Inter', serif;
       font-size: 0.95rem;
-      letter-spacing: 0.5px;
+      font-weight: 400;
       color: #fff;
-      font-family: 'capitolium2', 'Inter', Arial, sans-serif;
-      padding-top: 0.15rem;
+      text-align: right;
       position: sticky;
       top: 1rem;
-      text-align: right;
+      padding-top: 0.1rem;
     }
-    .timeline-text p {
-      margin: 0 0 1.1rem;
-      font-family: 'capitolium2', 'Inter', Arial, sans-serif;
+    .tl-text {
+      font-family: 'capitolium2', 'Inter', serif;
+      font-size: 0.95rem;
+      text-align: justify;
+      hyphens: auto;
+      line-height: 1.6;
     }
-    .timeline-text p:last-child {
-      margin-bottom: 0;
+    .tl-text p { margin: 0 0 1.1rem; }
+    .tl-text p:last-child { margin-bottom: 0; }
+    .annotation {
+      float: right;
+      clear: right;
+      width: 36%;
+      margin: 0.1rem 0 0.75rem 1.5rem;
+      font-family: 'capitolium2', 'Inter', serif;
+      font-size: 0.72rem;
+      color: #ff0000;
+      line-height: 1.5;
+      text-align: left;
+      hyphens: auto;
     }
-    @media (max-width: 600px) {
-      .timeline-row { grid-template-columns: 50px 1fr; gap: 0 0.75rem; }
-      .timeline-year { font-size: 0.85rem; }
+    .annotation em { font-style: italic; }
+
+    @media (max-width: 700px) {
+      .tl-row { grid-template-columns: 48px 1fr; gap: 0 1.25rem; }
+      .tl-year { font-size: 0.85rem; }
+      .annotation { float: none; width: 100%; margin: 0.75rem 0; }
+      .title-word { font-size: clamp(2.8rem, 14vw, 5rem); }
     }
   </style>
 </head>
 <body>
-  <header style="position:relative; height:6rem; border-bottom:2px solid #fff; overflow:hidden; display:flex; align-items:center; justify-content:center;">
-    <a href="index.html" aria-label="Return to Spryte homepage" style="display:block; width:100%; height:100%;">
-      <img class="logo" src="images/spryte_logo.png" alt="Spryte Logo (Back to Home)" style="animation:hue 20s linear infinite; border:none;" />
+
+  <!-- HEADER -->
+  <header style="position:relative;height:6rem;border-bottom:2px solid #fff;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+    <a href="index.html" aria-label="Return to Spryte homepage" style="display:block;width:100%;height:100%;">
+      <img class="logo" src="images/spryte_logo.png" alt="Spryte Logo (Back to Home)" style="animation:hue 20s linear infinite;border:none;" />
     </a>
   </header>
 
-  <section style="width:70vw; margin:1.5rem 0 0; padding:0 1.25rem;">
-    <h1 style="margin:0 0 0.25rem; font-size:1.15rem; text-transform:uppercase;">Black Hole of Kolkata</h1>
-    <p style="margin:0 0 0.2rem; font-style:italic; font-size:0.9rem;">Rashi Rajguru</p>
-    <p style="margin:0 0 1.5rem; font-size:0.8rem; opacity:0.7;"></p>
+  <!-- TITLE PAGE -->
+  <section class="title-page">
+    <div class="title-grid">
+      <h1 class="title-word">Black</h1>
+      <h1 class="title-word right">Hole</h1>
+      <h1 class="title-word">of</h1>
+      <h1 class="title-word right">Kolkata</h1>
+    </div>
+    <div class="title-meta">
+      <p style="font-style:italic;">Rashi Rajguru</p>
+      <p style="font-size:0.8rem;opacity:0.6;"></p>
+    </div>
   </section>
 
-  <div style="width:70vw; margin:0 0 0; padding:0 1.25rem;">
-    <img src="images/Kali_by_Raja_Ravi_Varma.jpg" alt="Kali by Raja Ravi Varma" style="display:block; width:100%; height:auto;" />
-  </div>
+  <!-- INTRO + CONE -->
+  <section class="intro-section">
+    <div class="intro-columns">
+      <div class="intro-col">
+        <p>The &#8220;Black Hole of Calcutta&#8221; narrative grew from a desire for emotional British propaganda which could bleed into future culture. As a motif it appears in literature and journalism throughout the Victorian era and runs alongside Britain&#8217;s rule over India like an ideological support system for maintaining imperialistic momentum. The construction of a national trauma can bode well for colonial expansion and the success in these efforts shows in the re-sprouting of derogatory concepts and tropes across time and historical media. Dicke&#8217;s proposal speaks volumes: to re-engage the name of a controversial event which was and still is widely contested is a prime example of how the way in which we describe objects can ultimately extend problematic narratives, hidden not-so-deep in the linguistic undercurrents until they resurface with a new topology.</p>
+        <p>The following timeline is a study into the etymology of &#8220;black hole&#8221;, along with some more tangential connections which help to inform of certain actors and situations that facilitate the trajectory of the term.</p>
+      </div>
 
-  <main style="width:70vw; margin:0 0 4rem; padding:0 1.25rem;">
+      <!-- CONE SVG -->
+      <div class="cone-col">
+        <svg viewBox="0 0 200 420" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Dashed outer extension lines -->
+          <line x1="100" y1="370" x2="-15" y2="5" stroke="#ff0000" stroke-width="0.8" stroke-dasharray="5 3"/>
+          <line x1="100" y1="370" x2="215" y2="5" stroke="#ff0000" stroke-width="0.8" stroke-dasharray="5 3"/>
+          <!-- Red filled cone: base at top, apex at bottom -->
+          <polygon points="100,370 5,10 195,10" fill="#ff0000"/>
+          <!-- Radiating black lines from apex to base -->
+          <line x1="100" y1="370" x2="5"   y2="10" stroke="#000" stroke-width="0.7"/>
+          <line x1="100" y1="370" x2="26"  y2="10" stroke="#000" stroke-width="0.7"/>
+          <line x1="100" y1="370" x2="47"  y2="10" stroke="#000" stroke-width="0.7"/>
+          <line x1="100" y1="370" x2="68"  y2="10" stroke="#000" stroke-width="0.7"/>
+          <line x1="100" y1="370" x2="89"  y2="10" stroke="#000" stroke-width="0.7"/>
+          <line x1="100" y1="370" x2="100" y2="10" stroke="#000" stroke-width="0.7"/>
+          <line x1="100" y1="370" x2="116" y2="10" stroke="#000" stroke-width="0.7"/>
+          <line x1="100" y1="370" x2="137" y2="10" stroke="#000" stroke-width="0.7"/>
+          <line x1="100" y1="370" x2="158" y2="10" stroke="#000" stroke-width="0.7"/>
+          <line x1="100" y1="370" x2="174" y2="10" stroke="#000" stroke-width="0.7"/>
+          <line x1="100" y1="370" x2="195" y2="10" stroke="#000" stroke-width="0.7"/>
+          <!-- Latitude curves (bow upward, concave from below, 3D effect) -->
+          <path d="M24,80  Q100,73 176,80"  fill="none" stroke="#000" stroke-width="0.5"/>
+          <path d="M39,140 Q100,132 161,140" fill="none" stroke="#000" stroke-width="0.5"/>
+          <path d="M55,200 Q100,192 145,200" fill="none" stroke="#000" stroke-width="0.5"/>
+          <path d="M71,260 Q100,253 129,260" fill="none" stroke="#000" stroke-width="0.5"/>
+          <path d="M86,320 Q100,314 114,320" fill="none" stroke="#000" stroke-width="0.5"/>
+          <!-- DISTANT FUTURE text -->
+          <text x="100" y="196" text-anchor="middle" font-family="'capitolium2',serif" font-weight="700" font-size="13" fill="#000" letter-spacing="1.5">DISTANT</text>
+          <text x="100" y="214" text-anchor="middle" font-family="'capitolium2',serif" font-weight="700" font-size="13" fill="#000" letter-spacing="1.5">FUTURE</text>
+          <!-- Arrow at apex -->
+          <line x1="100" y1="370" x2="100" y2="400" stroke="#000" stroke-width="1.5"/>
+          <polygon points="94,396 106,396 100,412" fill="#000"/>
+        </svg>
+      </div>
 
-    <div class="timeline-row">
-      <span class="timeline-year">1756</span>
-      <div class="timeline-text">
-        <p>Placeholder text for this entry. The year sits to the left as a fixed point while the prose extends into the right column, allowing the reader to orient themselves in time as they move through the essay.</p>
+      <div class="intro-col">
+        <p>It is clear why &#8220;black hole&#8221; is deemed an appropriate name for describing this type of astronomical body without much further consideration: it signifies a black area which emits no light, where anything that travels across its boundary must fall in. And yet, it is exactly this strong compatibility which means that the story behind the term is unknown, or worse dismissed. It has such syntactical success that it allows for this new astrophysical manifestation of a &#8220;black hole&#8221; to hold ground and even become embedded into areas of international communication such as economic journalism, to help express the financial instability of national economies and football clubs. This exponential evolution into spectacle propels forward ideas and visuals quickly enough to dismiss their significant origins.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <main class="timeline">
+
+    <div class="tl-row">
+      <span class="tl-year">1686</span>
+      <div class="tl-text">
+        <p>The East India Trading Company (EIC), a British-owned joint-stock business, has been trading in India since the start of the century. Although a private corporation, it receives diplomatic and financial aid from the British Crown as it grow relationships with Indian royalty to gain trade benefits, such as waived tax duties. By this point in time, King Charles II has awarded EIC with certain powers to significantly increase their autonomy overseas: the right to acquire territory, coin their own money, hold military leadership over forts and troops, privately produce alliances and conflicts and exercise both civil and criminal jurisdiction in the communities that they build.</p>
+        <p>EIC travels to the north-east of India to create a new settlement and expand its trade lines. Along the eastern bank of Hooghly River in Bengal (a region referred to by the Mughals as &#8220;the paradise of nations&#8221;), they occupy and merge three existing villages into a singular territory, using the central village Kalikata to officially rename the area Calcutta. The city is soon surrounded by settlements built by other European traders, such as the French in Chandernagor and eventually the Danish in Serampore. Further out, the Portuguese hold a commercial monopoly along the mainland&#8217;s western coast, whilst the Dutch create several outposts along the southern tip.</p>
       </div>
     </div>
 
-    <div class="timeline-row">
-      <span class="timeline-year">1857</span>
-      <div class="timeline-text">
-        <p>A second placeholder passage for a later date. Multiple paragraphs can sit under the same year, with the label remaining pinned while the text scrolls.</p>
-        <p>Further detail can be added here — a continuation of the same moment, or a digression that returns to it. The year holds everything together.</p>
-      </div>
-    </div>
-
-    <div class="timeline-row">
-      <span class="timeline-year">1943</span>
-      <div class="timeline-text">
-        <p>Third placeholder entry. This structure allows the essay to move between close historical analysis and wider narrative without losing the reader's sense of when they are.</p>
-      </div>
-    </div>
-
-    <div class="timeline-row">
-      <span class="timeline-year">2026</span>
-      <div class="timeline-text">
-        <p>Final placeholder. The timeline can be as sparse or as dense as the material demands — a single sentence under one year, several paragraphs under another.</p>
+    <div class="tl-row">
+      <span class="tl-year">1704</span>
+      <div class="tl-text">
+        <aside class="annotation">Historian Swati Chattopadhyay argues that this distinction is misleading and mere extension of the Eurocentric narrative: <em>&#8220;in Bengali parlance there was no equivalent to the white town/black town duality &hellip; the city was divided into a host of paras, tolas and tulis &hellip; although these localities did not have fixed boundaries or legal bearing, they formed a block that residents could identify with&#8221;.</em></aside>
+        <p>Calcutta has 30,000 inhabitants. The city attempts to be structurally segregated, with British and Europeans living in the supposedly more civilised and considered &#8220;White Town&#8221; while Indians and other Asians are assigned to living in the less desirable &#8220;Black Town&#8221;.</p>
+        <p>The city develops in an area where the Hindu deity worshipped by local followers is Kali, the Goddess of Destruction, Time and Power. The Kali Kalighat Temple nearby the city attracts constant footfall of devotees.</p>
       </div>
     </div>
 
   </main>
+
 </body>
 </html>
