@@ -652,9 +652,6 @@
     /* ============================= */
     /* RESPONSIVE */
     /* ============================= */
-   /* Broadened breakpoint to cover more mobile/tablet devices where
-     gaps were reported. These rules force-override inline styles so
-     the banner will fill its container. */
    @media (max-width: 900px) {
       h2 { font-size: 1.2rem; }
       .popup h2 { font-size: 1.3rem; }
@@ -667,41 +664,11 @@
         padding: 1rem;
       }
 
-    /* Remove extra vertical spacing around the Spryte banner on mobile.
-      To preserve the entire image (no cropping) we will size the
-      container to match the image aspect ratio via JS and use
-      object-fit: contain so the full image is visible without blank
-      bands. */
-    #twitchPlayer, #twitchPlaceholder {
-      margin: 0 auto !important; /* center horizontally while removing vertical gap */
+    #twitchPlayer {
+      margin: 0 auto !important;
       max-width: 100% !important;
       width: 100% !important;
-      /* don't force an aspect here; JS will compute and set it based on
-        the actual image dimensions so the image is shown fully */
       overflow: hidden !important;
-    }
-
-    #twitchPlaceholder {
-      display: none !important;
-    }
-
-    /* Show the full image inside the container (no cropping). Because
-      the container will be resized to match the image aspect ratio,
-      object-fit: contain will render without top/bottom bands. */
-    #twitchPlaceholder img,
-    #twitchPlayer img {
-      display: block !important;
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: contain !important;
-      object-position: center center !important;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-
-    /* Keep the overlay banner hidden on mobile */
-    #twitchOverlayBanner {
-      display: none !important;
     }
 
 
@@ -783,8 +750,6 @@
     // Toggle Twitch Player here:
     // set to true to show, false to hide
     const showTwitch = true;
-    // Optional: cover the Twitch player with the Spryte banner (when Twitch is shown)
-    const coverTwitchWithBanner = false;
     // ===========================
   </script>
 
@@ -922,7 +887,6 @@
       frameborder="0"
       style="position:relative; z-index:1;">
     </iframe>
-    <img src="images/SpryteBanner.png" alt="Spryte Banner" id="twitchOverlayBanner" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:10; display:none;" />
   </div>
 
   <!-- Stream info box -->
@@ -943,50 +907,7 @@
 
 
 
-  <!-- Placeholder image shown when Twitch is hidden -->
-  <div id="twitchPlaceholder" style="width:100%; max-width:800px; display: none; margin: 2rem auto;">
-    <img src="images/SpryteBanner.png" alt="Spryte Banner" style="width:100%; height:auto; display:block;" loading="lazy" />
-  </div>
 
-  <script>
-    // Overlay is always visible, so no toggle needed
-    
-    // Compute and set an exact container height from the banner image using
-    // a standalone Image() so we always get the natural dimensions even if
-    // the DOM <img> is lazy-loaded or not yet in the document.
-    (function(){
-      const src = document.querySelector('#twitchPlaceholder img')?.getAttribute('src') || document.getElementById('twitchOverlayBanner')?.getAttribute('src');
-      const containers = [document.getElementById('twitchPlayer'), document.getElementById('twitchPlaceholder')];
-      if (!src) return;
-
-      function applyFromNatural(w, h) {
-        if (!w || !h) return;
-        const ratio = h / w;
-        containers.forEach(c => {
-          if (!c) return;
-          const cw = c.clientWidth || c.offsetWidth || window.innerWidth;
-          if (!cw) return;
-          const desiredH = Math.round(cw * ratio);
-          c.style.height = desiredH + 'px';
-          c.style.maxHeight = '80vh';
-          c.style.aspectRatio = `${w} / ${h}`;
-        });
-      }
-
-      function loadAndApply() {
-        const img = new Image();
-        img.src = src;
-        if (img.complete && img.naturalWidth) {
-          applyFromNatural(img.naturalWidth, img.naturalHeight);
-        } else {
-          img.addEventListener('load', () => applyFromNatural(img.naturalWidth, img.naturalHeight), { once: true });
-        }
-      }
-
-      window.addEventListener('DOMContentLoaded', loadAndApply);
-      let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(loadAndApply, 120); });
-    })();
-  </script>
 
   
 
