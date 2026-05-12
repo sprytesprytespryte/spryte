@@ -109,7 +109,7 @@
       margin: 0;
       font-family: 'Inter', Arial, sans-serif;
       background: #000;
-      color: #0f0;
+      color: #ffffff;
       overflow-x: hidden;
     }
 
@@ -356,12 +356,9 @@
 
     /* Match archive's title box style for headings */
     .artist-title-box {
-      border: 1px solid currentColor;
-      border-radius: 4px;
       padding: 0.5rem 1rem;
       margin-bottom: 0.7rem;
       display: inline-block;
-      background: rgba(0,255,0,0.03);
       animation: textHue 20s linear infinite;
     }
 
@@ -714,6 +711,7 @@
   </div>
 
   <!-- Wiggle line between About and Archive -->
+  <!-- WIGGLE HIDDEN:
   <div class="wiggle-separator">
     <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
       <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
@@ -724,6 +722,7 @@
       </path>
     </svg>
   </div>
+  -->
 
   <!-- ============================= -->
   <!-- HEADER & LOGO -->
@@ -1084,6 +1083,7 @@
         </div>
         <button class="carousel-arrow" id="carouselNext" aria-label="Next">&#8250;</button>
       </div>
+    <!-- WIGGLE HIDDEN:
     <li style="padding:0; margin:0; list-style:none;">
       <div class="wiggle-separator">
         <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
@@ -1096,6 +1096,7 @@
         </svg>
       </div>
     </li>
+    -->
     <!-- Weather Diary Section -->
     <li>
       <div class="artist-title-box"><h2 style="margin:0;">Weather Diary</h2></div>
@@ -1111,6 +1112,7 @@
       </p>
     </li>
     <!-- Wiggle line between Weather Diary and SPRYTEtexts -->
+    <!-- WIGGLE HIDDEN:
     <li style="padding:0; margin:0; list-style:none;">
       <div class="wiggle-separator">
         <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
@@ -1123,12 +1125,14 @@
         </svg>
       </div>
     </li>
+    -->
     <!-- SPRYTEtexts Section -->
     <li>
       <div class="artist-title-box"><h2 class="mixed-caps" style="margin:0;">SPRYTEtexts</h2></div>
   <p>✦ <a href="pip-williams.html" style="color:inherit; text-decoration:underline;">Pip Williams</a>: <em>mumurations (after E.C)</em> - 9 February 2025</p>
     </li>
     <!-- Wiggle line between SPRYTEtexts and Newsletter -->
+    <!-- WIGGLE HIDDEN:
     <li style="padding:0; margin:0; list-style:none;">
       <div class="wiggle-separator">
         <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
@@ -1141,6 +1145,7 @@
         </svg>
       </div>
     </li>
+    -->
     <!-- Newsletter section moved here just below SPRYTEtexts -->
     <li id="newsletter">
       <div class="artist-title-box"><h2 style="margin:0;">Newsletter</h2></div>
@@ -1158,6 +1163,7 @@
       <p class="privacy-note">We only use your email to send Spryte updates. Unsubscribe anytime - no spam.</p>
     </li>
     <!-- Wiggle line between sections -->
+    <!-- WIGGLE HIDDEN:
     <li style="padding:0; margin:0; list-style:none;">
       <div class="wiggle-separator">
         <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
@@ -1170,6 +1176,7 @@
         </svg>
       </div>
     </li>
+    -->
   <li id="support">
       <div class="artist-title-box"><h2 style="margin:0;">Support</h2></div>
       <p>Spryte always pays artists and contributors to show their work
@@ -1186,12 +1193,10 @@
         and contributions, we can set up more streams, pay more artists and pay
         those artists more.
         </p>
-  <p class="no-hue"><span style="animation: textHue 20s linear infinite;">To support Spryte in this way, please visit our </span>
-  <a href="https://www.patreon.com/SPRYTE" style="color: #0f0; text-decoration: none;" target="_blank" rel="noopener">Patreon</a><span style="animation: textHue 20s linear infinite;">.</span>
-  </p>
         <p>Thank you!</p>
     </li>
     <!-- Wiggle line between Support and Submissions -->
+    <!-- WIGGLE HIDDEN:
     <li style="padding:0; margin:0; list-style:none;">
       <div class="wiggle-separator">
         <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
@@ -1204,7 +1209,13 @@
         </svg>
       </div>
     </li>
+    -->
     <!-- About Section (inserted between Support and Submissions) -->
+    <!-- WIGGLE HIDDEN (above):
+    <li style="padding:0; margin:0; list-style:none;">
+      <div class="wiggle-separator">...</div>
+    </li>
+    -->
     <li id="about">
       <div class="artist-title-box"><h2 style="margin:0;">About/Contact</h2></div>
   <p>Spryte was created and is managed by artists <a href="https://www.rashirajguru.com" target="_blank" rel="noopener">Rashi Rajguru</a> and <a href="https://cameronscott.info" target="_blank" rel="noopener">Cameron Scott</a>.</p>
@@ -1212,6 +1223,7 @@
   <p>To keep updated, either sign up to the newsletter above, or use these links: <a href="https://spryte.substack.com" target="_blank" rel="noopener">Substack</a> | <a href="https://www.patreon.com/SPRYTE" target="_blank" rel="noopener">Patreon</a></p>
     </li>
     <!-- Wiggle line between About and Submissions -->
+    <!-- WIGGLE HIDDEN:
     <li style="padding:0; margin:0; list-style:none;">
       <div class="wiggle-separator">
         <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
@@ -1224,6 +1236,7 @@
         </svg>
       </div>
     </li>
+    -->
     <!-- Submissions Section -->
     <li id="submissions">
       <details>
