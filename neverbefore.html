@@ -175,41 +175,6 @@
       margin: 1.2rem 0;
     }
 
-    .essay-card .inline-media.pan-media {
-      margin-bottom: 0.4rem;
-    }
-
-    .pan-frame {
-      width: 100%;
-      overflow-x: auto;
-      overflow-y: hidden;
-      -webkit-overflow-scrolling: touch;
-      cursor: ew-resize;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(0, 255, 102, 0.28) transparent;
-    }
-
-    .pan-frame::-webkit-scrollbar {
-      height: 4px;
-    }
-
-    .pan-frame::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    .pan-frame::-webkit-scrollbar-thumb {
-      background: rgba(0, 255, 102, 0.24);
-      border-radius: 999px;
-    }
-
-    .pan-image {
-      display: block;
-      width: 720%;
-      max-width: none;
-      min-width: 130%;
-      height: auto;
-    }
-
     .nav {
       margin-top: 0.8rem;
       display: grid;
@@ -336,10 +301,8 @@
               <p>If the star's core continues to shrink, the gravitational force it places on itself becomes increasingly stronger. This exponential warping of surrounding spacetime makes it harder and harder for a nearby object to free itself from the star's gravitational pull; the minimum speed to free oneself is referred to as the escape velocity. For example: for an object to hit its escape velocity and become free from Earth's gravity, it must be travelling away from the planet at a speed of 11km per second. From the Sun, it must be at 615km per second. From a neutron star, something only double the mass of the Sun, the speed required is 150,000km per second, also known as half the speed of light.</p>
               <p>If the mass of a dying star is at a solar rate higher than 2.8, gravity can successfully override any resistance from the star's core. Once the size of the compressed core gets down to about 18km, the escape velocity becomes equal to the speed of light. At this rate, nothing can escape the gravitational pull of this singularity, not even light or information. We are left with a colourless region known as a black hole. The boundary that marks the black hole's fatal reach, the gateway between a near miss and an endless dive, is referred to as the event horizon.</p>
 
-              <figure class="inline-media pan-media">
-                <div class="pan-frame" aria-label="Pan image left and right">
-                  <img class="pan-image" src="images/NeverBefore/E1/E1_spacetimewarping.png" alt="Spacetime warping diagram across stellar collapse outcomes" loading="lazy" />
-                </div>
+              <figure class="inline-media">
+                <img src="images/NeverBefore/E1/E1_spacetimewarping.png" alt="Spacetime warping diagram across stellar collapse outcomes" loading="lazy" />
               </figure>
             </div>
           </article>
@@ -403,9 +366,6 @@
 
       function onPointerDown(e) {
         if (e.button !== undefined && e.button !== 0) {
-          return;
-        }
-        if (e.target.closest(".pan-frame")) {
           return;
         }
         pointerId = e.pointerId;
