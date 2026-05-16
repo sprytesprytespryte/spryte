@@ -3,67 +3,484 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A Narrative on Mass – Spryte Texts</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="images/spryte%20flower%20favicon.png?v=3" sizes="any" type="image/png">
-  <link rel="shortcut icon" href="images/spryte%20flower%20favicon.png?v=3" type="image/png">
-  <link rel="apple-touch-icon" href="images/spryte%20flower%20favicon.png?v=3">
+  <title>Neverbefore Carousel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Play:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
   <style>
-    body { margin:0; background:#000; color:#fff; font-family:'Inter', Arial, sans-serif; line-height:1.45; }
-    header { padding:0; text-align:center; }
-    h1 { margin:0 0 1rem; font-size:2rem; letter-spacing:0.5px; color:#fff; }
-    h2 { margin:1.8rem 0 0.6rem; font-size:0.95rem; letter-spacing:1px; text-transform:uppercase; color:#fff; }
-    main { width:70vw; margin:0 0 4rem 0; padding:0 1.25rem; }
-    @media (max-width: 900px){ main { width:100%; } }
-    p { margin:0 0 1.1rem; }
-    a { color:#fff; }
-    a:hover { text-decoration:underline; }
-    .back { display:inline-block; margin-top:2rem; font-size:0.85rem; text-decoration:none; border:1px solid currentColor; padding:0.4rem 0.7rem; }
-    .back:hover { background:rgba(255,255,255,0.1); }
-    @keyframes hue { 0% { filter:hue-rotate(0deg);} 100% { filter:hue-rotate(360deg);} }
-    @media (prefers-reduced-motion: reduce) { h1, h2 { animation:none; } }
+    :root {
+      --bg: #000000;
+      --panel: #040404;
+      --ink: #f1fff1;
+      --muted: #8ddf8d;
+      --accent: #00ff66;
+      --accent-soft: #00aa44;
+      --card-radius: 0px;
+      --shadow: 0 0 28px rgba(0, 255, 102, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 520px at 100% -20%, rgba(0, 255, 102, 0.08) 0%, rgba(0, 255, 102, 0) 70%),
+        radial-gradient(900px 480px at -10% 120%, rgba(0, 255, 102, 0.06) 0%, rgba(0, 255, 102, 0) 68%),
+        var(--bg);
+      font-family: "Inter", Arial, sans-serif;
+    }
+
+    @keyframes textHue {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    .brand {
+      position: relative;
+      height: 6rem;
+      border-bottom: 2px solid var(--accent);
+      overflow: hidden;
+      margin-bottom: 1.2rem;
+    }
+
     .logo {
-      position:absolute;
-      top:50%;
-      left:50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%);
-      max-height:80%;
-      max-width:95%;
-      height:auto;
-      width:auto;
-      object-fit:contain;
+      max-height: 62%;
+      max-width: 72%;
+      height: auto;
+      width: auto;
+      object-fit: contain;
+      animation: textHue 20s linear infinite;
+    }
+
+    .page {
+      width: min(1120px, 100% - 2rem);
+      margin: 0 auto 2rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .carousel {
+      position: relative;
+      border-radius: 0;
+      border: none;
+      background: transparent;
+      backdrop-filter: blur(4px);
+      padding: 0;
+      box-shadow: none;
+      overflow: hidden;
+    }
+
+    .viewport {
+      overflow: hidden;
+      border-radius: 0;
+      touch-action: pan-y;
+      cursor: grab;
+    }
+
+    .viewport.dragging {
+      cursor: grabbing;
+    }
+
+    .track {
+      display: flex;
+      will-change: transform;
+      transition: transform 360ms cubic-bezier(0.2, 0.7, 0.15, 1);
+    }
+
+    .track.no-anim {
+      transition: none;
+    }
+
+    .card {
+      min-width: 100%;
+      background: var(--panel);
+      border-radius: var(--card-radius);
+      border: none;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: 1fr;
+      max-height: min(74vh, 780px);
+    }
+
+    .card-inner {
+      overflow: auto;
+      padding: clamp(1rem, 1.4vw + 0.8rem, 2rem);
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent) transparent;
+      background:
+        linear-gradient(180deg, rgba(0, 255, 102, 0.02), rgba(0, 255, 102, 0));
+    }
+
+    .card-inner::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .card-inner::-webkit-scrollbar-thumb {
+      background: var(--accent-soft);
+      border-radius: 999px;
+    }
+
+    .image-card figure,
+    .essay-card figure {
+      margin: 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .image-card img,
+    .essay-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 0;
+      border: none;
+    }
+
+    figcaption {
+      color: var(--muted);
+      font-family: "Inter", "Trebuchet MS", sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .essay-card h2 {
+      margin: 0 0 0.8rem;
+      font-size: clamp(1.3rem, 1.3vw + 1rem, 2rem);
+      line-height: 1.1;
+      font-family: "Inter", Arial, sans-serif;
+      letter-spacing: 0.02em;
+      animation: textHue 20s linear infinite;
+    }
+
+    .essay-card p {
+      margin: 0 0 1rem;
+      font-family: "Inter", "Trebuchet MS", sans-serif;
+      line-height: 1.65;
+      font-size: 1.03rem;
+      max-width: 72ch;
+    }
+
+    .essay-card .inline-media {
+      margin: 1.2rem 0;
+    }
+
+    .essay-card .inline-media.pan-media {
+      margin-bottom: 0.4rem;
+    }
+
+    .pan-frame {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      cursor: ew-resize;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 255, 102, 0.28) transparent;
+    }
+
+    .pan-frame::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .pan-frame::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .pan-frame::-webkit-scrollbar-thumb {
+      background: rgba(0, 255, 102, 0.24);
+      border-radius: 999px;
+    }
+
+    .pan-image {
+      display: block;
+      width: 720%;
+      max-width: none;
+      min-width: 130%;
+      height: auto;
+    }
+
+    .nav {
+      margin-top: 0.8rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: "Inter", "Trebuchet MS", sans-serif;
+    }
+
+    button {
+      border: none;
+      background: transparent;
+      color: var(--accent);
+      padding: 0.2rem 0.45rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 400;
+      font-size: 1.05rem;
+      line-height: 1;
+      opacity: 0.2;
+      transition: opacity 180ms ease, text-shadow 180ms ease;
+    }
+
+    button:hover {
+      opacity: 1;
+      text-shadow: 0 0 9px rgba(0, 255, 102, 0.45);
+    }
+
+    button:focus-visible {
+      opacity: 1;
+      outline: 1px solid rgba(0, 255, 102, 0.65);
+      outline-offset: 2px;
+      text-shadow: 0 0 9px rgba(0, 255, 102, 0.45);
+    }
+
+    .nav:hover #prevBtn,
+    .nav:hover #nextBtn {
+      opacity: 1;
+    }
+
+    button:disabled {
+      opacity: 0.08;
+      text-shadow: none;
+      cursor: default;
+    }
+
+    .dots {
+      display: flex;
+      gap: 0.35rem;
+      align-items: center;
+      justify-self: center;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border: none;
+      border-radius: 999px;
+      background: rgba(0, 255, 102, 0.3);
+      padding: 0;
+    }
+
+    .dot[aria-current="true"] {
+      width: 12px;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(0, 255, 102, 0.35);
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: min(100% - 1rem, 700px);
+      }
+
+      .card {
+        max-height: min(80vh, 760px);
+      }
+
+      .nav {
+        grid-template-columns: 1fr auto 1fr;
+      }
+
+      button {
+        opacity: 1;
+      }
     }
   </style>
 </head>
 <body>
-  <header style="position:relative; height:6rem; border-bottom:2px solid #fff; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+  <header class="brand">
     <a href="index.html" aria-label="Return to Spryte homepage" style="display:block; width:100%; height:100%;">
-      <img class="logo" src="images/spryte_logo.png" alt="Spryte Logo (Back to Home)" style="animation:hue 20s linear infinite; border:none;" />
+      <img class="logo" src="images/spryte flower favicon.png" alt="Spryte Logo" />
     </a>
   </header>
 
-  <section style="width:70vw; margin:1.5rem 0 0; padding:0 1.25rem;">
-    <h1 style="margin:0 0 0.25rem; font-size:1.15rem; text-transform:uppercase;">A Narrative on Mass</h1>
-    <p style="margin:0 0 0.2rem; font-style:italic; font-size:0.9rem;">Rashi Rajguru</p>
-    <p style="margin:0 0 1.5rem; font-size:0.8rem; opacity:0.7;"></p>
-  </section>
+  <main class="page">
+    <section class="carousel" aria-label="Story carousel">
+      <div class="viewport" id="viewport">
+        <div class="track" id="track">
+          <article class="card image-card" data-type="image">
+            <div class="card-inner">
+              <figure>
+                <img src="images/NeverBefore/E1/E1_xbox.png" alt="Xbox-shaped spacetime visualization" loading="lazy" />
+              </figure>
+            </div>
+          </article>
 
-  <div style="width:90vw; margin:0 0 0 auto; padding-right:0;">
-    <img src="images/E1_spacetimewarping.png" alt="Spacetime warping diagrams showing Sun, white dwarf, neutron star and black hole" style="display:block; width:100%; height:auto; margin-left:auto;" />
-  </div>
+          <article class="card essay-card" data-type="essay">
+            <div class="card-inner">
+              <figure class="inline-media">
+                <img src="images/NeverBefore/E1/E1_realimaginary.png" alt="Real and imaginary spacetime diagram" loading="lazy" />
+              </figure>
 
-  <main style="width:70vw; margin:0 0 4rem; padding:0 1.25rem;">
-    <p>Every known object in the universe is given a certain amount of mass - a totally dimensionless property which tells us how much matter is in that object. It quantifies the density of its internal particles and indicates how tightly packed together they are. This property is not pre-determined by the object's shape or size - a balloon is usually much larger than an apple, yet the internal composition of the latter is such that it most likely has a much greater mass.</p>
+              <h2>A Narrative on Mass</h2>
+              <p>Every known object in the universe is given a certain amount of mass - a totally dimensionless property which tells us how much matter is in that object. It quantifies the density of its internal particles and indicates how tightly packed together they are. This property is not pre-determined by the object's shape or size - a balloon is usually much larger than an apple, yet the internal composition of the latter is such that it most likely has a much greater mass.</p>
 
-    <h2>1: Spacetime</h2>
-    <p>Scientists have applied this notion of mass to a larger idea that both the physicality of space and the directional journey of time are completely fused together, two expressions of the same entity. To take a step in space is to simultaneously move along in time. This idea of unification is referred to as spacetime and is usually characterised by a type of fabric which structures the universe, upon/within which all matter exists. This fabric upholds the physical laws in which we and everything we know operates and at the same time is fundamentally impressionable. Similar to the effect of a heavy bowling ball on a trampoline, the immense mass of objects like stars and planets can bend spacetime, creating curvatures in its structure which will then change how other objects behave when close enough to those dense bodies (imagine a marble that is rolled onto the trampoline, bending towards the bowling ball). The greater the object's mass, the more intensely it bends its surrounding area of spacetime and the paths taken by nearby objects become further altered in both speed and direction.</p>
+              <h2>1: Spacetime</h2>
+              <p>Scientists have applied this notion of mass to a larger idea that both the physicality of space and the directional journey of time are completely fused together, two expressions of the same entity. To take a step in space is to simultaneously move along in time. This idea of unification is referred to as spacetime and is usually characterised by a type of fabric which structures the universe, upon/within which all matter exists. This fabric upholds the physical laws in which we and everything we know operates and at the same time is fundamentally impressionable. Similar to the effect of a heavy bowling ball on a trampoline, the immense mass of objects like stars and planets can bend spacetime, creating curvatures in its structure which will then change how other objects behave when close enough to those dense bodies (imagine a marble that is rolled onto the trampoline, bending towards the bowling ball). The greater the object's mass, the more intensely it bends its surrounding area of spacetime and the paths taken by nearby objects become further altered in both speed and direction.</p>
 
-    <h2>2: Collapsar</h2>
-    <p>This warping of spacetime is particularly noticeable when stars progress through their evolution cycle. When one finally reaches 'the end of its life', its constant outwards radiation of energy starts to give way to the pull of its own gravity and the star's core begins to break down. Scientists, most notably Subrahmanyan Chandrasekhar, have found a direct mathematical relationship between the mass of a star and the final form it takes after collapsing - depending on its mass, it will become either a white dwarf, a neutron star or a black hole. The mass of the Sun is used as a measuring stick to determine these categories. Stars with a mass of up to 1.4 times that of the Sun will shrink into a white dwarf, an extremely hot body of supercompressed matter which tends to shrink down to the size of Earth. Those with a mass between 1.4 - 2.8 times the Sun's will endure a greater collapse, compressing to just 20 kilometres (km) across, although its internal composition can still radiate enough energy to resist complete disintegration.</p>
+              <h2>2: Collapsar</h2>
+              <p>This warping of spacetime is particularly noticeable when stars progress through their evolution cycle. When one finally reaches 'the end of its life', its constant outwards radiation of energy starts to give way to the pull of its own gravity and the star's core begins to break down. Scientists, most notably Subrahmanyan Chandrasekhar, have found a direct mathematical relationship between the mass of a star and the final form it takes after collapsing - depending on its mass, it will become either a white dwarf, a neutron star or a black hole. The mass of the Sun is used as a measuring stick to determine these categories. Stars with a mass of up to 1.4 times that of the Sun will shrink into a white dwarf, an extremely hot body of supercompressed matter which tends to shrink down to the size of Earth. Those with a mass between 1.4 - 2.8 times the Sun's will endure a greater collapse, compressing to just 20 kilometres (km) across, although its internal composition can still radiate enough energy to resist complete disintegration.</p>
 
-    <h2>3: Black Holes</h2>
-    <p>If the star's core continues to shrink, the gravitational force it places on itself becomes increasingly stronger. This exponential warping of surrounding spacetime makes it harder and harder for a nearby object to free itself from the star's gravitational pull; the minimum speed to free oneself is referred to as the escape velocity. For example: for an object to hit its escape velocity and become free from Earth's gravity, it must be travelling away from the planet at a speed of 11km per second. From the Sun, it must be at 615km per second. From a neutron star, something only double the mass of the Sun, the speed required is 150,000km per second, also known as half the speed of light.</p>
-    <p>If the mass of a dying star is at a solar rate higher than 2.8, gravity can successfully override any resistance from the star's core. Once the size of the compressed core gets down to about 18km, the escape velocity becomes equal to the speed of light. At this rate, nothing can escape the gravitational pull of this singularity, not even light or information. We are left with a colourless region known as a black hole. The boundary that marks the black hole's fatal reach, the gateway between a near miss and an endless dive, is referred to as the event horizon.</p>
+              <h2>3: Black Holes</h2>
+              <p>If the star's core continues to shrink, the gravitational force it places on itself becomes increasingly stronger. This exponential warping of surrounding spacetime makes it harder and harder for a nearby object to free itself from the star's gravitational pull; the minimum speed to free oneself is referred to as the escape velocity. For example: for an object to hit its escape velocity and become free from Earth's gravity, it must be travelling away from the planet at a speed of 11km per second. From the Sun, it must be at 615km per second. From a neutron star, something only double the mass of the Sun, the speed required is 150,000km per second, also known as half the speed of light.</p>
+              <p>If the mass of a dying star is at a solar rate higher than 2.8, gravity can successfully override any resistance from the star's core. Once the size of the compressed core gets down to about 18km, the escape velocity becomes equal to the speed of light. At this rate, nothing can escape the gravitational pull of this singularity, not even light or information. We are left with a colourless region known as a black hole. The boundary that marks the black hole's fatal reach, the gateway between a near miss and an endless dive, is referred to as the event horizon.</p>
+
+              <figure class="inline-media pan-media">
+                <div class="pan-frame" aria-label="Pan image left and right">
+                  <img class="pan-image" src="images/NeverBefore/E1/E1_spacetimewarping.png" alt="Spacetime warping diagram across stellar collapse outcomes" loading="lazy" />
+                </div>
+              </figure>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <div class="nav">
+        <button type="button" id="prevBtn" aria-label="Previous card" style="justify-self:start;">&#8592;</button>
+        <div class="dots" id="dots" aria-label="Slide indicators"></div>
+        <button type="button" id="nextBtn" aria-label="Next card" style="justify-self:end;">&#8594;</button>
+      </div>
+    </section>
   </main>
+
+  <script>
+    (function () {
+      const viewport = document.getElementById("viewport");
+      const track = document.getElementById("track");
+      const cards = Array.from(track.children);
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const dotsWrap = document.getElementById("dots");
+
+      let index = 0;
+      let dragStartX = 0;
+      let dragStartY = 0;
+      let dragDelta = 0;
+      let isDragging = false;
+      let pointerId = null;
+      let width = viewport.clientWidth;
+
+      const dots = cards.map((_, i) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "dot";
+        dot.setAttribute("aria-label", "Go to card " + (i + 1));
+        dot.addEventListener("click", () => goTo(i));
+        dotsWrap.appendChild(dot);
+        return dot;
+      });
+
+      function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      function updateUI() {
+        track.style.transform = "translate3d(" + -index * width + "px,0,0)";
+        dots.forEach((dot, i) => {
+          dot.setAttribute("aria-current", i === index ? "true" : "false");
+        });
+        prevBtn.disabled = index === 0;
+        nextBtn.disabled = index === cards.length - 1;
+      }
+
+      function goTo(nextIndex) {
+        index = clamp(nextIndex, 0, cards.length - 1);
+        track.classList.remove("no-anim");
+        updateUI();
+      }
+
+      function onPointerDown(e) {
+        if (e.button !== undefined && e.button !== 0) {
+          return;
+        }
+        if (e.target.closest(".pan-frame")) {
+          return;
+        }
+        pointerId = e.pointerId;
+        viewport.setPointerCapture(pointerId);
+        isDragging = true;
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        dragDelta = 0;
+        width = viewport.clientWidth;
+        track.classList.add("no-anim");
+        viewport.classList.add("dragging");
+      }
+
+      function onPointerMove(e) {
+        if (!isDragging || e.pointerId !== pointerId) {
+          return;
+        }
+        const deltaX = e.clientX - dragStartX;
+        const deltaY = e.clientY - dragStartY;
+
+        if (Math.abs(deltaX) <= Math.abs(deltaY)) {
+          return;
+        }
+
+        dragDelta = deltaX;
+        track.style.transform = "translate3d(" + (-index * width + dragDelta) + "px,0,0)";
+      }
+
+      function onPointerUp(e) {
+        if (!isDragging || e.pointerId !== pointerId) {
+          return;
+        }
+        isDragging = false;
+        viewport.classList.remove("dragging");
+        track.classList.remove("no-anim");
+
+        const threshold = Math.max(70, width * 0.18);
+        if (dragDelta <= -threshold) {
+          index = clamp(index + 1, 0, cards.length - 1);
+        } else if (dragDelta >= threshold) {
+          index = clamp(index - 1, 0, cards.length - 1);
+        }
+
+        updateUI();
+
+        try {
+          viewport.releasePointerCapture(pointerId);
+        } catch (error) {
+          // Ignore release errors for stale pointer capture states.
+        }
+        pointerId = null;
+      }
+
+      prevBtn.addEventListener("click", () => goTo(index - 1));
+      nextBtn.addEventListener("click", () => goTo(index + 1));
+
+      viewport.addEventListener("pointerdown", onPointerDown);
+      viewport.addEventListener("pointermove", onPointerMove);
+      viewport.addEventListener("pointerup", onPointerUp);
+      viewport.addEventListener("pointercancel", onPointerUp);
+
+      window.addEventListener("resize", () => {
+        width = viewport.clientWidth;
+        updateUI();
+      });
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") {
+          goTo(index + 1);
+        }
+        if (e.key === "ArrowLeft") {
+          goTo(index - 1);
+        }
+      });
+
+      updateUI();
+    })();
+  </script>
 </body>
 </html>
