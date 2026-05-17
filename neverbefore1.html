@@ -175,13 +175,25 @@
       margin: 1.2rem 0;
     }
 
-    .nav {
-      margin-top: 0.8rem;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 0.4rem;
-      font-family: "Inter", "Trebuchet MS", sans-serif;
+    .carousel-body {
+      position: relative;
+      padding: 0 2rem;
+    }
+
+    #prevBtn {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+
+    #nextBtn {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
     }
 
     button {
@@ -211,8 +223,8 @@
       text-shadow: 0 0 9px rgba(0, 255, 102, 0.45);
     }
 
-    .nav:hover #prevBtn,
-    .nav:hover #nextBtn {
+    .carousel-body:hover #prevBtn,
+    .carousel-body:hover #nextBtn {
       opacity: 1;
     }
 
@@ -226,7 +238,8 @@
       display: flex;
       gap: 0.35rem;
       align-items: center;
-      justify-self: center;
+      justify-content: center;
+      padding: 0.55rem 0 0.35rem;
     }
 
     .dot {
@@ -272,6 +285,9 @@
 
   <main class="page">
     <section class="carousel" aria-label="Story carousel">
+      <div class="dots" id="dots" aria-label="Slide indicators"></div>
+      <div class="carousel-body">
+      <button type="button" id="prevBtn" aria-label="Previous card">&#8592;</button>
       <div class="viewport" id="viewport">
         <div class="track" id="track">
           <article class="card image-card" data-type="image">
@@ -309,11 +325,7 @@
 
         </div>
       </div>
-
-      <div class="nav">
-        <button type="button" id="prevBtn" aria-label="Previous card" style="justify-self:start;">&#8592;</button>
-        <div class="dots" id="dots" aria-label="Slide indicators"></div>
-        <button type="button" id="nextBtn" aria-label="Next card" style="justify-self:end;">&#8594;</button>
+      <button type="button" id="nextBtn" aria-label="Next card">&#8594;</button>
       </div>
     </section>
   </main>
@@ -333,6 +345,7 @@
       let dragDelta = 0;
       let isDragging = false;
       let pointerId = null;
+      let lockDir = null;
       let width = viewport.clientWidth;
 
       const dots = cards.map((_, i) => {
@@ -377,6 +390,7 @@
         width = viewport.clientWidth;
         track.classList.add("no-anim");
         viewport.classList.add("dragging");
+        lockDir = null;
       }
 
       function onPointerMove(e) {
@@ -386,7 +400,10 @@
         const deltaX = e.clientX - dragStartX;
         const deltaY = e.clientY - dragStartY;
 
-        if (Math.abs(deltaX) <= Math.abs(deltaY)) {
+        if (lockDir === null && (Math.abs(deltaX) > 5 || Math.abs(deltaY) > 5)) {
+          lockDir = Math.abs(deltaX) >= Math.abs(deltaY) ? "h" : "v";
+        }
+        if (lockDir !== "h") {
           return;
         }
 
@@ -399,6 +416,7 @@
           return;
         }
         isDragging = false;
+        lockDir = null;
         viewport.classList.remove("dragging");
         track.classList.remove("no-anim");
 
