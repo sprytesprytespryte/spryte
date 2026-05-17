@@ -526,6 +526,15 @@
     /* ============================= */
     /* ARCHIVE CAROUSEL              */
     /* ============================= */
+    /* Archive li: show carousel above text */
+    ul > li:first-child {
+      display: flex;
+      flex-direction: column;
+    }
+    ul > li:first-child > div:first-child { order: 1; }
+    .archive-carousel { order: 2; }
+    .archive-text { order: 3; }
+
     .archive-carousel {
       display: flex;
       align-items: center;
@@ -669,22 +678,13 @@
     /* ============================= */
     @media (min-width: 900px) {
       ul {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        align-items: start;
-        gap: 0;
+        columns: 2;
+        column-gap: 0;
+        column-rule: 1px solid rgba(0, 255, 0, 0.4);
       }
 
-      /* Vertical glowing column divider on col-1 items */
-      ul > li:nth-child(odd):not(:last-child)::before {
-        content: '';
-        position: absolute;
-        top: 1.5rem;
-        bottom: 0;
-        right: 0;
-        width: 1px;
-        background: rgba(0, 255, 0, 0.3);
-        box-shadow: 0 0 6px rgba(0, 255, 0, 0.5), 0 0 14px rgba(0, 255, 0, 0.2);
+      li {
+        break-inside: avoid;
       }
     }
 
@@ -695,6 +695,9 @@
       h2 { font-size: 1.2rem; }
       .popup h2 { font-size: 1.3rem; }
       .archive-text { font-size: 0.9rem; }
+
+      /* Bigger carousel images on mobile */
+      .carousel-slide img { aspect-ratio: 4 / 3; }
       /* Make popup usable on small screens by allowing near-full width */
       .popup {
         max-width: 95%;
@@ -1251,7 +1254,7 @@
     -->
     <li id="about">
       <div class="artist-title-box"><h2 style="margin:0;">About/Contact</h2></div>
-  <p>Spryte was created and is managed by artists <a href="https://www.rashirajguru.com" target="_blank" rel="noopener">Rashi Rajguru</a> and <a href="https://cameronscott.info" target="_blank" rel="noopener">Cameron Scott</a>.</p>
+  <p>Spryte was created and is managed by artists <a href="https://www.rashirajguru.com" target="_blank" rel="noopener" style="color:#0f0;">Rashi Rajguru</a> and <a href="https://cameronscott.info" target="_blank" rel="noopener" style="color:#0f0;">Cameron Scott</a>.</p>
   <p>To contact us, email <a href="mailto:hello@spryte.info">hello@spryte.info</a></p>
   <p>To keep updated, either sign up to the newsletter above, or use these links: <a href="https://spryte.substack.com" target="_blank" rel="noopener">Substack</a> | <a href="https://www.patreon.com/SPRYTE" target="_blank" rel="noopener">Patreon</a></p>
     </li>
