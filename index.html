@@ -1163,11 +1163,11 @@
     <li id="newsletter">
       <div class="artist-title-box"><h2 style="margin:0;">Newsletter</h2></div>
       <p>Sign up to our newsletter to stay updated on future streams. We send one announcement e-mail and one reminder e-mail when the stream, text or audio project goes live. As Spryte is sporadic in nature, this means you’ll only receive a few emails each month:</p>
-      <form id="gsheetSignupForm" style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+      <form id="gsheetSignupForm" style="display:flex;gap:0.5rem;align-items:center;">
         <input id="gsEmail" type="email" name="email" required inputmode="email" autocomplete="email"
           pattern="[^\s@]+@[^\s@]+\.[^\s@]+" title="Please enter a valid email address"
           placeholder="your@email.com" aria-label="Email"
-          style="flex:1 1 280px;max-width:420px;padding:0.6rem 0.8rem;border:1px solid currentColor;background:transparent;color:inherit;border-radius:4px;"/>
+          style="flex:1;min-width:0;padding:0.6rem 0.8rem;border:1px solid currentColor;background:transparent;color:inherit;border-radius:4px;"/>
         <!-- Honeypot field to deter bots -->
         <input type="text" name="hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-10000px;opacity:0;" aria-hidden="true"/>
         <button id="gsSubmit" type="submit" class="button" style="padding:0.6rem 0.9rem;">Sign Up</button>
