@@ -665,6 +665,30 @@
     .popup .action-btn:hover { background: #00cc00; border-color: #00cc00; }
 
     /* ============================= */
+    /* TWO-COLUMN DESKTOP LAYOUT */
+    /* ============================= */
+    @media (min-width: 900px) {
+      ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+        gap: 0;
+      }
+
+      /* Vertical glowing column divider on col-1 items */
+      ul > li:nth-child(odd):not(:last-child)::before {
+        content: '';
+        position: absolute;
+        top: 1.5rem;
+        bottom: 0;
+        right: 0;
+        width: 1px;
+        background: rgba(0, 255, 0, 0.3);
+        box-shadow: 0 0 6px rgba(0, 255, 0, 0.5), 0 0 14px rgba(0, 255, 0, 0.2);
+      }
+    }
+
+    /* ============================= */
     /* RESPONSIVE */
     /* ============================= */
    @media (max-width: 900px) {
@@ -1289,7 +1313,7 @@
       <a href="#newsletter" id="fwToNewsletter">Newsletter Sign-Up</a>
     </div>
   </div>
-  <button id="spryteWidgetReopen" class="floating-reopen" aria-label="Open quick links" style="display:none;">Open Spryte Links</button>
+  <button id="spryteWidgetReopen" class="floating-reopen" aria-label="Open quick links" style="display:none;">Support Us! Sign Up!</button>
 
   <!-- ============================= -->
   <!-- FOOTER -->
