@@ -149,13 +149,13 @@
     figcaption {
       color: var(--muted);
       font-family: "Inter", "Trebuchet MS", sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.875rem;
       line-height: 1.4;
     }
 
     .essay-card h2 {
       margin: 0 0 0.8rem;
-      font-size: clamp(1.3rem, 1.3vw + 1rem, 2rem);
+      font-size: 0.875rem;
       line-height: 1.1;
       font-family: "Inter", Arial, sans-serif;
       letter-spacing: 0.02em;
@@ -166,7 +166,7 @@
       margin: 0 0 1rem;
       font-family: "Inter", "Trebuchet MS", sans-serif;
       line-height: 1.65;
-      font-size: 1.03rem;
+      font-size: 0.875rem;
       max-width: 72ch;
       text-indent: 0;
       padding-left: 1.1em;
@@ -206,7 +206,7 @@
       cursor: pointer;
       font: inherit;
       font-weight: 400;
-      font-size: 1.05rem;
+      font-size: 0.875rem;
       line-height: 1;
       opacity: 0.2;
       transition: opacity 180ms ease, text-shadow 180ms ease;
@@ -275,6 +275,23 @@
         opacity: 1;
       }
     }
+
+    @media (min-width: 761px) {
+      #prevBtn,
+      #nextBtn {
+        font-size: 1.7rem;
+        padding: 0.4rem 0.75rem 0.52rem;
+        border: 1px solid rgba(0, 255, 102, 0.55);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .carousel-body {
+        padding: 0 3.5rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -301,9 +318,11 @@
 
           <article class="card essay-card" data-type="essay">
             <div class="card-inner">
-              <figure class="inline-media">
-                <img src="images/NeverBefore/E1/E1_realimaginary.png" alt="Real and imaginary spacetime diagram" loading="lazy" />
+              <figure class="inline-media" style="display:flex; justify-content:flex-end;">
+                <img src="images/NeverBefore/E1/E1_realimaginary.png" alt="Real and imaginary spacetime diagram" loading="lazy" style="width:60%;" />
               </figure>
+
+              <div style="height:30vh;"></div>
 
               <h2>A Narrative on Mass</h2>
               <p>Every known object in the universe is given a certain amount of mass - a totally dimensionless property which tells us how much matter is in that object. It quantifies the density of its internal particles and indicates how tightly packed together they are. This property is not pre-determined by the object's shape or size - a balloon is usually much larger than an apple, yet the internal composition of the latter is such that it most likely has a much greater mass.</p>
@@ -319,7 +338,7 @@
               <p>If the mass of a dying star is at a solar rate higher than 2.8, gravity can successfully override any resistance from the star's core. Once the size of the compressed core gets down to about 18km, the escape velocity becomes equal to the speed of light. At this rate, nothing can escape the gravitational pull of this singularity, not even light or information. We are left with a colourless region known as a black hole. The boundary that marks the black hole's fatal reach, the gateway between a near miss and an endless dive, is referred to as the event horizon.</p>
 
               <figure class="inline-media">
-                <img src="images/NeverBefore/E1/E1_spacetimewarping.png" alt="Spacetime warping diagram across stellar collapse outcomes" loading="lazy" />
+                <img src="images/NeverBefore/E1/E1_spacetimewarping.png" alt="Spacetime warping diagram across stellar collapse outcomes" loading="lazy" style="transform: rotate(90deg); transform-origin: center center;" />
               </figure>
             </div>
           </article>
