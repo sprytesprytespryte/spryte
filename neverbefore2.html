@@ -274,6 +274,14 @@
         opacity: 1;
       }
     }
+
+    body.white-page {
+      background: #ffffff;
+    }
+
+    body.white-page .brand {
+      border-bottom-color: #000;
+    }
   </style>
 </head>
 <body>
@@ -352,7 +360,7 @@
             </div>
           </article>
 
-          <article class="card essay-card" data-type="essay" style="background:#ffffff;">
+          <article class="card essay-card" data-type="essay" style="background:#ffffff;" data-bg="white">
             <div class="card-inner" style="background:#ffffff; color:#000; scrollbar-color:#444 transparent;">
               <h2 style="color:#ffffff; -webkit-text-stroke:2px #000000; paint-order:stroke fill; animation:none;">M87* &amp; SGR A*</h2>
               <figure class="inline-media">
@@ -393,7 +401,7 @@
             </div>
           </article>
 
-          <article class="card essay-card" data-type="essay" style="background:#ffffff;">
+          <article class="card essay-card" data-type="essay" style="background:#ffffff;" data-bg="white">
             <div class="card-inner" style="background:#ffffff; color:#000; scrollbar-color:#444 transparent;">
               <h2 style="color:#ffffff; -webkit-text-stroke:2px #000000; paint-order:stroke fill; animation:none;">OBSERVING THE EVENT HORIZON</h2>
               <div style="background:#fff100; color:#000; padding:0.8em 1.1em; margin:0 0 1.2rem; font-family:'Inter',Arial,sans-serif; font-weight:700; font-size:1rem; line-height:1.65; max-width:72ch;">After years of planning and testing, in April 2017 EHT were ready to make their biggest attempt at recording galaxy M87's black hole. Teams were allocated to each telescope in the global network and sent to their designated locations across the planet, driving into high altitudes and arid climates - the standard conditions necessary for most telescope operations.</div>
@@ -417,17 +425,17 @@
             </div>
           </article>
 
-          <article class="card essay-card" data-type="essay">
-            <div class="card-inner">
+          <article class="card essay-card" data-type="essay" style="background:#ffffff;" data-bg="white">
+            <div class="card-inner" style="background:#ffffff; color:#000; scrollbar-color:#444 transparent;">
               <figure class="inline-media">
                 <img src="images/NeverBefore/E2/E2_MTBHI_Apex_Door.png" alt="APEX door with tape for ventilation" loading="lazy" />
-                <figcaption style="font-family:'athelas',Georgia,serif; font-size:0.75rem; color:var(--muted);">Still from <em>How to See a Black Hole: The Universe's Greatest Mystery</em> (2019) Copyright: BBC</figcaption>
+                <figcaption style="font-family:'athelas',Georgia,serif; font-size:0.75rem; color:#555;">Still from <em>How to See a Black Hole: The Universe's Greatest Mystery</em> (2019) Copyright: BBC</figcaption>
               </figure>
-              <p>At APEX, while preparing the telescope for the 2017 global observation, the scientists noticed that the atomic clock - responsible for time-stamping the data so that it can be aligned with results from the other telescopes to form the image - began to overheat. Running out of time, with millions of dollars of funding and hundreds of team members counting on the telescope to take part in the array, the team decided to use a piece of tape to keep the door ajar, providing just enough ventilation for the hardware to function.</p>
+              <p style="color:#000;">At APEX, while preparing the telescope for the 2017 global observation, the scientists noticed that the atomic clock - responsible for time-stamping the data so that it can be aligned with results from the other telescopes to form the image - began to overheat. Running out of time, with millions of dollars of funding and hundreds of team members counting on the telescope to take part in the array, the team decided to use a piece of tape to keep the door ajar, providing just enough ventilation for the hardware to function.</p>
             </div>
           </article>
 
-          <article class="card essay-card" data-type="essay" style="background:#ffffff;">
+          <article class="card essay-card" data-type="essay" style="background:#ffffff;" data-bg="white">
             <div class="card-inner" style="background:#ffffff; color:#000; scrollbar-color:#444 transparent;">
               <h2 style="color:#ffffff; -webkit-text-stroke:2px #000000; paint-order:stroke fill; animation:none;">CALIBRATION</h2>
               <div style="background:#fff100; color:#000; padding:0.8em 1.1em; margin:0 0 1.2rem; font-family:'Inter',Arial,sans-serif; font-weight:700; font-size:1rem; line-height:1.65; max-width:72ch;">The correlators took the data from every telescope and, by using the time signatures embedded by the atomic clocks, found the exact wavefront that arrived at each telescope from the source, from which they could temporally align all the individual datasets. Averages could now be applied to begin to compress the information into a more workable size, from heavy petabytes down to megabytes which can be emailed between international team members much more easily. To remove imperfections caused by the instruments themselves and the atmosphere above the telescopes, EHT used processes like fringe-fitting to take out any distracting noise and clean up the data to prepare it for image reconstruction. Weak signals were found and then amplified into strong signals to aid the imaging process.</div>
@@ -450,7 +458,7 @@
             </div>
           </article>
 
-          <article class="card essay-card" data-type="essay" style="background:#ffffff;">
+          <article class="card essay-card" data-type="essay" style="background:#ffffff;" data-bg="white">
             <div class="card-inner" style="background:#ffffff; color:#000; scrollbar-color:#444 transparent;">
               <figure class="inline-media">
                 <img src="images/NeverBefore/E2/E2_MTBHI_ComputationalImagingProblem.png" alt="Computational imaging problem visualisation" loading="lazy" />
@@ -459,10 +467,102 @@
             </div>
           </article>
 
-          <article class="card essay-card" data-type="essay" style="background:#ffffff;">
+          <article class="card essay-card" data-type="essay" style="background:#ffffff;" data-bg="white">
             <div class="card-inner" style="background:#ffffff; color:#000; scrollbar-color:#444 transparent;">
               <h2 style="color:#ffffff; -webkit-text-stroke:2px #000000; paint-order:stroke fill; animation:none;">FILLING IN THE GAPS</h2>
-              <div style="background:#fff100; color:#000; padding:0.8em 1.1em; margin:0 0 1rem; font-family:'Inter',Arial,sans-serif; font-weight:700; font-size:1rem; line-height:1.65; max-width:72ch;">a telescope the size of the Earth, the data it collects only produces information for a very small part of the image since the array of telescopes used in 2017 could only produce 10 data points.&#x2060; The rest of the image must be created through image reconstruction, which consists of a mixture of computational tools such as image processing algorithms and human judgement.<br><br>In a TEDtalk two years prior to the release of the black hole image, EHT member Katie Bouman compared the team's network of telescopes to a broken disco ball. Just like how a disco ball should consist of many tiny mirrors completely covering its surface area, an ideal network of telescopes would mean that every single one of those mirrors was in fact a telescope, positioned in every possible location on the planet, providing full coverage of any celestial target within range. In reality, the current set-up of ground-based telescopes on Earth is more similar to a disco ball with most of its mirrors knocked out and just a handful remaining, scattered across its surface.</div>
+              <div style="background:#fff100; color:#000; padding:0.8em 1.1em; margin:0 0 1rem; font-family:'Inter',Arial,sans-serif; font-weight:700; font-size:1rem; line-height:1.65; max-width:72ch;">Even though EHT's array simulates the capabilities of a telescope the size of the Earth, the data it collects only produces information for a very small part of the image since the array of telescopes used in 2017 could only produce 10 data points.&#x2060; The rest of the image must be created through image reconstruction, which consists of a mixture of computational tools such as image processing algorithms and human judgement.<br><br>In a TEDtalk two years prior to the release of the black hole image, EHT member Katie Bouman compared the team's network of telescopes to a broken disco ball. Just like how a disco ball should consist of many tiny mirrors completely covering its surface area, an ideal network of telescopes would mean that every single one of those mirrors was in fact a telescope, positioned in every possible location on the planet, providing full coverage of any celestial target within range. In reality, the current set-up of ground-based telescopes on Earth is more similar to a disco ball with most of its mirrors knocked out and just a handful remaining, scattered across its surface.</div>
+            </div>
+          </article>
+
+          <article class="card essay-card" data-type="essay" style="background:#ffffff;" data-bg="white">
+            <div class="card-inner" style="background:#ffffff; color:#000; scrollbar-color:#444 transparent;">
+              <h2 style="color:#ffffff; -webkit-text-stroke:2px #000000; paint-order:stroke fill; animation:none;">RECONSTRUCTION:<br>1. SYNTHETIC DATA TESTS</h2>
+              <div style="background:#fff100; color:#000; padding:0.8em 1.1em; margin:0 0 1.2rem; font-family:'Inter',Arial,sans-serif; font-weight:700; font-size:1rem; line-height:1.65; max-width:72ch;">Years before EHT had collected data from M87*, they were running tests with synthetic data to check that their imaging methods were sufficient. Since they would not be able to compare their real results against any existing images and there is a strong collective bias to assume or hope that it will end up looking like a bright disk or ring (based on scientific theory and equally visual culture), EHT focussed their efforts on not just verifying their imaging methods but also minimising human intervention as much as possible.<br><br>The team underwent various imaging challenges, in which their imaging algorithms and pipelines would take the synthetic data (without any information on the "true" image which it was converted from) and reconstruct it into an image that the computational methods believed was correct. Participants were split into teams and asked to select their preferred method to process the data, equally unaware of what the original source image was. Each team produced a slightly different image result, however there would be major common features and clear anomalies which allowed them to discern what they believed and did not believe in the images that they produced. Moreover, the most successful methods produced images with a strong likeness to the original true image, indicating that they would do the same with the real M87* data.<br><br>The teams were also given data from unknown source images which were completely unexpected, such as the image of a snowman. This allowed the testers to check if the teams were inputting any bias on their imaging methods by choosing parameters which would encourage the data to produce a black hole-like shape. Luckily, each team produced a reconstructed image which stayed very close to the original snowman image, indicating that there was not an override of bias in the imaging process.</div>
+              <figure class="inline-media">
+                <img src="images/NeverBefore/E2/E2_MTBHI_akiyama.png" alt="Synthetic data imaging test results" loading="lazy" />
+              </figure>
+            </div>
+          </article>
+
+          <article class="card essay-card" data-type="essay" style="background:#ffffff;" data-bg="white">
+            <div class="card-inner" style="background:#ffffff; color:#000; scrollbar-color:#444 transparent;">
+              <h2 style="color:#ffffff; -webkit-text-stroke:2px #000000; paint-order:stroke fill; animation:none;">RECONSTRUCTION:<br>2. BLIND IMAGING OF REAL M87* DATA</h2>
+              <figure class="inline-media">
+                <img src="images/NeverBefore/E2/E2_MTBHI_Katie%20Bouman_screen.png" alt="Katie Bouman's reaction to initial M87* results" loading="lazy" />
+                <figcaption style="font-family:'athelas',Georgia,serif; font-size:0.75rem; color:#555;">Crop showing laptop screen from the highly disseminated image of Katie Bouman's reaction after seeing initial results from the team experiment.<br><em>EHT Collaboration</em></figcaption>
+              </figure>
+              <div style="background:#fff100; color:#000; padding:0.8em 1.1em; margin:1.2rem 0; font-family:'Inter',Arial,sans-serif; font-weight:700; font-size:1rem; line-height:1.65; max-width:72ch;">Having evaluated their methods, EHT were ready to handle the real M87* data once collected in 2017 and calibrated for imaging. They organised four international teams which were given the real data to work on for a seven week period. They were asked to select one algorithm to blindly reconstruct the image and then to select what they thought was the best outcome, working independently from other teams to avoid any external influences.<br><br>After seven weeks, they reconvened and compared results: every final image shared the same emissive ring of light surrounding a dark central shadow, measuring at 40 microarcseconds across, with a brighter intensity in the lower section of the ring.</div>
+              <figure class="inline-media">
+                <img src="images/NeverBefore/E2/E2_MTBHI_apjlab0e85f4_hr.jpeg" alt="Four blind reconstructions of M87* by EHT imaging teams" loading="lazy" />
+              </figure>
+              <p style="color:#000; font-family:'athelas',Georgia,serif; font-size:0.9rem; line-height:1.7; max-width:72ch; margin:0.8rem 0 0; padding-left:0; font-style:italic;">"The first EHT images of M87, blindly reconstructed by four independent imaging teams using an early, engineering release of data from the April 11 observations ... Images from Teams 1 and 2 used RML methods (no restoring beam); images from Teams 3 and 4 used CLEAN (restored with a circular 20 &#956;as beam, shown in the lower right). The images all show similar morphology, although the reconstructions show significant differences in brightness temperature because of different assumptions regarding the total compact flux density (see Table 2) and because restoring beams are applied only to CLEAN images."</p>
+            </div>
+          </article>
+
+          <article class="card essay-card" data-type="essay" style="background:#ffffff;" data-bg="white">
+            <div class="card-inner" style="background:#ffffff; color:#000; scrollbar-color:#444 transparent;">
+              <h2 style="color:#ffffff; -webkit-text-stroke:2px #000000; paint-order:stroke fill; animation:none;">RECONSTRUCTION:<br>3. OBJECTIVELY CHOOSING IMAGING PARAMETERS</h2>
+              <div style="background:#fff100; color:#000; padding:0.8em 1.1em; margin:0 0 1.2rem; font-family:'Inter',Arial,sans-serif; font-weight:700; font-size:1rem; line-height:1.65; max-width:72ch;">Even with this unanimous outcome, the teams needed to further test their imaging methods. With their goal image being the first of its kind, there was no other direct image with which they could compare their findings and they were at risk of having produced images that were based more on theoretical ideals and personal preferences. To counter this, they verified their processes by trying to impose various assumptions onto the algorithms as to what kind of image could be produced from the real M87* dataset, to see if it could be influenced by such assumptions.<br><br>To process the data into an image, the team pushes the data through imaging pipelines which contain "knobs" that are constantly being tuned by the user to have more control over the resulting image - a step which EHT tried to remove. To do so, they trained their imaging pipelines on some synthetic data of clear geometric structures (see image), tuning the knobs of the pipelines to successfully create such images from the data given. Once this was achieved, they took those exact parameters and applied them to the real M87* data, which still resulted in an image of the bright asymmetrical ring with a hole in the centre. This showed that even if they tried to coax the pipeline to produce a different type of image, the M87* data will remain independent to external assumptions and still lead to the same recurring features. Equally, if those geometric structures were really present in the M87* data, then this would have been reflected in the resulting images, yet this was not the case.</div>
+              <figure class="inline-media">
+                <img src="images/NeverBefore/E2/E2_MTBHI_Imaging_Pipelines.png" alt="Imaging pipeline knobs" loading="lazy" />
+              </figure>
+              <figure class="inline-media">
+                <img src="images/NeverBefore/E2/E2_MTBHI_Training_on_a_Disk.png" alt="Training imaging pipeline on a disk" loading="lazy" />
+                <figcaption style="font-family:'athelas',Georgia,serif; font-size:0.75rem; color:#555;">Slides from Katie Bouman's Caltech presentation, showing the "knobs" used for each imaging pipeline and a diagram demonstrating their attempts to tune the pipeline to search for certain geometric structures in the M87* data.<br><em>EHT Collaboration</em></figcaption>
+              </figure>
+              <figure class="inline-media">
+                <img src="images/NeverBefore/E2/E2_MTBHI_apjlab0e85f10_hr_edited.png" alt="M87* imaging pipeline results" loading="lazy" />
+              </figure>
+            </div>
+          </article>
+
+          <article class="card essay-card" data-type="essay" style="background:#ffffff;" data-bg="white">
+            <div class="card-inner" style="background:#ffffff; color:#000; scrollbar-color:#444 transparent;">
+              <figure class="inline-media">
+                <img src="images/NeverBefore/E2/E2_MTBHI_apjlab0e85f6_hr.jpg" alt="DIFMAP parameter survey results on real and synthetic data" loading="lazy" />
+                <figcaption style="font-family:'athelas',Georgia,serif; font-size:0.75rem; color:#555;">"Selection of the DIFMAP (CLEAN) parameter survey results on real and synthetic data with April 11 EHT baseline coverage. A 2D slice of the 5D parameter space is displayed, corresponding to different diameters of the circular mask and the data weight on ALMA in self-calibration. All other parameters are kept constant (Compact Flux = 0.5 Jy, &#954; = &#8722;1, Stop Condition = Flux Reached). The left panel shows results of the parameter search on the Crescent synthetic data, while the right panel shows reconstructions for the same parameters on M87 data. Images that meet the threshold for the Top Set are outlined in green."<br><em>EHT Collaboration</em></figcaption>
+              </figure>
+              <div style="background:#fff100; color:#000; padding:0.8em 1.1em; margin:1.2rem 0 0; font-family:'Inter',Arial,sans-serif; font-weight:700; font-size:1rem; line-height:1.65; max-width:72ch;">The team ran 100,000s of imaging parameters on the M87* data, and chose 1,500 images which were considered top-ranking amongst each slice (see image). These final approved images represent possible image outputs of the data which are all deemed valid or truthful in their own way. The difference between these collective final images reflects differences in the parameters selected during the imaging process.</div>
+            </div>
+          </article>
+
+          <article class="card essay-card" data-type="essay" style="background:#ffffff;" data-bg="white">
+            <div class="card-inner" style="background:#ffffff; color:#000; scrollbar-color:#444 transparent;">
+              <h2 style="color:#ffffff; -webkit-text-stroke:2px #000000; paint-order:stroke fill; animation:none;">A FINAL IMAGE</h2>
+              <figure class="inline-media">
+                <img src="images/NeverBefore/E2/E2_MTBHI_BlurredtoEquivalentResolution.png" alt="Final images blurred and merged to equivalent resolution" loading="lazy" />
+                <figcaption style="font-family:'athelas',Georgia,serif; font-size:0.75rem; color:#555;">Slide from Katie Bouman's Caltech presentation, demonstrating how final images from each imaging pipeline were blurred and merged together to create an overall image to represent the data collected on 11 April.<br><em>EHT Collaboration</em></figcaption>
+              </figure>
+              <figure class="inline-media">
+                <img src="images/NeverBefore/E2/E2_MTBHI_apjlab0ec7f3_hr.jpeg" alt="EHT image of M87* from April 11 2017 and stability across days" loading="lazy" />
+                <figcaption style="font-family:'athelas',Georgia,serif; font-size:0.75rem; color:#555;">"Top: EHT image of M87* from observations on 2017 April 11 as a representative example of the images collected in the 2017 campaign. The image is the average of three different imaging methods after convolving each with a circular Gaussian kernel to give matched resolutions. The largest of the three kernels (20 &#956;as FWHM) is shown in the lower right. Bottom: similar images taken over different days showing the stability of the basic image structure and the equivalence among different days. North is up and east is to the left."<br><em>EHT Collaboration</em></figcaption>
+              </figure>
+              <div style="background:#fff100; color:#000; padding:0.8em 1.1em; margin:1.2rem 0 0; font-family:'Inter',Arial,sans-serif; font-weight:700; font-size:1rem; line-height:1.65; max-width:72ch;">The team merged three of the final images from each pipeline to produce a conclusive average which could be both an endpoint to this particular exercise and a representation of the entire research project to date. This final image shows a complete yet asymmetrical circle of bright energy which represents the photon ring - the area just outside the event horizon where matter can orbit the collapsed star without falling in. The increased luminosity in the bottom half indicates to scientists that the black hole is rotating clockwise towards Earth.<br><br>This final image is a compression of the initial &#8776;5 petabytes of data, down to just a few hundred kilobytes. The European Space Observatory's online image archive offers the black hole image in various sizes, swelling all the way up to 183MB for a "Fullsize Original". It even transforms from its square format into a vast landscape of negative space, ready for its highly anticipated 2019 release into the public world.</div>
+            </div>
+          </article>
+
+          <article class="card image-card" data-type="image">
+            <div class="card-inner" style="padding:0;">
+              <figure style="margin:0; height:100%; display:flex; align-items:center; justify-content:center; background:#000;">
+                <img src="images/NeverBefore/E2/E2_MTBHI_M87_Image.jpg" alt="The first image of a black hole, M87*" loading="lazy" style="width:100%; height:100%; object-fit:contain;" />
+              </figure>
+            </div>
+          </article>
+
+          <article class="card image-card" data-type="image" style="background:#ffffff;" data-bg="white">
+            <div class="card-inner" style="background:#ffffff; padding:0;">
+              <figure style="margin:0; height:100%; display:flex; align-items:center; justify-content:center; background:#ffffff;">
+                <img src="images/NeverBefore/E2/E2_MTBHI_Pre10th_NSF.png" alt="Pre-10th NSF announcement" loading="lazy" style="width:100%; height:100%; object-fit:contain;" />
+              </figure>
+            </div>
+          </article>
+
+          <article class="card" data-type="essay">
+            <div class="card-inner">
+              <div style="display:grid; grid-template-columns:28% 1fr; gap:0 1.2rem; align-items:start; max-width:80ch;">
+                <div style="font-family:'Inter',Arial,sans-serif; font-size:0.82rem; font-weight:700; color:var(--muted); line-height:1.5; padding-top:0.15em;">EMILY CONOVER:<br><span style="font-weight:400;">(reporter for <em>Science News</em>)</span></div>
+                <p style="font-family:'athelas',Georgia,serif; font-size:1rem; line-height:1.65; color:var(--ink); margin:0; padding-left:0;">Sitting in the audience watching the announcement of the first image of a black hole was a thrilling experience. There was a collective sense of tense anticipation from the scientists, journalists, and government officials gathered to watch it. The scientists were about to unveil never-before-seen details of what are perhaps the most mysterious and fascinating objects in the universe, black holes. In the moments before that orange doughnut flashed on the screen for the first time, I held my breath. As soon as I saw it, I knew instantly that it would be an iconic image, one that would be plastered across websites and newspapers across the world. This was great, because my publication, Science News, had been preparing our readers for this for weeks, with a video and news stories anticipating the image's release.<br><br>Personally, I had been worried that the image would be disappointing — too blurry to make out the black hole's shadow very well, for example. But it was stunning, and clearly evoked an appropriately deep sense of wonder. On the Science News website, the article on the discovery was wildly popular. I think that's partly because humans tend to crave visual imagery. That picture immediately made these ethereal cosmic objects somehow more tangible. And our readers couldn't get enough of it.</p>
+              </div>
             </div>
           </article>
 
@@ -515,6 +615,7 @@
         counter.textContent = (index + 1) + " / " + cards.length;
         prevBtn.disabled = index === 0;
         nextBtn.disabled = index === cards.length - 1;
+        document.body.classList.toggle("white-page", cards[index].dataset.bg === "white");
       }
 
       function goTo(nextIndex) {

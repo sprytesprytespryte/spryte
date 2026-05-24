@@ -95,10 +95,9 @@
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <!-- Favicon -->
-  <link rel="icon" href="images/favicon/favicon.ico" sizes="any">
-  <link rel="icon" href="images/favicon/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="images/favicon/apple-touch-icon.png">
-  <link rel="manifest" href="images/favicon/site.webmanifest">
+  <link rel="icon" href="images/spryte%20flower%20favicon.png?v=3" sizes="any" type="image/png">
+  <link rel="shortcut icon" href="images/spryte%20flower%20favicon.png?v=3" type="image/png">
+  <link rel="apple-touch-icon" href="images/spryte%20flower%20favicon.png?v=3">
   <meta name="theme-color" content="#000000">
   <style>
     
@@ -787,13 +786,6 @@
   <!-- ============================= -->
   <!-- TWITCH PLAYER -->
   <!-- ============================= -->
-  <script>
-    // ===========================
-    // Toggle Twitch Player here:
-    // set to true to show, false to hide
-    const showTwitch = true;
-    // ===========================
-  </script>
 
   <script>
     // Ensure the news banner animation is enabled as soon as the DOM is ready.
@@ -918,8 +910,19 @@
     });
   </script>
 
-  <div id="twitchPlayer" style="width:100%; max-width:800px; margin: 2rem auto; position: relative;">
+  <script>
+    // ===========================
+    // Toggle Twitch Player here:
+    // set to true to show, false to hide
+    const showTwitch = false;
+    // ===========================
+    document.addEventListener('DOMContentLoaded', function () {
+      var player = document.getElementById('twitchPlayer');
+      if (player) player.style.display = showTwitch ? 'block' : 'none';
+    });
+  </script>
 
+  <div id="twitchPlayer" style="width:100%; max-width:800px; margin: 2rem auto; position: relative;">
     <iframe
       src="https://player.twitch.tv/?channel=spryte_spryte_spryte&parent=spryte.info&parent=www.spryte.info&parent=localhost&parent=127.0.0.1"
       height="480"
@@ -1322,7 +1325,7 @@
   <!-- FOOTER -->
   <!-- ============================= -->
   <div style="text-align:center; padding: 3rem 0 1.5rem;">
-    <img src="images/spryte flower favicon.png" alt="Spryte" style="width: 50%; max-width: 300px;">
+    <img src="images/spryte flower favicon.png" alt="Spryte" style="width: 25%; max-width: 150px;">
   </div>
   <footer>© 2026 Spryte. All rights reserved.</footer>
 
