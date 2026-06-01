@@ -78,7 +78,8 @@
       }
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Play:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <!-- Large screen fixes -->
   <style>
     @media screen and (min-width: 1920px) {
@@ -109,16 +110,14 @@
       font-family: 'Inter', Arial, sans-serif;
       font-size: 0.875rem;
       background: #000;
-      color: #0f0;
+      color: #ffffff;
       overflow-x: hidden;
-      width: 100%;
     }
     header {
       position: relative;
       height: 6rem;
-      /* border-bottom removed per request */
+      border-bottom: 2px solid #0f0;
       overflow: hidden;
-      width: 100%;
     }
     .logo {
       /* Center the logo like on the home page */
@@ -156,15 +155,12 @@
       0%   { filter: hue-rotate(0deg); }
       100% { filter: hue-rotate(360deg); }
     }
-    h1 {
-      font-size: 2.5rem;
-      /* Inside .archive-list, so no extra horizontal padding needed */
-      margin: 0 0 1rem 0;
-      text-align: left;
+    h1, h2 {
+      font-size: 1.15rem;
+      margin: 0 0 0.4rem;
+      display: inline-block;
       animation: textHue 20s linear infinite;
-    }
-    h2 {
-      animation: textHue 20s linear infinite;
+      text-transform: uppercase;
     }
   /* Make wiggle lines full-bleed across screen (viewport width technique) */
   .wiggle-separator {
@@ -200,11 +196,10 @@
   /* (path non-scaling-stroke already set above) */
     .archive-list {
       margin: 2rem auto;
-      max-width: 800px;
       padding: 0;
     }
-    .archive-list > *:not(.wiggle-separator) {
-      padding: 0 1rem;
+    .artist-block {
+      padding: 1.5rem;
     }
     @keyframes fadeColor {
       0%   { background: rgba(255,0,0,0.2); }
@@ -217,23 +212,44 @@
       margin: 0;
     }
     li {
-      border-bottom: 2px solid #0f0;
       padding: 1.5rem;
       margin: 0;
+      position: relative;
+    }
+    ul > li:not(:last-child)::after {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 1.5rem;
+      right: 1.5rem;
+      height: 1px;
+      background: rgba(0, 255, 0, 0.3);
+      box-shadow: 0 0 6px rgba(0, 255, 0, 0.5), 0 0 14px rgba(0, 255, 0, 0.2);
     }
     .archive-text {
-      font-size: 1rem;
-      line-height: 1.5;
+      font-size: 0.875rem;
+      line-height: 1.2;
       animation: textHue 20s linear infinite;
     }
 
+    p:not(.no-hue) {
+      animation: textHue 20s linear infinite;
+    }
+
+    .listen-links a {
+      color: #0ff;
+      text-decoration: none;
+      margin: 0 0.3rem;
+    }
+    .listen-links a:hover {
+      text-decoration: underline;
+    }
+
     .artist-title-box {
-      border: 1px solid currentColor;
-      border-radius: 4px;
-      padding: 0.5rem 1rem;
-      margin-bottom: 0.7rem;
+      padding: 0.25rem 0;
+      margin-bottom: 0.3rem;
       display: inline-block;
-      background: rgba(0,255,0,0.03);
       animation: textHue 20s linear infinite;
     }
 
@@ -254,26 +270,31 @@
       font-size: 0.8rem;
       animation: textHue 20s linear infinite;
     }
-    @media (max-width: 600px) {
-      h1 { font-size: 1.5rem; }
-      .archive-text { font-size: 0.9rem; }
-      .logo {
-        max-width: 90vw;
-        max-height: 60%;
+    @media (min-width: 900px) {
+      .archive-list {
+        columns: 2;
+        column-gap: 0;
+        column-rule: 1px solid rgba(0, 255, 0, 0.4);
+      }
+      .artist-block {
+        break-inside: avoid;
+      }
+      /* Contain wiggle separators within columns at desktop */
+      .archive-list .wiggle-separator {
+        width: 100%;
+        left: auto;
+        transform: none;
+        margin-left: 0;
+        margin-right: 0;
       }
     }
 
-    /* Desktop: keep text compact and left-aligned under headings */
-    @media (min-width: 1200px) {
-      .archive-list { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-      .archive-list .artist-block,
-      .archive-list .archive-text,
-      .archive-list p { max-width: 900px; }
-      /* Ensure wiggle separators are not constrained */
-      .wiggle-separator {
-        max-width: none !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
+    @media (max-width: 900px) {
+      h1, h2 { font-size: 1rem; }
+      .archive-text { font-size: 0.875rem; }
+      .logo {
+        max-width: 90vw;
+        max-height: 60%;
       }
     }
   </style>
@@ -297,6 +318,29 @@
   
   <div class="archive-list">
   <h1>ARCHIVE</h1>
+  <div class="artist-block" id="spryte-presents-outplaying-elite-table-tennis">
+    <div class="artist-title-box"><h2>SPRYTE PRESENTS: OUTPLAYING ELITE TABLE TENNIS PLAYERS WITH AN AUTONOMOUS ROBOT</h2></div>
+    <img src="images/Acerobot.png" alt="Spryte Presents: Outplaying Elite Table Tennis Players with an Autonomous Robot Still" class="artist-img" />
+    <div class="archive-text" style="margin-top:1rem;">
+      <span class="streamed-date">Streamed on Sunday 10th May 2026, 12:00 - 00:00 (BST/UTC+1)</span><br><br>
+      <strong>Outplaying elite table tennis players with an autonomous robot</strong><br>
+      D&uuml;rr, P., El Gheche, M., Maeda, G.J. <em>et al.</em><br><br>
+      Artificial intelligence (AI) systems now challenge or surpass human experts in many computer games. Physical and real-time sports such as table tennis, however, remain a major open challenge because of their requirements for fast, precise and adversarial interactions near obstacles and at the edge of human reaction time. Here we present Ace, to our knowledge the first real-world autonomous system competitive with elite human table tennis players. Ace addresses the challenges of physical real-time interaction through a new, high-speed perception system using event-based vision sensors, and a new control system based on model-free reinforcement learning, as well as state-of-the-art high-speed robot hardware. Evaluated in matches against elite and professional players under official competition rules, Ace achieved several victories and demonstrated consistent returns of high-speed, high-spin shots. These results highlight the potential of physical AI agents to perform complex, real-time interactive tasks, suggesting broader applications in domains requiring fast, precise human&ndash;robot interaction.<br><br>
+      Available via Open Access<br>
+      CC BY-NC-ND 4.0<br><br>
+      D&uuml;rr, P., El Gheche, M., Maeda, G.J. <em>et al.</em> Outplaying elite table tennis players with an autonomous robot. <em>Nature</em> <strong>652</strong>, 886&ndash;891 (2026). <a href="https://doi.org/10.1038/s41586-026-10338-5" target="_blank" style="color:#0ff;">https://doi.org/10.1038/s41586-026-10338-5</a>
+    </div>
+  </div>
+  <div class="wiggle-separator" style="margin:3rem 0;">
+    <svg width="100%" height="24" viewBox="0 0 1920 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+      <path d="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12" stroke="#0ff" stroke-width="2" fill="transparent">
+        <animate attributeName="d" dur="2s" repeatCount="indefinite"
+          values="M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                  M0 12 Q 120 24, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12;
+                  M0 12 Q 120 0, 240 12 T 480 12 T 720 12 T 960 12 T 1200 12 T 1440 12 T 1680 12 T 1920 12"/>
+      </path>
+    </svg>
+  </div>
   <div class="artist-block" id="pam-virada">
     <div class="artist-title-box"><h2>Pam Virada: Sonnet for Si Chang</h2></div>
     <img src="images/PamVirada2.jpg" alt="Pam Virada Still" class="artist-img" />
