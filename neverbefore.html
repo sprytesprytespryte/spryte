@@ -287,6 +287,59 @@
         padding: 0 3.5rem;
       }
     }
+
+    #map-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: #080000;
+    }
+    #map-section canvas {
+      display: block;
+      position: absolute;
+      inset: 0;
+    }
+    #map-ui {
+      position: absolute;
+      top: 24px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+    #map-title {
+      font-family: monospace;
+      font-size: clamp(20px, 3.5vw, 36px);
+      color: #ff4444;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px #ff1a1a, 0 0 30px #aa0000, 0 0 60px #440000;
+    }
+    #map-sub {
+      font-family: monospace;
+      font-size: 11px;
+      color: rgba(255,80,80,0.4);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+    #map-tip {
+      position: absolute;
+      bottom: 30px;
+      left: 0; right: 0;
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+      font-family: monospace;
+      font-size: clamp(13px, 2vw, 18px);
+      color: #ff8888;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px #ff1a1a, 0 0 30px #880000;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
   </style>
 </head>
 <body>
@@ -304,6 +357,236 @@
     It's a mix of research and materials which, to me, fall within the image's sphere of influence; a mixture of causes, feelings and effects. This research looks at the leaky socio-historical feedback loops which can power an image; cultural anchors within science fiction and expectations on current technological progress; various spectacle- and event-based media which fuel relationships to images; social and technical relationships to vision; the absolute need for funding and its relationship to the major framework of science communication; the taxonomy of big things in deep space...</p>
     <p style="margin: 0;">This upload is a compressed and stripped version of some of the research that I gathered during this time. The full collection was designed, edited and intended for print (something I still very much hope to do), so to ensure its readability online some materials have been omitted.</p>
   </main>
+
+  <section id="map-section">
+    <canvas id="c"></canvas>
+    <div id="map-ui"></div>
+    <div id="map-tip"></div>
+  </section>
+
+  <script>
+  const PAGES = [
+    { label: 'Episode 1',   url: 'neverbefore1.html' },
+    { label: 'Episode 2',   url: 'neverbefore2.html' },
+    { label: 'Episode 3',   url: 'neverbefore3.html' },
+    { label: 'Episode 3.5', url: 'neverbefore3b.html' },
+    { label: 'Episode 4',   url: 'neverbefore4.html' },
+    { label: 'Episode 5',   url: 'neverbefore5.html' },
+    { label: 'Episode 6',   url: 'neverbefore6.html' },
+    { label: 'Episode 7',   url: 'neverbefore7.html' },
+  ];
+
+  const canvas = document.getElementById('c');
+  const ctx = canvas.getContext('2d');
+  const tip = document.getElementById('map-tip');
+  const section = canvas.parentElement;
+
+  const nodeImg = new Image();
+  nodeImg.src = 'images/NeverBefore/E1/E1_xbox.png';
+
+  let W, H, cx, cy, nodes = [], hovered = null, t = 0;
+
+  function resize() {
+    W = canvas.width  = section.offsetWidth;
+    H = canvas.height = section.offsetHeight;
+    cx = W * 0.5;
+    cy = H * 0.3;
+    buildNodes();
+  }
+
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect();
+    return { x: e.clientX - r.left, y: e.clientY - r.top };
+  }
+
+  function project(x3, y3, z3) {
+    const tilt = Math.PI / 5;
+    const yT =  y3 * Math.cos(tilt) - z3 * Math.sin(tilt);
+    const zT =  y3 * Math.sin(tilt) + z3 * Math.cos(tilt);
+    const fov = 1.8, cam = 2.2;
+    const s = fov / (cam + zT);
+    const scale = W * 0.88;
+    return { x: cx + x3 * s * scale, y: cy + yT * s * scale, s };
+  }
+
+  function buildNodes() {
+    const turns = 1.75;
+    const rMin = 0.12, rMax = 0.44;
+    nodes = PAGES.map((page, i) => {
+      const frac = i / (PAGES.length - 1);
+      const angle = -Math.PI/2 + frac * turns * Math.PI * 2;
+      const r = rMin + (rMax - rMin) * (1 - frac);
+      const x3 = Math.cos(angle) * r;
+      const y3 = Math.sin(angle) * r * 0.5;
+      const z3 = frac * 1.1;
+      const { x, y, s } = project(x3, y3, z3);
+      const nr = 7 + (1 - frac) * 18;
+      return { ...page, x, y, nr, frac, i };
+    });
+  }
+
+  function spiralPts(steps = 240) {
+    const turns = 1.75;
+    const rMin = 0.12, rMax = 0.44;
+    const pts = [];
+    for (let k = 0; k <= steps; k++) {
+      const frac = k / steps;
+      const angle = -Math.PI/2 + frac * turns * Math.PI * 2;
+      const r = rMin + (rMax - rMin) * (1 - frac);
+      const x3 = Math.cos(angle) * r;
+      const y3 = Math.sin(angle) * r * 0.5;
+      const z3 = frac * 1.1;
+      const { x, y } = project(x3, y3, z3);
+      pts.push({ x, y, frac });
+    }
+    return pts;
+  }
+
+  function drawBg() {
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  function drawSpiral() {
+    const pts = spiralPts();
+    [[22,0.09,12],[10,0.22,5],[4,0.55,2],[0,0.85,1]].forEach(([blur,alpha,lw]) => {
+      ctx.save();
+      ctx.shadowBlur = blur;
+      ctx.shadowColor = '#ff1a1a';
+      ctx.strokeStyle = `rgba(255,55,55,${alpha})`;
+      ctx.lineWidth = lw;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.beginPath();
+      pts.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+      ctx.stroke();
+      ctx.restore();
+    });
+  }
+
+  function drawNode(n) {
+    const isH = n === hovered;
+    const { x, y, nr } = n;
+    const gr = nr + 6 + (isH ? 8 : 0);
+    const grd = ctx.createRadialGradient(x, y, nr*0.2, x, y, gr + 14);
+    grd.addColorStop(0, `rgba(255,50,50,${isH ? 0.65 : 0.38})`);
+    grd.addColorStop(0.6, `rgba(160,0,0,${isH ? 0.22 : 0.12})`);
+    grd.addColorStop(1, 'rgba(80,0,0,0)');
+    ctx.save(); ctx.fillStyle = grd; ctx.beginPath(); ctx.arc(x, y, gr + 14, 0, Math.PI*2); ctx.fill(); ctx.restore();
+    const core = ctx.createRadialGradient(x - nr*0.2, y - nr*0.2, nr*0.05, x, y, nr);
+    core.addColorStop(0, isH ? '#ffbbbb' : '#ff7777');
+    core.addColorStop(0.45, isH ? '#ff2222' : '#cc1111');
+    core.addColorStop(1, '#550000');
+    ctx.save();
+    ctx.shadowBlur = isH ? 28 : 12; ctx.shadowColor = '#ff1a1a';
+    ctx.fillStyle = core; ctx.beginPath(); ctx.arc(x, y, nr, 0, Math.PI*2); ctx.fill(); ctx.restore();
+    ctx.save();
+    ctx.shadowBlur = 6; ctx.shadowColor = '#ff3333';
+    ctx.strokeStyle = isH ? 'rgba(255,160,160,0.85)' : 'rgba(255,70,70,0.5)';
+    ctx.lineWidth = isH ? 1.5 : 0.8;
+    ctx.beginPath(); ctx.arc(x, y, nr + 3, 0, Math.PI*2); ctx.stroke(); ctx.restore();
+    const fs = Math.max(9, nr * 0.85);
+    ctx.save();
+    ctx.font = `bold ${fs}px monospace`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.shadowBlur = 8; ctx.shadowColor = '#ff0000';
+    ctx.fillStyle = isH ? '#fff' : 'rgba(255,230,230,0.92)';
+    ctx.fillText(n.i + 1, x, y + 1); ctx.restore();
+    // Node image clipped to circle
+    if (nodeImg.complete && nodeImg.naturalWidth) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(x, y, nr, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.globalAlpha = 0.55;
+      ctx.drawImage(nodeImg, x - nr, y - nr, nr * 2, nr * 2);
+      ctx.restore();
+    }
+    if (isH) {
+      const side = x < cx ? -1 : 1;
+      const lx = x + side * (nr + 16);
+      const ly = y;
+      const fs2 = Math.round(10 + (1 - n.frac) * 5);
+      ctx.save();
+      ctx.font = `${fs2}px monospace`; ctx.textAlign = side > 0 ? 'left' : 'right'; ctx.textBaseline = 'middle';
+      const tw = ctx.measureText(n.label).width;
+      const pad = 7;
+      const bx = side > 0 ? lx - pad : lx - tw - pad;
+      ctx.fillStyle = 'rgba(8,0,0,0.82)'; ctx.fillRect(bx, ly - 11, tw + pad*2, 22);
+      ctx.strokeStyle = 'rgba(255,50,50,0.5)'; ctx.lineWidth = 0.8; ctx.strokeRect(bx, ly - 11, tw + pad*2, 22);
+      ctx.shadowBlur = 14; ctx.shadowColor = '#ff1a1a'; ctx.fillStyle = '#ff9999';
+      ctx.fillText(n.label, lx, ly); ctx.restore();
+    }
+  }
+
+  function drawGrain() {
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    const count = (W * H / 80) | 0;
+    for (let i = 0; i < count; i++) {
+      const alpha = Math.random() * 0.07;
+      ctx.fillStyle = `rgba(220,40,40,${alpha})`;
+      ctx.fillRect(Math.random() * W, Math.random() * H, 1, 1);
+    }
+    ctx.restore();
+  }
+
+  function drawScanlines() {
+    ctx.save(); ctx.fillStyle = 'rgba(0,0,0,0.12)';
+    for (let y = 0; y < H; y += 4) { ctx.fillRect(0, y, W, 2); }
+    ctx.restore();
+  }
+
+  function getNode(mx, my) {
+    for (const n of nodes) {
+      const dx = mx - n.x, dy = my - n.y;
+      if (dx*dx + dy*dy < (n.nr + 12) ** 2) return n;
+    }
+    return null;
+  }
+
+  canvas.addEventListener('mousemove', e => {
+    const { x, y } = getPos(e);
+    hovered = getNode(x, y);
+    canvas.style.cursor = hovered ? 'pointer' : 'crosshair';
+    tip.style.opacity = hovered ? '1' : '0';
+    if (hovered) tip.textContent = `[ ${hovered.label} ]`;
+  });
+
+  canvas.addEventListener('mouseleave', () => { hovered = null; tip.style.opacity = '0'; });
+
+  canvas.addEventListener('click', e => {
+    const { x, y } = getPos(e);
+    const n = getNode(x, y);
+    if (n) {
+      const f = Object.assign(document.createElement('div'), {
+        style: 'position:fixed;inset:0;background:rgba(255,0,0,0.2);pointer-events:none;z-index:999;transition:opacity 0.35s'
+      });
+      document.body.appendChild(f);
+      requestAnimationFrame(() => { f.style.opacity = '0'; });
+      setTimeout(() => { window.location.href = n.url; }, 280);
+    }
+  });
+
+  canvas.addEventListener('touchstart', e => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const { x, y } = getPos(touch);
+    const n = getNode(x, y);
+    if (n) window.location.href = n.url;
+  }, { passive: false });
+
+  window.addEventListener('resize', resize);
+  resize();
+
+  (function loop() {
+    t += 0.016;
+    drawBg();
+    drawSpiral();
+    nodes.forEach(drawNode);
+    drawGrain();
+    requestAnimationFrame(loop);
+  })();
+  </script>
 
 </body>
 </html>
