@@ -690,6 +690,46 @@
     }
 
     /* ============================= */
+    /* TWITCH COVER */
+    /* ============================= */
+    #twitchPlayer {
+      position: relative;
+      overflow: hidden;
+    }
+
+    #twitchPlayer .twitch-cover {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/Valentina-Triet_2024_Provider-in-Spring-Summer-2000_Film-still-3.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .twitch-event-box {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      padding: 1rem 1.2rem;
+      border: 2px solid #0f0;
+      background: rgba(0, 255, 0, 0.06);
+      color: #fff;
+      box-sizing: border-box;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .twitch-event-box p {
+      margin: 0 0 0.8rem;
+    }
+
+    .twitch-event-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ============================= */
     /* RESPONSIVE */
     /* ============================= */
    @media (max-width: 900px) {
@@ -923,6 +963,8 @@
 
   <div id="twitchPlayer" style="width:100%; max-width:800px; margin: 2rem auto; position: relative;">
 
+    <div class="twitch-cover" aria-hidden="true"></div>
+
     <iframe
       src="https://player.twitch.tv/?channel=spryte_spryte_spryte&parent=spryte.info&parent=www.spryte.info&parent=localhost&parent=127.0.0.1"
       height="480"
@@ -932,6 +974,15 @@
       frameborder="0"
       style="position:relative; z-index:1;">
     </iframe>
+  </div>
+
+  <div class="twitch-event-box">
+    <p>THIS SUNDAY 21 JUNE, 00:00 - 00:00 on SPRYTE</p>
+    <p>VALENTINA TRIET</p>
+    <p><em>Provider</em></p>
+    <p>1hr 11mins 6secs</p>
+    <p>Courtesy the artist and FELIX GAUDLITZ, Vienna</p>
+    <p>This Sunday, we’ll be streaming a collection of video works from Triet’s <em>Provider</em> series. These five works will stream on a continuous loop, from midnight-to-midnight (BST) on our website (our first ever 24 hour stream)</p>
   </div>
 
 
