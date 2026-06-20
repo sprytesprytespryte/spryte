@@ -73,7 +73,7 @@
       }
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Play:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
   <!-- Large screen fixes -->
   <style>
     @media screen and (min-width: 1920px) {
@@ -107,7 +107,7 @@
     /* ============================= */
     body {
       margin: 0;
-      font-family: 'Inter', Arial, sans-serif;
+      font-family: 'Helvetica', Arial, sans-serif;
       font-size: 0.875rem;
       background: #000;
       color: #ffffff;
@@ -190,7 +190,7 @@
     }
 
     .news-text {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Helvetica', sans-serif;
       font-weight: 700;
       color: #000;
       display: inline-block;
@@ -265,7 +265,7 @@
       color: inherit;
       border: none;
       box-shadow: none;
-      font-family: 'Inter', Arial, sans-serif;
+      font-family: 'Helvetica', Arial, sans-serif;
       font-size: 0.9rem; /* slightly smaller */
       line-height: 1.35;
       letter-spacing: 0;
@@ -273,10 +273,11 @@
 
     /* Theme: Neon glow card (in keeping with site) */
     .about-theme-neon {
-      background: rgba(0, 0, 0, 0.65);
+      background: #0f0;
       border: 1px solid #0f0;
       box-shadow: 0 0 10px rgba(0,255,0,0.35), 0 0 22px rgba(0,255,0,0.18);
       animation: neonPulse 6s ease-in-out infinite;
+      color: #000;
     }
     @keyframes neonPulse {
       0%, 100% { box-shadow: 0 0 8px rgba(0,255,0,0.30), 0 0 18px rgba(0,255,0,0.14); }
@@ -302,7 +303,7 @@
     }
 
     /* Remove global hue-rotation in About and tighten text rhythm */
-  .about-box p { animation: none; margin: 0; line-height: 1.35; font-family: 'Inter', Arial, sans-serif; font-size: 0.9rem; }
+  .about-box p { animation: none; margin: 0; line-height: 1.35; font-family: 'Helvetica', Arial, sans-serif; font-size: 0.9rem; }
 
     /* Blinking continue arrow like vintage RPG boxes */
     .about-box .ff-arrow {
@@ -466,7 +467,7 @@
       box-shadow: 0 0 14px rgba(0,255,0,0.45), 0 0 26px rgba(0,255,0,0.25);
       z-index: 9999;
       overflow: hidden;
-      font-family: 'Inter', Arial, sans-serif;
+      font-family: 'Helvetica', Arial, sans-serif;
     }
     .floating-widget .fw-header {
       display: flex;
@@ -714,11 +715,12 @@
       margin: 0 auto 2rem;
       padding: 1rem 1.2rem;
       border: 2px solid #0f0;
-      background: rgba(0, 255, 0, 0.06);
+      background: #fff;
       color: #fff;
       box-sizing: border-box;
-      line-height: 1.5;
-      font-size: 0.95rem;
+      line-height: 1.35;
+      font-size: 0.9rem;
+      font-family: 'Helvetica', sans-serif;
     }
 
     .twitch-event-box p {
@@ -733,7 +735,7 @@
       font-size: 1.8rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: normal;
       line-height: 1.15;
       animation: textHue 20s linear infinite;
     }
@@ -795,6 +797,27 @@
       }
     }
   .badges-img { max-width: 100%; display: block; margin-bottom: 1em; }
+  .pin-badges-cta {
+    display: inline-block;
+    text-decoration: none;
+    color: #000;
+    background: #0f0;
+    text-transform: uppercase;
+    font-size: 1.3em;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    padding: 0.12rem 0.42rem;
+    line-height: 1.1;
+    border-radius: 2px;
+    box-shadow: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .pin-badges-cta:hover,
+  .pin-badges-cta:focus {
+    transform: translateY(-1px);
+    box-shadow: none;
+    outline: none;
+  }
   @media (min-width: 768px) { .badges-img { max-width: 50%; } }
   </style>
 </head>
@@ -977,8 +1000,6 @@
   </script>
 
   <div id="twitchPlayer" style="width:100%; max-width:800px; margin: 2rem auto; position: relative;">
-
-    <div class="twitch-cover" aria-hidden="true"></div>
 
     <iframe
       src="https://player.twitch.tv/?channel=spryte_spryte_spryte&parent=spryte.info&parent=www.spryte.info&parent=localhost&parent=127.0.0.1"
@@ -1287,7 +1308,7 @@
     -->
   <li id="support">
       <div class="artist-title-box"><h2 style="margin:0;">Support</h2></div>
-      <p><a href="https://spryte.bigcartel.com/" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; text-transform:uppercase; font-size:1.3em;">Pin badges now available!</a></p>
+      <p><a href="https://spryte.bigcartel.com/" target="_blank" rel="noopener noreferrer" class="pin-badges-cta">Pin badges now available!</a></p>
       <p>CLICK ON THE BADGES TO BUY:</p>
       <a href="https://spryte.bigcartel.com/" target="_blank" rel="noopener noreferrer"><img src="images/Both Badges Website Image transp.png" alt="Pin badges" class="badges-img"></a>
       <p>Spryte always pays artists and contributors to show their work
