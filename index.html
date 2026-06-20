@@ -618,8 +618,12 @@
       align-items: center;
     }
 
-    .popup {
+    .popup-wrapper {
       position: relative;
+      display: inline-flex;
+    }
+
+    .popup {
       background: #000; /* solid box */
       border: 2px solid #0f0;
       border-radius: 0;
@@ -639,7 +643,7 @@
   .popup h2 { margin: 0; font-size: 2rem; }
   .popup p { margin: 0; font-size: 0.95rem; }
 
-    .popup .close-btn {
+    .close-btn {
       position: absolute;
       top: 50%;
       right: -2.4rem;
@@ -669,10 +673,16 @@
       .popup {
         max-width: 85%;
       }
-      .popup .close-btn {
+      .popup-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 90%;
+      }
+      .close-btn {
         position: static;
         transform: none;
-        margin-top: 1rem;
+        margin-top: 0.75rem;
         animation: spinSimple 3s linear infinite;
       }
     }
@@ -682,7 +692,7 @@
       to { transform: rotate(360deg); }
     }
 
-    .popup .close-btn:hover {
+    .close-btn:hover {
       background: #00cc00;
     }
 
@@ -874,9 +884,11 @@
   <!-- SUPPORT POPUP -->
   <!-- ============================= -->
   <div class="popup-overlay" id="popupOverlay">
-    <div class="popup">
-    <button class="close-btn" onclick="document.getElementById('popupOverlay').style.display='none'">×</button>
-  <a class="action-btn" href="https://patreon.com/SPRYTE" target="_blank" rel="noopener noreferrer">CLICK HERE TO SUPPORT FROM £1</a>
+    <div class="popup-wrapper">
+      <div class="popup">
+        <a class="action-btn" href="https://patreon.com/SPRYTE" target="_blank" rel="noopener noreferrer">CLICK HERE TO SUPPORT FROM £1</a>
+      </div>
+      <button class="close-btn" onclick="document.getElementById('popupOverlay').style.display='none'">×</button>
     </div>
   </div>
 
