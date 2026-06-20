@@ -891,8 +891,8 @@
   <!-- ============================= -->
   <!-- SUPPORT POPUP -->
   <!-- ============================= -->
-  <div class="popup-overlay" id="popupOverlay">
-    <div class="popup-wrapper">
+  <div class="popup-overlay" id="popupOverlay" onclick="document.getElementById('popupOverlay').style.display='none'">
+    <div class="popup-wrapper" onclick="event.stopPropagation()">
       <div class="popup">
         <a class="action-btn" href="https://patreon.com/SPRYTE" target="_blank" rel="noopener noreferrer">CLICK HERE TO SUPPORT FROM £1</a>
       </div>
