@@ -665,6 +665,23 @@
       to { transform: translateY(-50%) rotate(360deg); }
     }
 
+    @media (max-width: 600px) {
+      .popup {
+        max-width: 85%;
+      }
+      .popup .close-btn {
+        position: static;
+        transform: none;
+        margin-top: 1rem;
+        animation: spinSimple 3s linear infinite;
+      }
+    }
+
+    @keyframes spinSimple {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
     .popup .close-btn:hover {
       background: #00cc00;
     }
