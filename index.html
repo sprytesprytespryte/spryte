@@ -275,8 +275,8 @@
     .about-theme-neon {
       background: #0f0;
       border: 1px solid #0f0;
-      box-shadow: 0 0 10px rgba(0,255,0,0.35), 0 0 22px rgba(0,255,0,0.18);
-      animation: neonPulse 6s ease-in-out infinite;
+      box-shadow: none;
+      animation: none;
       color: #000;
     }
     @keyframes neonPulse {
@@ -463,8 +463,8 @@
       background: #0f0; /* be green */
       color: #000;
       border: 2px solid #0f0;
-      border-radius: 10px;
-      box-shadow: 0 0 14px rgba(0,255,0,0.45), 0 0 26px rgba(0,255,0,0.25);
+      border-radius: 0;
+      box-shadow: none;
       z-index: 9999;
       overflow: hidden;
       font-family: 'Helvetica', Arial, sans-serif;
@@ -517,11 +517,11 @@
       background: #0f0;
       color: #000;
       border: 2px solid #0f0;
-      border-radius: 9999px;
+      border-radius: 0;
       font-weight: 700;
       padding: 8px 12px;
       cursor: pointer;
-      box-shadow: 0 0 12px rgba(0,255,0,0.4);
+      box-shadow: none;
     }
     .floating-reopen:hover { filter: brightness(0.96); }
 
@@ -622,8 +622,8 @@
       position: relative;
       background: #000; /* solid box */
       border: 2px solid #0f0;
-      border-radius: 12px;
-  padding: 3rem 2rem 2rem;
+      border-radius: 0;
+  padding: 2rem;
       color: #0f0;
       max-width: 30%;
       /* allow a sensible minimum so the popup doesn't become unusably small */
@@ -641,8 +641,9 @@
 
     .popup .close-btn {
       position: absolute;
-      top: 0.75rem;
-      right: 0.75rem;
+      top: 50%;
+      right: -2.4rem;
+      transform: translateY(-50%);
       width: 1.6rem;
       height: 1.6rem;
       font-size: 1rem;
@@ -656,6 +657,12 @@
       align-items: center;
       justify-content: center;
       transition: background 0.2s;
+      animation: spin 3s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: translateY(-50%) rotate(0deg); }
+      to { transform: translateY(-50%) rotate(360deg); }
     }
 
     .popup .close-btn:hover {
@@ -667,6 +674,7 @@
       padding: 0.5rem 1rem;
       background: #0f0;
       border: 2px solid #0f0;
+      border-radius: 9999px;
       color: #000;
       cursor: pointer;
       font-size: 1rem;
@@ -715,7 +723,7 @@
       margin: 0 auto 2rem;
       padding: 1rem 1.2rem;
       border: 2px solid #0f0;
-      background: #fff;
+      background: #000;
       color: #fff;
       box-sizing: border-box;
       line-height: 1.35;
@@ -818,7 +826,26 @@
     box-shadow: none;
     outline: none;
   }
-  @media (min-width: 768px) { .badges-img { max-width: 50%; } }
+  @media (min-width: 768px) {
+    .badges-img { max-width: 100%; margin-bottom: 0; }
+    #support {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 38%);
+      column-gap: 1.5rem;
+      align-items: start;
+    }
+    #support > :not(.support-badges-link) {
+      grid-column: 1;
+    }
+    #support .support-badges-link {
+      grid-column: 2;
+      grid-row: 1 / span 8;
+      align-self: start;
+      justify-self: end;
+      width: 100%;
+      max-width: 420px;
+    }
+  }
   </style>
 </head>
 <body>
@@ -1310,7 +1337,7 @@
       <div class="artist-title-box"><h2 style="margin:0;">Support</h2></div>
       <p><a href="https://spryte.bigcartel.com/" target="_blank" rel="noopener noreferrer" class="pin-badges-cta">Pin badges now available!</a></p>
       <p>CLICK ON THE BADGES TO BUY:</p>
-      <a href="https://spryte.bigcartel.com/" target="_blank" rel="noopener noreferrer"><img src="images/Both Badges Website Image transp.png" alt="Pin badges" class="badges-img"></a>
+      <a href="https://spryte.bigcartel.com/" target="_blank" rel="noopener noreferrer" class="support-badges-link"><img src="images/Both Badges Website Image transp.png" alt="Pin badges" class="badges-img"></a>
       <p>Spryte always pays artists and contributors to show their work
         and also keeps the stream freely available to anyone with access
         to the internet.
